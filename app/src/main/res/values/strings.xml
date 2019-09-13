@@ -3,4 +3,9 @@
     <string name="title_circular_letters">Circular letters</string>
     <string name="title_favourites">Favourites</string>
     <string name="title_reminders">Reminders</string>
+
+    <string name="notification_title">Published circular letter number %1$d</string>
+
+    <string name="channel_name">Circular letters</string>
+    <string name="channel_description">Notify when your school issue a new circular letter</string>
 </resources>
