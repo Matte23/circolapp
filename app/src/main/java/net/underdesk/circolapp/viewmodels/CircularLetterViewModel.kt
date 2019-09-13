@@ -18,14 +18,41 @@
 
 package net.underdesk.circolapp.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import net.underdesk.circolapp.data.AppDatabase
+import net.underdesk.circolapp.data.Circular
+import net.underdesk.circolapp.server.DataFetcher
 
-class CircularLetterViewModel : ViewModel() {
+class CircularLetterViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = ""
+    private val _circulars: MutableLiveData<List<Circular>> by lazy {
+        MutableLiveData<List<Circular>>().also {
+            loadCirculars()
+        }
     }
-    val text: LiveData<String> = _text
+
+    val circulars: LiveData<List<Circular>> = _circulars
+
+    private fun loadCirculars() {
+        object : Thread() {
+            override fun run() {
+                _circulars.postValue(AppDatabase.getInstance(getApplication()).circularDao().getCirculars())
+                updateCirculars()
+            }
+        }.start()
+    }
+
+    private fun updateCirculars() {
+        val fetcher = DataFetcher()
+
+        val newCirculars = fetcher.getCircularsFromServer()
+        if (newCirculars.size != _circulars.value?.size ?: true) {
+            _circulars.postValue(newCirculars)
+            AppDatabase.getInstance(getApplication()).circularDao().deleteAll()
+            AppDatabase.getInstance(getApplication()).circularDao().insertAll(newCirculars)
+        }
+    }
 }

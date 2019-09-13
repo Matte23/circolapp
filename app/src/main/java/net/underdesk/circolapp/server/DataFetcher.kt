@@ -19,6 +19,7 @@
 package net.underdesk.circolapp.server
 
 import com.google.gson.Gson
+import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.server.pojo.Response
 import org.jsoup.Jsoup
 import java.io.IOException
@@ -33,16 +34,16 @@ class DataFetcher {
     }
 
     @Throws(IOException::class)
-    fun getCircularsFromServer(): ArrayList<Pair<String, String>> {
+    public fun getCircularsFromServer(): List<Circular> {
         val json = gson.fromJson(retrieveDataFromServer(), Response::class.java)
 
         val document = Jsoup.parseBodyFragment(json.content!!.rendered)
         val htmlList = document.getElementsByTag("ul")[0].getElementsByTag("a")
 
-        val list = ArrayList<Pair<String, String>>()
+        val list = ArrayList<Circular>()
 
         htmlList.forEach { element ->
-            list.add(Pair(element.text(), element.attr("href")))
+            list.add(Circular(null, element.text(), element.attr("href")))
         }
 
         return list

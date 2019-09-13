@@ -40,7 +40,7 @@ class RemindersFragment : Fragment() {
         circularLetterViewModel =
             ViewModelProviders.of(this).get(CircularLetterViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_circular_letters, container, false)
-        circularLetterViewModel.text.observe(this, Observer {
+        circularLetterViewModel.circulars.observe(this, Observer {
 
         })
         return root

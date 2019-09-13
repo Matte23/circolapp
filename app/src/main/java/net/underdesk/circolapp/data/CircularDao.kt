@@ -18,7 +18,6 @@
 
 package net.underdesk.circolapp.data
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -27,8 +26,11 @@ import androidx.room.Query
 @Dao
 interface CircularDao {
     @Query("SELECT * FROM circulars")
-    fun getCirculars(): LiveData<List<Circular>>
+    fun getCirculars(): List<Circular>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(circulars: List<Circular>)
+    fun insertAll(circulars: List<Circular>)
+
+    @Query("DELETE FROM circulars")
+    fun deleteAll()
 }

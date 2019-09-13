@@ -23,7 +23,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "circulars")
 data class Circular(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long?,
     val name: String,
     val url: String
 )

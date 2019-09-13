@@ -25,7 +25,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_circular_letters.view.*
 import net.underdesk.circolapp.R
+import net.underdesk.circolapp.adapters.CircularLetterAdapter
 import net.underdesk.circolapp.viewmodels.CircularLetterViewModel
 
 class CircularLetterFragment : Fragment() {
@@ -37,11 +40,14 @@ class CircularLetterFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val root = inflater.inflate(R.layout.fragment_circular_letters, container, false)
+
+        root.circulars_list.layoutManager = LinearLayoutManager(context)
+
         circularLetterViewModel =
             ViewModelProviders.of(this).get(CircularLetterViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_circular_letters, container, false)
-        circularLetterViewModel.text.observe(this, Observer {
-
+        circularLetterViewModel.circulars.observe(this, Observer {
+            root.circulars_list.adapter = CircularLetterAdapter(it)
         })
         return root
     }
