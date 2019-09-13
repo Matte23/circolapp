@@ -18,19 +18,32 @@
 
 package net.underdesk.circolapp.data
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.TypeConverter
 
-@Dao
-interface CircularDao {
-    @Query("SELECT * FROM circulars ORDER BY id DESC")
-    fun getCirculars(): List<Circular>
+class Converters {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(circulars: List<Circular>)
+    @TypeConverter
+    fun stringToList(data: String?): List<String> {
+        val list: MutableList<String> = mutableListOf()
 
-    @Query("DELETE FROM circulars")
-    fun deleteAll()
+        if (data != null) {
+            for (attachment in data.split(",")) {
+                list.add(attachment)
+            }
+        }
+
+        return list.dropLast(1)
+    }
+
+    @TypeConverter
+    fun listToString(list: List<String>): String {
+        var string = ""
+
+        for (attachment in list) {
+            string += "$attachment,"
+        }
+
+        return string
+    }
 }
+

@@ -23,7 +23,17 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "circulars")
 data class Circular(
-    @PrimaryKey(autoGenerate = true) val id: Long?,
+    @PrimaryKey val id: Long,
     val name: String,
-    val url: String
-)
+    val url: String,
+    val attachmentsNames: MutableList<String> = mutableListOf(),
+    val attachmentsUrls: MutableList<String> = mutableListOf()
+) {
+    companion object {
+        fun generateFromString(string: String, url: String): Circular {
+            val id = string.split(" ")[1]
+
+            return Circular(id.toLong(), string, url)
+        }
+    }
+}
