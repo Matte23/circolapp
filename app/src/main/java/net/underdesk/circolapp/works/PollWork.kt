@@ -42,7 +42,7 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
         const val CHANNEL_ID = "net.underdesk.circolapp.NEW_CIRCULAR"
 
         private const val pollWorkName = "net.underdesk.circolapp.POLL_WORK"
-        private const val repeatIntervalMin: Long = 30
+        private const val repeatIntervalMin: Long = 15
         private const val flexIntervalMin: Long = 10
 
         private fun getPollWorkRequest(): PeriodicWorkRequest {
@@ -75,9 +75,33 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
         val newCirculars = fetcher.getCircularsFromServer()
 
         if (newCirculars.size != oldCirculars.size) {
-            for (i in oldCirculars.lastIndex..newCirculars.lastIndex) {
-                createNotificationChannel()
+            createNotificationChannel()
+
+            val summaryStyle = NotificationCompat.InboxStyle()
+                .setBigContentTitle(applicationContext.getString(R.string.notification_summary_title))
+                .setSummaryText(applicationContext.getString(R.string.notification_summary))
+
+            for (i in oldCirculars.size..newCirculars.lastIndex) {
                 createNotification(newCirculars[i])
+                summaryStyle.addLine(newCirculars[i].name)
+            }
+
+            val summaryNotification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+                .setContentTitle(applicationContext.getString(R.string.notification_summary_title))
+                .setContentText(
+                    applicationContext.getString(
+                        R.string.notification_summary_text,
+                        newCirculars.size - oldCirculars.size
+                    )
+                )
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setStyle(summaryStyle)
+                .setGroup(CHANNEL_ID)
+                .setGroupSummary(true)
+                .build()
+
+            with(NotificationManagerCompat.from(applicationContext)) {
+                notify(-1, summaryNotification)
             }
 
             AppDatabase.getInstance(applicationContext).circularDao().deleteAll()

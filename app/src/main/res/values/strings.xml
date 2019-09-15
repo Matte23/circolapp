@@ -4,7 +4,10 @@
     <string name="title_favourites">Favourites</string>
     <string name="title_reminders">Reminders</string>
 
-    <string name="notification_title">Published circular letter number %1$d</string>
+    <string name="notification_title">Circular letter number %1$d</string>
+    <string name="notification_summary_title">New circulars published</string>
+    <string name="notification_summary">New circulars</string>
+    <string name="notification_summary_text">%1$d new circulars</string>
 
     <string name="channel_name">Circular letters</string>
     <string name="channel_description">Notify when your school issue a new circular letter</string>
