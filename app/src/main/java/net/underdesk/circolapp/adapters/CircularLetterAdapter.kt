@@ -33,6 +33,7 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
 
     inner class CircularLetterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var title: TextView = view.circular_title_textview
+        var number: TextView = view.circular_number_textview
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CircularLetterViewHolder {
@@ -43,6 +44,7 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
     }
 
     override fun onBindViewHolder(holder: CircularLetterViewHolder, position: Int) {
+        holder.number.text = circulars[position].id.toString()
         holder.title.text = circulars[position].name
     }
 
