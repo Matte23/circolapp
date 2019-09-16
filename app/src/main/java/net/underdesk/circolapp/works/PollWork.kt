@@ -81,7 +81,9 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
                 .setBigContentTitle(applicationContext.getString(R.string.notification_summary_title))
                 .setSummaryText(applicationContext.getString(R.string.notification_summary))
 
-            for (i in oldCirculars.size..newCirculars.lastIndex) {
+            val circularCount = newCirculars.size - oldCirculars.size
+
+            for (i in 0 until circularCount) {
                 createNotification(newCirculars[i])
                 summaryStyle.addLine(newCirculars[i].name)
             }
@@ -91,7 +93,7 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
                 .setContentText(
                     applicationContext.getString(
                         R.string.notification_summary_text,
-                        newCirculars.size - oldCirculars.size
+                        circularCount
                     )
                 )
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
@@ -123,6 +125,7 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
             .setContentText(circular.name)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
             .setGroup(CHANNEL_ID)
             .setStyle(
                 NotificationCompat.BigTextStyle()
