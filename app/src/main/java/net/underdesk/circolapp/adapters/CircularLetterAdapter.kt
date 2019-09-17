@@ -18,10 +18,15 @@
 
 package net.underdesk.circolapp.adapters
 
+import android.app.DownloadManager
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_circular.view.*
@@ -37,6 +42,10 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
         var title: TextView = view.circular_title_textview
         var number: TextView = view.circular_number_textview
         var date: TextView = view.circular_date_textview
+        var viewButton: ImageButton = view.circular_view_button
+        var downloadButton: ImageButton = view.circular_download_button
+        var favouriteButton: ImageButton = view.circular_favourite_button
+        var reminderButton: ImageButton = view.circular_reminder_button
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CircularLetterViewHolder {
@@ -51,6 +60,23 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
         holder.number.text = context.getString(R.string.notification_title, circulars[position].id)
         holder.title.text = circulars[position].name
         holder.date.text = circulars[position].date
+
+        holder.viewButton.setOnClickListener {
+            val viewIntent = Intent(Intent.ACTION_VIEW)
+            viewIntent.setDataAndType(Uri.parse(circulars[position].url), "application/pdf")
+            context.startActivity(viewIntent)
+        }
+
+        holder.downloadButton.setOnClickListener {
+            val request = DownloadManager.Request(Uri.parse(circulars[position].url))
+            request.setTitle(circulars[position].name)
+            request.setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_DOWNLOADS,
+                "Circolapp/" + circulars[position].id + ".pdf"
+            )
+
+            (context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+        }
     }
 
     override fun getItemCount() = circulars.size
