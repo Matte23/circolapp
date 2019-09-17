@@ -28,6 +28,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_circular.view.*
 import net.underdesk.circolapp.R
@@ -46,6 +47,7 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
         var downloadButton: ImageButton = view.circular_download_button
         var favouriteButton: ImageButton = view.circular_favourite_button
         var reminderButton: ImageButton = view.circular_reminder_button
+        var attachmentsList: RecyclerView = view.circulars_attachments_list
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CircularLetterViewHolder {
@@ -76,6 +78,18 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
             )
 
             (context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+        }
+
+        if (circulars[position].attachmentsNames.isNotEmpty()) {
+            holder.attachmentsList.visibility = View.VISIBLE
+            holder.attachmentsList.layoutManager = LinearLayoutManager(context)
+            holder.attachmentsList.adapter = AttachmentAdapter(
+                circulars[position].attachmentsNames,
+                circulars[position].attachmentsUrls
+            )
+        } else {
+            holder.attachmentsList.visibility = View.GONE
+            holder.attachmentsList.adapter = null
         }
     }
 
