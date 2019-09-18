@@ -28,6 +28,7 @@ data class Circular(
     val name: String,
     val url: String,
     val date: String,
+    var favourite: Boolean = false,
     val attachmentsNames: MutableList<String> = mutableListOf(),
     val attachmentsUrls: MutableList<String> = mutableListOf()
 ) {

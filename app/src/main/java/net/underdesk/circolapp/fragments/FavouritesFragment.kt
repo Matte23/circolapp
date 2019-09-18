@@ -25,23 +25,29 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_circular_letters.view.*
 import net.underdesk.circolapp.R
-import net.underdesk.circolapp.viewmodels.CircularLetterViewModel
+import net.underdesk.circolapp.adapters.CircularLetterAdapter
+import net.underdesk.circolapp.viewmodels.FavouritesViewModel
 
 class FavouritesFragment : Fragment() {
 
-    private lateinit var circularLetterViewModel: CircularLetterViewModel
+    private lateinit var favouritesViewModel: FavouritesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        circularLetterViewModel =
-            ViewModelProviders.of(this).get(CircularLetterViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_circular_letters, container, false)
-        circularLetterViewModel.circulars.observe(this, Observer {
 
+        root.circulars_list.layoutManager = LinearLayoutManager(context)
+
+        favouritesViewModel =
+            ViewModelProviders.of(this).get(FavouritesViewModel::class.java)
+        favouritesViewModel.circulars.observe(this, Observer {
+            root.circulars_list.adapter = CircularLetterAdapter(it)
         })
         return root
     }

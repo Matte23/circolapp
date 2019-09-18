@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_circular.view.*
 import net.underdesk.circolapp.R
+import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 
 
@@ -83,6 +84,15 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
             )
 
             (context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+        }
+
+        holder.favouriteButton.setOnClickListener {
+            object : Thread() {
+                override fun run() {
+                    AppDatabase.getInstance(context).circularDao()
+                        .update(circulars[position].apply { favourite = !favourite })
+                }
+            }.start()
         }
 
         holder.collapseButton.setOnClickListener {

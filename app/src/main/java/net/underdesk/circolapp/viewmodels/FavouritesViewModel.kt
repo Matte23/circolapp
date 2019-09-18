@@ -16,25 +16,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.underdesk.circolapp.data
+package net.underdesk.circolapp.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import net.underdesk.circolapp.data.AppDatabase
+import net.underdesk.circolapp.data.Circular
 
-@Dao
-interface CircularDao {
-    @Query("SELECT * FROM circulars ORDER BY id DESC")
-    fun getCirculars(): List<Circular>
-
-    @Query("SELECT * FROM circulars WHERE favourite ORDER BY id DESC")
-    fun getFavourites(): LiveData<List<Circular>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(circulars: List<Circular>)
-
-    @Update
-    fun update(circular: Circular)
-
-    @Query("DELETE FROM circulars")
-    fun deleteAll()
+class FavouritesViewModel(application: Application) : AndroidViewModel(application) {
+    val circulars: LiveData<List<Circular>> =
+        AppDatabase.getInstance(getApplication()).circularDao().getFavourites()
 }
