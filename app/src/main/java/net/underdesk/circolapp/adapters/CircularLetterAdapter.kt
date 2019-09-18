@@ -43,6 +43,7 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
         var title: TextView = view.circular_title_textview
         var number: TextView = view.circular_number_textview
         var date: TextView = view.circular_date_textview
+        var collapseButton: ImageButton = view.circular_collapse_button
         var viewButton: ImageButton = view.circular_view_button
         var downloadButton: ImageButton = view.circular_download_button
         var favouriteButton: ImageButton = view.circular_favourite_button
@@ -84,15 +85,29 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
             (context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
         }
 
-        if (circulars[position].attachmentsNames.isNotEmpty()) {
-            holder.attachmentsList.visibility = View.VISIBLE
-            holder.attachmentsList.adapter = AttachmentAdapter(
-                circulars[position].attachmentsNames,
-                circulars[position].attachmentsUrls
-            )
-        } else {
-            holder.attachmentsList.visibility = View.GONE
-            holder.attachmentsList.adapter = null
+        holder.collapseButton.setOnClickListener {
+            if (holder.viewButton.visibility == View.VISIBLE) {
+                holder.viewButton.visibility = View.GONE
+                holder.downloadButton.visibility = View.GONE
+                holder.favouriteButton.visibility = View.GONE
+                holder.reminderButton.visibility = View.GONE
+
+                holder.attachmentsList.visibility = View.GONE
+                holder.attachmentsList.adapter = null
+            } else {
+                holder.viewButton.visibility = View.VISIBLE
+                holder.downloadButton.visibility = View.VISIBLE
+                holder.favouriteButton.visibility = View.VISIBLE
+                holder.reminderButton.visibility = View.VISIBLE
+
+                if (circulars[position].attachmentsNames.isNotEmpty()) {
+                    holder.attachmentsList.visibility = View.VISIBLE
+                    holder.attachmentsList.adapter = AttachmentAdapter(
+                        circulars[position].attachmentsNames,
+                        circulars[position].attachmentsUrls
+                    )
+                }
+            }
         }
     }
 

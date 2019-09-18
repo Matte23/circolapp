@@ -24,13 +24,13 @@
 
         <TextView
             android:id="@+id/circular_title_textview"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/circular_view_button"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/circular_collapse_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/circular_number_textview" />
 
@@ -45,6 +45,18 @@
             app:layout_constraintTop_toTopOf="@+id/circular_number_textview" />
 
         <ImageButton
+            android:id="@+id/circular_collapse_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/baseline_keyboard_arrow_down_24"
+            app:layout_constraintBottom_toTopOf="@+id/circular_reminder_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
             android:id="@+id/circular_view_button"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
@@ -52,6 +64,7 @@
             android:layout_marginStart="8dp"
             android:src="@drawable/baseline_visibility_24"
             android:tint="@color/colorAccent"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -63,6 +76,7 @@
             android:gravity="center"
             android:src="@drawable/baseline_get_app_24"
             android:tint="@color/colorAccent"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
             app:layout_constraintEnd_toStartOf="@+id/circular_guideline"
             app:layout_constraintStart_toEndOf="@+id/circular_view_button" />
@@ -74,6 +88,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_star_24"
             android:tint="@color/colorAccent"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
             app:layout_constraintEnd_toStartOf="@+id/circular_reminder_button"
             app:layout_constraintStart_toStartOf="@+id/circular_guideline" />
@@ -86,6 +101,7 @@
             android:layout_marginEnd="8dp"
             android:src="@drawable/baseline_notifications_24"
             android:tint="@color/colorAccent"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -97,6 +113,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:nestedScrollingEnabled="false"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
