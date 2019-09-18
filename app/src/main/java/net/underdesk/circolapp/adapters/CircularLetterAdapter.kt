@@ -48,6 +48,10 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
         var favouriteButton: ImageButton = view.circular_favourite_button
         var reminderButton: ImageButton = view.circular_reminder_button
         var attachmentsList: RecyclerView = view.circulars_attachments_list
+
+        init {
+            attachmentsList.layoutManager = LinearLayoutManager(context)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CircularLetterViewHolder {
@@ -82,7 +86,6 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
 
         if (circulars[position].attachmentsNames.isNotEmpty()) {
             holder.attachmentsList.visibility = View.VISIBLE
-            holder.attachmentsList.layoutManager = LinearLayoutManager(context)
             holder.attachmentsList.adapter = AttachmentAdapter(
                 circulars[position].attachmentsNames,
                 circulars[position].attachmentsUrls
