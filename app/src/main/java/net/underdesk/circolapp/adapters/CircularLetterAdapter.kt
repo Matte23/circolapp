@@ -39,6 +39,7 @@ import net.underdesk.circolapp.data.Circular
 class CircularLetterAdapter(private val circulars: List<Circular>) :
     RecyclerView.Adapter<CircularLetterAdapter.CircularLetterViewHolder>() {
     private lateinit var context: Context
+    private var collapsedItems = -1
 
     inner class CircularLetterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var title: TextView = view.circular_title_textview
@@ -69,6 +70,33 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
         holder.title.text = circulars[position].name
         holder.date.text = circulars[position].date
 
+        if (collapsedItems != position) {
+            holder.collapseButton.setImageDrawable(context.getDrawable(R.drawable.baseline_expand_more_24))
+
+            holder.viewButton.visibility = View.GONE
+            holder.downloadButton.visibility = View.GONE
+            holder.favouriteButton.visibility = View.GONE
+            holder.reminderButton.visibility = View.GONE
+
+            holder.attachmentsList.visibility = View.GONE
+            holder.attachmentsList.adapter = null
+        } else {
+            holder.collapseButton.setImageDrawable(context.getDrawable(R.drawable.baseline_expand_less_24))
+
+            holder.viewButton.visibility = View.VISIBLE
+            holder.downloadButton.visibility = View.VISIBLE
+            holder.favouriteButton.visibility = View.VISIBLE
+            holder.reminderButton.visibility = View.VISIBLE
+
+            if (circulars[position].attachmentsNames.isNotEmpty()) {
+                holder.attachmentsList.visibility = View.VISIBLE
+                holder.attachmentsList.adapter = AttachmentAdapter(
+                    circulars[position].attachmentsNames,
+                    circulars[position].attachmentsUrls
+                )
+            }
+        }
+
         holder.viewButton.setOnClickListener {
             val viewIntent = Intent(Intent.ACTION_VIEW)
             viewIntent.setDataAndType(Uri.parse(circulars[position].url), "application/pdf")
@@ -96,28 +124,14 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
         }
 
         holder.collapseButton.setOnClickListener {
-            if (holder.viewButton.visibility == View.VISIBLE) {
-                holder.viewButton.visibility = View.GONE
-                holder.downloadButton.visibility = View.GONE
-                holder.favouriteButton.visibility = View.GONE
-                holder.reminderButton.visibility = View.GONE
-
-                holder.attachmentsList.visibility = View.GONE
-                holder.attachmentsList.adapter = null
+            collapsedItems = if (collapsedItems == position) {
+                -1
             } else {
-                holder.viewButton.visibility = View.VISIBLE
-                holder.downloadButton.visibility = View.VISIBLE
-                holder.favouriteButton.visibility = View.VISIBLE
-                holder.reminderButton.visibility = View.VISIBLE
-
-                if (circulars[position].attachmentsNames.isNotEmpty()) {
-                    holder.attachmentsList.visibility = View.VISIBLE
-                    holder.attachmentsList.adapter = AttachmentAdapter(
-                        circulars[position].attachmentsNames,
-                        circulars[position].attachmentsUrls
-                    )
-                }
+                if (collapsedItems > -1) notifyItemChanged(collapsedItems)
+                position
             }
+
+            notifyItemChanged(position)
         }
     }
 
