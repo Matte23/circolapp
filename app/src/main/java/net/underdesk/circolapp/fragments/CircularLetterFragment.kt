@@ -22,10 +22,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_circular_letters.view.*
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
@@ -48,6 +50,17 @@ class CircularLetterFragment : Fragment() {
             ViewModelProviders.of(this).get(CircularLetterViewModel::class.java)
         circularLetterViewModel.circulars.observe(this, Observer {
             root.circulars_list.adapter = CircularLetterAdapter(it)
+        })
+        circularLetterViewModel.showMessage.observe(this, Observer {
+            if (it) activity?.findViewById<ConstraintLayout>(R.id.container)?.let { view ->
+                Snackbar.make(
+                    view,
+                    getString(R.string.snackbar_connection_not_available),
+                    Snackbar.LENGTH_LONG
+                ).show()
+
+                circularLetterViewModel.showMessage.postValue(false)
+            }
         })
         return root
     }

@@ -32,6 +32,7 @@ import net.underdesk.circolapp.R
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.server.DataFetcher
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 
@@ -72,7 +73,11 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
         val fetcher = DataFetcher()
 
         val oldCirculars = AppDatabase.getInstance(applicationContext).circularDao().getCirculars()
-        val newCirculars = fetcher.getCircularsFromServer()
+        val newCirculars = try {
+            fetcher.getCircularsFromServer()
+        } catch (exception: IOException) {
+            return Result.retry()
+        }
 
         if (newCirculars.size != oldCirculars.size) {
             createNotificationChannel()

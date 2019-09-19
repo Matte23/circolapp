@@ -11,4 +11,6 @@
 
     <string name="channel_name">Circular letters</string>
     <string name="channel_description">Notify when your school issue a new circular letter</string>
+
+    <string name="snackbar_connection_not_available">Network not available. Results may be outdated</string>
 </resources>
