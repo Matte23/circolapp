@@ -19,6 +19,7 @@
 package net.underdesk.circolapp.adapters
 
 import android.app.DownloadManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -28,12 +29,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_circular.view.*
+import net.underdesk.circolapp.AlarmBroadcastReceiver
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
+import net.underdesk.circolapp.fragments.NewReminderFragment
 
 
 class CircularLetterAdapter(private val circulars: List<Circular>) :
@@ -121,6 +125,29 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
                         .update(circulars[position].apply { favourite = !favourite })
                 }
             }.start()
+        }
+
+        holder.reminderButton.setOnClickListener {
+            if (circulars[position].reminder) {
+                object : Thread() {
+                    override fun run() {
+                        val pendingIntent = PendingIntent.getBroadcast(
+                            context,
+                            circulars[position].id.toInt(),
+                            Intent(context, AlarmBroadcastReceiver::class.java),
+                            0
+                        )
+
+                        pendingIntent.cancel()
+
+                        AppDatabase.getInstance(context).circularDao()
+                            .update(circulars[position].apply { reminder = false })
+                    }
+                }.start()
+            } else {
+                NewReminderFragment.create(circulars[position])
+                    .show((context as FragmentActivity).supportFragmentManager, "NewReminderDialog")
+            }
         }
 
         holder.collapseButton.setOnClickListener {

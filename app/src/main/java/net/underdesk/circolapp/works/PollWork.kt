@@ -144,8 +144,8 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = applicationContext.getString(R.string.channel_name)
-            val descriptionText = applicationContext.getString(R.string.channel_description)
+            val name = applicationContext.getString(R.string.channel_name_new)
+            val descriptionText = applicationContext.getString(R.string.channel_description_new)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText

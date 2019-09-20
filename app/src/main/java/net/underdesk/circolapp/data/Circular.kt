@@ -18,10 +18,13 @@
 
 package net.underdesk.circolapp.data
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 import java.util.regex.Pattern
 
+@Parcelize
 @Entity(tableName = "circulars")
 data class Circular(
     @PrimaryKey val id: Long,
@@ -29,9 +32,10 @@ data class Circular(
     val url: String,
     val date: String,
     var favourite: Boolean = false,
+    var reminder: Boolean = false,
     val attachmentsNames: MutableList<String> = mutableListOf(),
     val attachmentsUrls: MutableList<String> = mutableListOf()
-) {
+) : Parcelable {
     companion object {
         fun generateFromString(string: String, url: String): Circular {
             val id = string.split(" ")[1]
