@@ -18,29 +18,37 @@
 
 package net.underdesk.circolapp.adapters
 
-import android.app.DownloadManager
+import android.Manifest
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_circular.view.*
 import net.underdesk.circolapp.AlarmBroadcastReceiver
+import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.fragments.NewReminderFragment
 
 
-class CircularLetterAdapter(private val circulars: List<Circular>) :
+class CircularLetterAdapter(
+    private val circulars: List<Circular>,
+    private val adapterCallback: AdapterCallback
+) :
     RecyclerView.Adapter<CircularLetterAdapter.CircularLetterViewHolder>() {
     private lateinit var context: Context
     private var collapsedItems = -1
@@ -108,14 +116,36 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
         }
 
         holder.downloadButton.setOnClickListener {
-            val request = DownloadManager.Request(Uri.parse(circulars[position].url))
-            request.setTitle(circulars[position].name)
-            request.setDestinationInExternalPublicDir(
-                Environment.DIRECTORY_DOWNLOADS,
-                "Circolapp/" + circulars[position].id + ".pdf"
-            )
+            adapterCallback.circularToDownload = circulars[position]
 
-            (context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+
+                val builder: AlertDialog.Builder? = AlertDialog.Builder(context)
+
+                builder?.apply {
+                    setMessage(context.getString(R.string.dialog_message_permission_write))
+                    setTitle(context.getString(R.string.dialog_title_permission_required))
+                    setPositiveButton(
+                        context.getString(R.string.dialog_next)
+                    ) { _, _ ->
+                        ActivityCompat.requestPermissions(
+                            adapterCallback as AppCompatActivity,
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            MainActivity.PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE
+                        )
+                    }
+
+                }
+
+                builder?.create()?.show()
+            } else {
+                adapterCallback.downloadCircular()
+            }
         }
 
         holder.favouriteButton.setOnClickListener {
@@ -163,4 +193,9 @@ class CircularLetterAdapter(private val circulars: List<Circular>) :
     }
 
     override fun getItemCount() = circulars.size
+
+    interface AdapterCallback {
+        var circularToDownload: Circular?
+        fun downloadCircular()
+    }
 }

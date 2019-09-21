@@ -18,9 +18,13 @@
 
 package net.underdesk.circolapp
 
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
@@ -30,9 +34,19 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
+import net.underdesk.circolapp.adapters.CircularLetterAdapter
+import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.works.PollWork
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback {
+
+    companion object {
+        internal const val PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10
+    }
+
+    override var circularToDownload: Circular? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +92,44 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    downloadCircular()
+                } else {
+                    Snackbar.make(
+                        container,
+                        resources.getString(R.string.snackbar_write_permission_not_granted),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+                return
+            }
+        }
+    }
+
+    override fun downloadCircular() {
+        val request = DownloadManager.Request(Uri.parse(circularToDownload!!.url))
+        request.setTitle(circularToDownload!!.name)
+        request.setDestinationInExternalPublicDir(
+            Environment.DIRECTORY_DOWNLOADS,
+            "Circolapp/" + circularToDownload!!.id + ".pdf"
+        )
+
+        (getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+
+        Snackbar.make(
+            container,
+            resources.getString(R.string.snackbar_circular_downloaded),
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 
     private fun showInfoDialog() {

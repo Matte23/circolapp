@@ -32,5 +32,11 @@
     © 2019  Matteo Schiff\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it
     under certain conditions.</string>
 
+    <string name="dialog_title_permission_required">Permission required</string>
+    <string name="dialog_message_permission_write">We need your permission to save this circular letter to local storage</string>
+
+    <string name="snackbar_write_permission_not_granted">Unable to save this circular letter to local storage. Permission not granted</string>
+    <string name="snackbar_circular_downloaded">The circular letter will be saved into the download folder</string>
+
     <string name="snackbar_connection_not_available">Network not available. Results may be outdated</string>
 </resources>

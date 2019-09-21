@@ -27,6 +27,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_circular_letters.view.*
+import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
 import net.underdesk.circolapp.viewmodels.FavouritesViewModel
@@ -47,7 +48,7 @@ class FavouritesFragment : Fragment() {
         favouritesViewModel =
             ViewModelProviders.of(this).get(FavouritesViewModel::class.java)
         favouritesViewModel.circulars.observe(this, Observer {
-            root.circulars_list.adapter = CircularLetterAdapter(it)
+            root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
         })
         return root
     }
