@@ -7,7 +7,10 @@
     <string name="notification_title">Circular letter number %1$d</string>
     <string name="notification_summary_title">New circulars published</string>
     <string name="notification_summary">New circulars</string>
-    <string name="notification_summary_text">%1$d new circulars</string>
+    <plurals name="notification_summary_text">
+        <item quantity="one">%d new circular</item>
+        <item quantity="other">%d new circulars</item>
+    </plurals>
 
     <string name="notification_title_reminder">Reminder</string>
 

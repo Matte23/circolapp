@@ -9,7 +9,7 @@
         android:id="@+id/navigation_circular_letters"
         android:name="net.underdesk.circolapp.fragments.CircularLetterFragment"
         android:label="@string/title_circular_letters"
-        tools:layout="@layout/fragment_favourites" />
+        tools:layout="@layout/fragment_circular_letters" />
 
     <fragment
         android:id="@+id/navigation_favourites"
@@ -21,5 +21,5 @@
         android:id="@+id/navigation_reminders"
         android:name="net.underdesk.circolapp.fragments.RemindersFragment"
         android:label="@string/title_reminders"
-        tools:layout="@layout/fragment_reminders" />
+        tools:layout="@layout/fragment_circular_letters" />
 </navigation>

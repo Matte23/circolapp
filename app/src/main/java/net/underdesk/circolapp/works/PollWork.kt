@@ -96,8 +96,9 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
             val summaryNotification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
                 .setContentTitle(applicationContext.getString(R.string.notification_summary_title))
                 .setContentText(
-                    applicationContext.getString(
-                        R.string.notification_summary_text,
+                    applicationContext.resources.getQuantityString(
+                        R.plurals.notification_summary_text,
+                        circularCount,
                         circularCount
                     )
                 )

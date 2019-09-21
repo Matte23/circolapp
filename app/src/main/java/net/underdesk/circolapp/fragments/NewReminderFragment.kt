@@ -51,7 +51,7 @@ class NewReminderFragment : DialogFragment() {
         }
     }
 
-    var dateNotChosen = true
+    private var dateNotChosen = true
     var circular: Circular? = null
 
     override fun onCreateView(

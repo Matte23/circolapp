@@ -34,7 +34,7 @@ class DataFetcher {
     }
 
     @Throws(IOException::class)
-    public fun getCircularsFromServer(): List<Circular> {
+    fun getCircularsFromServer(): List<Circular> {
         val json = gson.fromJson(retrieveDataFromServer(), Response::class.java)
 
         val document = Jsoup.parseBodyFragment(json.content!!.rendered)

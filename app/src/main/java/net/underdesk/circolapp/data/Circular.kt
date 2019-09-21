@@ -40,7 +40,7 @@ data class Circular(
         fun generateFromString(string: String, url: String): Circular {
             val id = string.split(" ")[1]
 
-            val dateRegex = """(\d{2}\/\d{2}\/\d{4})"""
+            val dateRegex = """(\d{2}/\d{2}/\d{4})"""
             val matcherDate = Pattern.compile(dateRegex).matcher(string)
 
             var title = string.removeSuffix("-signed")
