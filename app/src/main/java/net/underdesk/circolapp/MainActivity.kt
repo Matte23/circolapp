@@ -18,7 +18,12 @@
 
 package net.underdesk.circolapp
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -48,5 +53,50 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         PollWork.enqueue(this)
+
+        if (getPreferences(Context.MODE_PRIVATE).getBoolean("first_start", true)) {
+            showInfoDialog()
+
+            getPreferences(Context.MODE_PRIVATE).edit().apply {
+                putBoolean("first_start", false)
+                apply()
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.menu_main_about -> {
+                showInfoDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showInfoDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.apply {
+            setTitle(R.string.dialog_info_title)
+            setMessage(R.string.dialog_info_content)
+            setPositiveButton(
+                R.string.dialog_ok
+            ) { dialog, _ ->
+                dialog.dismiss()
+            }
+            setNeutralButton(
+                R.string.dialog_licenses
+            ) { _, _ ->
+                startActivity(Intent(this@MainActivity, LicensesActivity::class.java))
+            }
+        }
+
+        builder.create().show()
     }
 }

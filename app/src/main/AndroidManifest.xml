@@ -21,6 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LicensesActivity"
+            android:label="@string/title_licenses"
+            android:parentActivityName=".MainActivity" />
         <receiver android:name=".BootCompleteReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

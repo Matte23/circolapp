@@ -3,6 +3,9 @@
     <string name="title_circular_letters">Circular letters</string>
     <string name="title_favourites">Favourites</string>
     <string name="title_reminders">Reminders</string>
+    <string name="title_licenses">Third party licenses</string>
+
+    <string name="menu_about">About</string>
 
     <string name="notification_title">Circular letter number %1$d</string>
     <string name="notification_summary_title">New circulars published</string>
@@ -22,6 +25,12 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_next">Next</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_licenses">Show third party licenses</string>
+
+    <string name="dialog_info_title">About Circolapp</string>
+    <string name="dialog_info_content">Circolapp is released under the GPL v3 license (https://github.com/Matte23/circolapp/blob/master/LICENSE):\n\n
+    © 2019  Matteo Schiff\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it
+    under certain conditions.</string>
 
     <string name="snackbar_connection_not_available">Network not available. Results may be outdated</string>
 </resources>
