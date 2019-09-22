@@ -125,9 +125,9 @@ class CircularLetterAdapter(
                 != PackageManager.PERMISSION_GRANTED
             ) {
 
-                val builder: AlertDialog.Builder? = AlertDialog.Builder(context)
+                val builder = AlertDialog.Builder(context)
 
-                builder?.apply {
+                builder.apply {
                     setMessage(context.getString(R.string.dialog_message_permission_write))
                     setTitle(context.getString(R.string.dialog_title_permission_required))
                     setPositiveButton(
@@ -142,7 +142,7 @@ class CircularLetterAdapter(
 
                 }
 
-                builder?.create()?.show()
+                builder.create().show()
             } else {
                 adapterCallback.downloadCircular()
             }

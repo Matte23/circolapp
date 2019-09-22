@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Circolapp</string>
+    <string name="app_name">CircolApp</string>
     <string name="title_circular_letters">Circular letters</string>
     <string name="title_favourites">Favourites</string>
     <string name="title_reminders">Reminders</string>
