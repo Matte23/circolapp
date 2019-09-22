@@ -48,7 +48,11 @@ class FavouritesFragment : Fragment() {
         favouritesViewModel =
             ViewModelProviders.of(this).get(FavouritesViewModel::class.java)
         favouritesViewModel.circulars.observe(this, Observer {
-            root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
+            if (root.circulars_list.adapter == null) {
+                root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
+            } else {
+                (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
+            }
         })
         return root
     }

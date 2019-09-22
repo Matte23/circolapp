@@ -46,7 +46,7 @@ import net.underdesk.circolapp.fragments.NewReminderFragment
 
 
 class CircularLetterAdapter(
-    private val circulars: List<Circular>,
+    private var circulars: List<Circular>,
     private val adapterCallback: AdapterCallback
 ) :
     RecyclerView.Adapter<CircularLetterAdapter.CircularLetterViewHolder>() {
@@ -206,6 +206,11 @@ class CircularLetterAdapter(
 
             notifyItemChanged(position)
         }
+    }
+
+    fun changeDataSet(newCirculars: List<Circular>) {
+        circulars = newCirculars
+        notifyDataSetChanged()
     }
 
     override fun getItemCount() = circulars.size

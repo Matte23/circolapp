@@ -50,7 +50,11 @@ class CircularLetterFragment : Fragment() {
         circularLetterViewModel =
             ViewModelProviders.of(this).get(CircularLetterViewModel::class.java)
         circularLetterViewModel.circulars.observe(this, Observer {
-            root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
+            if (root.circulars_list.adapter == null) {
+                root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
+            } else {
+                (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
+            }
         })
         circularLetterViewModel.showMessage.observe(this, Observer {
             if (it) activity?.findViewById<ConstraintLayout>(R.id.container)?.let { view ->

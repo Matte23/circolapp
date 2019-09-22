@@ -26,6 +26,9 @@ interface CircularDao {
     @Query("SELECT * FROM circulars ORDER BY id DESC")
     fun getCirculars(): List<Circular>
 
+    @Query("SELECT * FROM circulars ORDER BY id DESC")
+    fun getLiveCirculars(): LiveData<List<Circular>>
+
     @Query("SELECT * FROM circulars WHERE id = :id ORDER BY id DESC")
     fun getCircular(id: Long): Circular
 

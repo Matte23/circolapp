@@ -48,7 +48,11 @@ class RemindersFragment : Fragment() {
         remindersViewModel =
             ViewModelProviders.of(this).get(RemindersViewModel::class.java)
         remindersViewModel.circulars.observe(this, Observer {
-            root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
+            if (root.circulars_list.adapter == null) {
+                root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
+            } else {
+                (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
+            }
         })
         return root
     }

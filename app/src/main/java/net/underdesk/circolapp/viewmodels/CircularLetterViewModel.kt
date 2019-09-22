@@ -28,32 +28,25 @@ import net.underdesk.circolapp.server.DataFetcher
 import java.io.IOException
 
 class CircularLetterViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val _circulars: MutableLiveData<List<Circular>> by lazy {
-        MutableLiveData<List<Circular>>().also {
-            loadCirculars()
-        }
-    }
-
-    val circulars: LiveData<List<Circular>> = _circulars
-    val showMessage = MutableLiveData<Boolean>().apply { value = false }
-
-    private fun loadCirculars() {
+    init {
         object : Thread() {
             override fun run() {
-                _circulars.postValue(AppDatabase.getInstance(getApplication()).circularDao().getCirculars())
                 updateCirculars()
             }
         }.start()
     }
+
+    val circulars: LiveData<List<Circular>> =
+        AppDatabase.getInstance(getApplication()).circularDao().getLiveCirculars()
+
+    val showMessage = MutableLiveData<Boolean>().apply { value = false }
 
     private fun updateCirculars() {
         val fetcher = DataFetcher()
 
         try {
             val newCirculars = fetcher.getCircularsFromServer()
-            if (newCirculars.size != _circulars.value?.size ?: true) {
-                _circulars.postValue(newCirculars)
+            if (newCirculars.size != circulars.value?.size ?: true) {
                 AppDatabase.getInstance(getApplication()).circularDao().deleteAll()
                 AppDatabase.getInstance(getApplication()).circularDao().insertAll(newCirculars)
             }
