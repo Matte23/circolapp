@@ -82,6 +82,22 @@ class CircularLetterAdapter(
         holder.title.text = circulars[position].name
         holder.date.text = circulars[position].date
 
+        holder.favouriteButton.setImageResource(
+            if (circulars[position].favourite) {
+                R.drawable.baseline_star_24
+            } else {
+                R.drawable.baseline_star_border_24
+            }
+        )
+
+        holder.reminderButton.setImageResource(
+            if (circulars[position].reminder) {
+                R.drawable.baseline_notifications_active_24
+            } else {
+                R.drawable.baseline_notifications_none_24
+            }
+        )
+
         if (collapsedItems != position) {
             holder.collapseButton.setImageDrawable(context.getDrawable(R.drawable.baseline_expand_more_24))
 
