@@ -24,6 +24,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -57,9 +58,11 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
     }
 
     private fun createNotification(context: Context, circular: Circular) {
-        val intent = Intent(context, MainActivity::class.java).apply {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(Uri.parse(circular.url), "application/pdf").apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+
         val pendingIntent: PendingIntent =
             PendingIntent.getActivity(context, 0, intent, 0)
 
