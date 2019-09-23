@@ -22,6 +22,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.server.DataFetcher
@@ -36,8 +37,14 @@ class CircularLetterViewModel(application: Application) : AndroidViewModel(appli
         }.start()
     }
 
-    val circulars: LiveData<List<Circular>> =
-        AppDatabase.getInstance(getApplication()).circularDao().getLiveCirculars()
+    val query = MutableLiveData<String>("")
+    val circulars: LiveData<List<Circular>> = Transformations.switchMap(query) { input ->
+        if (input == null || input == "") {
+            AppDatabase.getInstance(getApplication()).circularDao().getLiveCirculars()
+        } else {
+            AppDatabase.getInstance(getApplication()).circularDao().searchCirculars("%$input%")
+        }
+    }
 
     val showMessage = MutableLiveData<Boolean>().apply { value = false }
 

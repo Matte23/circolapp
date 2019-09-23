@@ -32,7 +32,7 @@ import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
 import net.underdesk.circolapp.viewmodels.RemindersViewModel
 
-class RemindersFragment : Fragment() {
+class RemindersFragment : Fragment(), MainActivity.SearchCallback {
 
     private lateinit var remindersViewModel: RemindersViewModel
 
@@ -54,6 +54,12 @@ class RemindersFragment : Fragment() {
                 (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
             }
         })
+
+        (activity as MainActivity).searchCallback = this
         return root
+    }
+
+    override fun search(query: String) {
+        remindersViewModel.query.postValue(query)
     }
 }

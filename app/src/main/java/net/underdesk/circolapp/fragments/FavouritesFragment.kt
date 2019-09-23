@@ -32,7 +32,7 @@ import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
 import net.underdesk.circolapp.viewmodels.FavouritesViewModel
 
-class FavouritesFragment : Fragment() {
+class FavouritesFragment : Fragment(), MainActivity.SearchCallback {
 
     private lateinit var favouritesViewModel: FavouritesViewModel
 
@@ -54,6 +54,12 @@ class FavouritesFragment : Fragment() {
                 (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
             }
         })
+
+        (activity as MainActivity).searchCallback = this
         return root
+    }
+
+    override fun search(query: String) {
+        favouritesViewModel.query.postValue(query)
     }
 }

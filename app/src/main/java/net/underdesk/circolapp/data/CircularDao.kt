@@ -29,14 +29,23 @@ interface CircularDao {
     @Query("SELECT * FROM circulars ORDER BY id DESC")
     fun getLiveCirculars(): LiveData<List<Circular>>
 
+    @Query("SELECT * FROM circulars WHERE name LIKE :query ORDER BY id DESC")
+    fun searchCirculars(query: String): LiveData<List<Circular>>
+
     @Query("SELECT * FROM circulars WHERE id = :id ORDER BY id DESC")
     fun getCircular(id: Long): Circular
 
     @Query("SELECT * FROM circulars WHERE favourite ORDER BY id DESC")
     fun getFavourites(): LiveData<List<Circular>>
 
+    @Query("SELECT * FROM circulars WHERE favourite AND name LIKE :query ORDER BY id DESC")
+    fun searchFavourites(query: String): LiveData<List<Circular>>
+
     @Query("SELECT * FROM circulars WHERE reminder ORDER BY id DESC")
     fun getReminders(): LiveData<List<Circular>>
+
+    @Query("SELECT * FROM circulars WHERE reminder AND name LIKE :query ORDER BY id DESC")
+    fun searchReminders(query: String): LiveData<List<Circular>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(circulars: List<Circular>)

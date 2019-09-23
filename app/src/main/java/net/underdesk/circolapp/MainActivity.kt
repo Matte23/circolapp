@@ -29,6 +29,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         internal const val PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10
     }
 
+    var searchCallback: SearchCallback? = null
     override var circularToDownload: Circular? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +82,21 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+
+        (menu.findItem(R.id.menu_main_search).actionView as SearchView).setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    searchCallback?.search(query)
+                    return false
+                }
+
+                override fun onQueryTextChange(query: String): Boolean {
+                    searchCallback?.search(query)
+                    return false
+                }
+            })
+
         return true
     }
 
@@ -150,5 +167,9 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         }
 
         builder.create().show()
+    }
+
+    interface SearchCallback {
+        fun search(query: String)
     }
 }

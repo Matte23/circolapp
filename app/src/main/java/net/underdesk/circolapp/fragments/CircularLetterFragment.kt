@@ -34,7 +34,7 @@ import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
 import net.underdesk.circolapp.viewmodels.CircularLetterViewModel
 
-class CircularLetterFragment : Fragment() {
+class CircularLetterFragment : Fragment(), MainActivity.SearchCallback {
 
     private lateinit var circularLetterViewModel: CircularLetterViewModel
 
@@ -67,6 +67,12 @@ class CircularLetterFragment : Fragment() {
                 circularLetterViewModel.showMessage.postValue(false)
             }
         })
+
+        (activity as MainActivity).searchCallback = this
         return root
+    }
+
+    override fun search(query: String) {
+        circularLetterViewModel.query.postValue(query)
     }
 }

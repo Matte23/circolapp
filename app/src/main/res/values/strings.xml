@@ -6,6 +6,7 @@
     <string name="title_licenses">Third party licenses</string>
 
     <string name="menu_about">About</string>
+    <string name="menu_search">Search</string>
 
     <string name="notification_title">Circular letter number %1$d</string>
     <string name="notification_summary_title">New circulars published</string>

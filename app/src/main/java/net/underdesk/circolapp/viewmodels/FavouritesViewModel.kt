@@ -21,10 +21,18 @@ package net.underdesk.circolapp.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 
 class FavouritesViewModel(application: Application) : AndroidViewModel(application) {
-    val circulars: LiveData<List<Circular>> =
-        AppDatabase.getInstance(getApplication()).circularDao().getFavourites()
+    val query = MutableLiveData<String>("")
+    val circulars: LiveData<List<Circular>> = Transformations.switchMap(query) { input ->
+        if (input == null || input == "") {
+            AppDatabase.getInstance(getApplication()).circularDao().getFavourites()
+        } else {
+            AppDatabase.getInstance(getApplication()).circularDao().searchFavourites("%$input%")
+        }
+    }
 }
