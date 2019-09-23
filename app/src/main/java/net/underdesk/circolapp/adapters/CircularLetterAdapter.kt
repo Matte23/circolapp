@@ -31,6 +31,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -54,6 +55,7 @@ class CircularLetterAdapter(
     private var collapsedItems = -1
 
     inner class CircularLetterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var card: CardView = view.circular_card
         var title: TextView = view.circular_title_textview
         var number: TextView = view.circular_number_textview
         var date: TextView = view.circular_date_textview
@@ -197,6 +199,17 @@ class CircularLetterAdapter(
         }
 
         holder.collapseButton.setOnClickListener {
+            collapsedItems = if (collapsedItems == position) {
+                -1
+            } else {
+                if (collapsedItems > -1) notifyItemChanged(collapsedItems)
+                position
+            }
+
+            notifyItemChanged(position)
+        }
+
+        holder.card.setOnClickListener {
             collapsedItems = if (collapsedItems == position) {
                 -1
             } else {
