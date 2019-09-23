@@ -25,6 +25,7 @@
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_next">Next</string>
+    <string name="dialog_back">Back</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_licenses">Show third party licenses</string>
 

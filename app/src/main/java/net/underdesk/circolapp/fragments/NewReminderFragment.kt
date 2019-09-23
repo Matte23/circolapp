@@ -69,6 +69,7 @@ class NewReminderFragment : DialogFragment() {
         dialog_time_picker.setIs24HourView(true)
 
         dialog_ok_button.setOnClickListener { next() }
+        dialog_back_button.setOnClickListener { back() }
         dialog_cancel_button.setOnClickListener { dismiss() }
     }
 
@@ -76,6 +77,7 @@ class NewReminderFragment : DialogFragment() {
         if (dateNotChosen) {
             dialog_date_picker.visibility = View.GONE
             dialog_time_picker.visibility = View.VISIBLE
+            dialog_back_button.visibility = View.VISIBLE
             dialog_ok_button.text = getString(R.string.dialog_ok)
             dateNotChosen = false
         } else {
@@ -127,5 +129,13 @@ class NewReminderFragment : DialogFragment() {
                 }
             }.start()
         }
+    }
+
+    private fun back() {
+        dialog_date_picker.visibility = View.VISIBLE
+        dialog_time_picker.visibility = View.GONE
+        dialog_back_button.visibility = View.GONE
+        dialog_ok_button.text = getString(R.string.dialog_next)
+        dateNotChosen = true
     }
 }
