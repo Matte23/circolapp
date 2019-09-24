@@ -54,6 +54,10 @@ class CircularLetterAdapter(
     private lateinit var context: Context
     private var collapsedItems = -1
 
+    init {
+        setHasStableIds(true)
+    }
+
     inner class CircularLetterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var card: CardView = view.circular_card
         var title: TextView = view.circular_title_textview
@@ -227,6 +231,8 @@ class CircularLetterAdapter(
     }
 
     override fun getItemCount() = circulars.size
+
+    override fun getItemId(position: Int) = circulars[position].id
 
     interface AdapterCallback {
         var circularToDownload: Circular?
