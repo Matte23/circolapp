@@ -226,6 +226,9 @@ class CircularLetterAdapter(
     }
 
     fun changeDataSet(newCirculars: List<Circular>) {
+        if (circulars.size != newCirculars.size)
+            collapsedItems = -1
+
         circulars = newCirculars
         notifyDataSetChanged()
     }
