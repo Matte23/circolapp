@@ -44,6 +44,7 @@ class RemindersFragment : Fragment(), MainActivity.SearchCallback {
         val root = inflater.inflate(R.layout.fragment_circular_letters, container, false)
 
         root.circulars_list.layoutManager = LinearLayoutManager(context)
+        root.circulars_refresh.isEnabled = false
 
         remindersViewModel =
             ViewModelProviders.of(this).get(RemindersViewModel::class.java)
@@ -56,6 +57,7 @@ class RemindersFragment : Fragment(), MainActivity.SearchCallback {
         })
 
         (activity as MainActivity).searchCallback = this
+        (activity as MainActivity).refreshCallback = null
         return root
     }
 

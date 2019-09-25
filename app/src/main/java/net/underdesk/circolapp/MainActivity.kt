@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
     }
 
     var searchCallback: SearchCallback? = null
+    var refreshCallback: RefreshCallback? = null
     override var circularToDownload: Circular? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,6 +104,10 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
+            R.id.menu_main_refresh -> {
+                refreshCallback?.refresh()
+                true
+            }
             R.id.menu_main_settings -> {
                 startActivity(Intent(this, SettingsActivity::class.java))
                 true
@@ -175,5 +180,9 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
 
     interface SearchCallback {
         fun search(query: String)
+    }
+
+    interface RefreshCallback {
+        fun refresh()
     }
 }

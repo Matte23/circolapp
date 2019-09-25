@@ -30,11 +30,7 @@ import java.io.IOException
 
 class CircularLetterViewModel(application: Application) : AndroidViewModel(application) {
     init {
-        object : Thread() {
-            override fun run() {
-                updateCirculars()
-            }
-        }.start()
+        updateCirculars()
     }
 
     val query = MutableLiveData<String>("")
@@ -47,18 +43,31 @@ class CircularLetterViewModel(application: Application) : AndroidViewModel(appli
     }
 
     val showMessage = MutableLiveData<Boolean>().apply { value = false }
+    val circularsUpdated = MutableLiveData<Boolean>().apply { value = false }
+    private var isNotUpdating = true
 
-    private fun updateCirculars() {
-        val fetcher = DataFetcher()
+    fun updateCirculars() {
+        if (isNotUpdating) {
+            object : Thread() {
+                override fun run() {
+                    isNotUpdating = false
+                    val fetcher = DataFetcher()
 
-        try {
-            val newCirculars = fetcher.getCircularsFromServer()
-            if (newCirculars.size != circulars.value?.size ?: true) {
-                AppDatabase.getInstance(getApplication()).circularDao().deleteAll()
-                AppDatabase.getInstance(getApplication()).circularDao().insertAll(newCirculars)
-            }
-        } catch (exception: IOException) {
-            showMessage.postValue(true)
+                    try {
+                        val newCirculars = fetcher.getCircularsFromServer()
+                        if (newCirculars.size != circulars.value?.size ?: true) {
+                            AppDatabase.getInstance(getApplication()).circularDao().deleteAll()
+                            AppDatabase.getInstance(getApplication()).circularDao()
+                                .insertAll(newCirculars)
+                        }
+                        circularsUpdated.postValue(true)
+                    } catch (exception: IOException) {
+                        showMessage.postValue(true)
+                    } finally {
+                        isNotUpdating = true
+                    }
+                }
+            }.start()
         }
     }
 }

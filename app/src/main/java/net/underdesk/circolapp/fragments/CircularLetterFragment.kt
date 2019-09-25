@@ -28,13 +28,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_circular_letters.*
 import kotlinx.android.synthetic.main.fragment_circular_letters.view.*
 import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
 import net.underdesk.circolapp.viewmodels.CircularLetterViewModel
 
-class CircularLetterFragment : Fragment(), MainActivity.SearchCallback {
+class CircularLetterFragment : Fragment(), MainActivity.SearchCallback,
+    MainActivity.RefreshCallback {
 
     private lateinit var circularLetterViewModel: CircularLetterViewModel
 
@@ -67,12 +69,27 @@ class CircularLetterFragment : Fragment(), MainActivity.SearchCallback {
                 circularLetterViewModel.showMessage.postValue(false)
             }
         })
+        circularLetterViewModel.circularsUpdated.observe(this, Observer {
+            if (it) {
+                root.circulars_refresh.isRefreshing = false
+
+                circularLetterViewModel.showMessage.postValue(false)
+            }
+        })
+
+        root.circulars_refresh.setOnRefreshListener { circularLetterViewModel.updateCirculars() }
 
         (activity as MainActivity).searchCallback = this
+        (activity as MainActivity).refreshCallback = this
         return root
     }
 
     override fun search(query: String) {
         circularLetterViewModel.query.postValue(query)
+    }
+
+    override fun refresh() {
+        circulars_refresh.isRefreshing = true
+        circularLetterViewModel.updateCirculars()
     }
 }

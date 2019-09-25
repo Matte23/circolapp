@@ -9,6 +9,10 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/menu_main_refresh"
+        android:title="@string/menu_refresh"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/menu_main_settings"
         android:title="@string/title_settings" />
     <item
