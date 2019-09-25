@@ -27,6 +27,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.preference.PreferenceManager
 import androidx.work.*
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.data.AppDatabase
@@ -46,13 +47,13 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
         private const val repeatIntervalMin: Long = 15
         private const val flexIntervalMin: Long = 10
 
-        private fun getPollWorkRequest(): PeriodicWorkRequest {
+        private fun getPollWorkRequest(repeatInterval: Long): PeriodicWorkRequest {
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
             return PeriodicWorkRequestBuilder<PollWork>(
-                repeatIntervalMin,
+                repeatInterval,
                 TimeUnit.MINUTES,
                 flexIntervalMin,
                 TimeUnit.MINUTES
@@ -60,12 +61,24 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
         }
 
         fun enqueue(context: Context) {
-            WorkManager.getInstance(context)
-                .enqueueUniquePeriodicWork(
-                    pollWorkName,
-                    ExistingPeriodicWorkPolicy.KEEP,
-                    getPollWorkRequest()
-                )
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+            if (sharedPreferences.getBoolean("notify_new_circulars", true)) {
+                WorkManager.getInstance(context)
+                    .enqueueUniquePeriodicWork(
+                        pollWorkName,
+                        ExistingPeriodicWorkPolicy.KEEP,
+                        getPollWorkRequest(
+                            sharedPreferences.getString(
+                                "poll_interval",
+                                null
+                            )?.toLong() ?: repeatIntervalMin
+                        )
+                    )
+            } else {
+                WorkManager.getInstance(context)
+                    .cancelUniqueWork(pollWorkName)
+            }
         }
     }
 

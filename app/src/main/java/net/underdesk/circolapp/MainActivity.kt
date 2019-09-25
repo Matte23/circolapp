@@ -103,6 +103,10 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
+            R.id.menu_main_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                true
+            }
             R.id.menu_main_about -> {
                 showInfoDialog()
                 true

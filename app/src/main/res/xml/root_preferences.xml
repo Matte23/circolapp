@@ -1,0 +1,35 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/preferences_general_header">
+
+        <ListPreference
+            app:defaultValue="auto"
+            app:entries="@array/dark_theme_entries"
+            app:entryValues="@array/dark_theme_values"
+            app:key="dark_theme"
+            app:title="@string/preferences_dark_theme"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/preference_notifications_header">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:summary="@string/preferences_notify_new_circulars_summary"
+            app:key="notify_new_circulars"
+            app:title="@string/preferences_notify_new_circulars" />
+
+        <EditTextPreference
+            android:defaultValue="15"
+            android:dependency="notify_new_circulars"
+            android:key="poll_interval"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/preferences_poll_interval_summary"
+            android:title="@string/preferences_poll_interval" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
