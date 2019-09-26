@@ -29,11 +29,13 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
     override var circularToDownload: Circular? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        loadDarkTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
@@ -176,6 +179,16 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         }
 
         builder.create().show()
+    }
+
+    private fun loadDarkTheme() {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        when (sharedPreferences.getString("dark_theme", "auto")) {
+            "auto" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            "enabled" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            "disabled" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     interface SearchCallback {
