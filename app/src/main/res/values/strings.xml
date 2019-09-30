@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CircolApp</string>
+    <string name="app_name" translatable="false">CircolApp</string>
     <string name="title_circular_letters">Circular letters</string>
     <string name="title_favourites">Favourites</string>
     <string name="title_reminders">Reminders</string>
@@ -29,7 +29,7 @@
     <string name="notification_title_reminder">Reminder</string>
 
     <string name="channel_name_new">Circular letters</string>
-    <string name="channel_description_new">Notify when your school issue a new circular letter</string>
+    <string name="channel_description_new">New circulars</string>
     <string name="channel_name_reminder">Reminders</string>
     <string name="channel_description_reminder">Reminder linked with circular letter</string>
 
@@ -42,7 +42,9 @@
     <string name="dialog_info_title">About Circolapp</string>
     <string name="dialog_info_content">Circolapp is released under the GPL v3 license (https://github.com/Matte23/circolapp/blob/master/LICENSE):\n\n
     © 2019  Matteo Schiff\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it
-    under certain conditions.</string>
+    under certain conditions. \n\n
+    Circulars letters are written by the Liceo Scientifico Maria Curie Pinerolo (https://curiepinerolo.edu.it/).\n
+    Those documents are released under the "Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)(https://creativecommons.org/licenses/by-nc-sa/3.0/), as specified in this page: https://curiepinerolo.edu.it/note-legali</string>
 
     <string name="dialog_title_permission_required">Permission required</string>
     <string name="dialog_message_permission_write">We need your permission to save this circular letter to local storage</string>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_circular_letters">Circolari</string>
+    <string name="title_favourites">Preferiti</string>
+    <string name="title_reminders">Promemoria</string>
+    <string name="title_licenses">Licenze di terze parti</string>
+    <string name="title_settings">Impostazioni</string>
+
+    <string name="menu_about">Informazioni</string>
+    <string name="menu_search">Cerca</string>
+    <string name="menu_refresh">Aggiorna</string>
+
+    <string name="preferences_general_header">Generale</string>
+    <string name="preference_notifications_header">Notifiche</string>
+    <string name="preferences_dark_theme">Tema scuro</string>
+    <string name="preferences_notify_new_circulars">Mostra notifiche</string>
+    <string name="preferences_poll_interval">Intervallo di sincronizzazione</string>
+    <string name="preferences_notify_new_circulars_summary">Mostra una notifica quando una nuova circolare è pubblicata</string>
+    <string name="preferences_poll_interval_summary">Quanto tempo attendere tra una sincronizzazione ed un altra</string>
+
+    <string name="notification_title">Circolare numero %1$d</string>
+    <string name="notification_summary_title">Nuove circolari pubblicate</string>
+    <string name="notification_summary">Nuove circolari</string>
+    <plurals name="notification_summary_text">
+        <item quantity="one">%d nuova circolare</item>
+        <item quantity="other">%d nuove circolari</item>
+    </plurals>
+
+    <string name="notification_title_reminder">Promemoria</string>
+
+    <string name="channel_name_new">Circolari</string>
+    <string name="channel_description_new">Nuove circolari</string>
+    <string name="channel_name_reminder">Promemoria</string>
+    <string name="channel_description_reminder">Promemoria relativi a circolari</string>
+
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_next">Avanti</string>
+    <string name="dialog_back">Indietro</string>
+    <string name="dialog_cancel">Annulla</string>
+    <string name="dialog_licenses">Mostra licenze di terze parti</string>
+
+    <string name="dialog_info_title">Informazioni su Circolapp</string>
+    <string name="dialog_info_content">Circolapp è rilasciata secondo la licenza GPL v3 (https://github.com/Matte23/circolapp/blob/master/LICENSE):\n\n
+    © 2019  Matteo Schiff\nQuesto programma è rilasciato SENZA ALCUNA GARANZIA E SENZA ALCUNA RESPONSABILITÀ A CARICO DELLO SVILUPPATORE.\nQuesto è software libero, e sei invitato a condividerlo nei termini della licenza. \n\n
+    Le circolari sono scritte e pubblicate dal Liceo Scientifico Maria Curie di Pinerolo (https://curiepinerolo.edu.it/).\n
+    Questi documenti sono rilasciati secondo la licenza "Attribution-NonCommercial-ShareAlike 3.0 Unported" (CC BY-NC-SA 3.0)(https://creativecommons.org/licenses/by-nc-sa/3.0/), come specificato in questa pagina: https://curiepinerolo.edu.it/note-legali/</string>
+
+    <string name="dialog_title_permission_required">Autorizzazioni richieste</string>
+    <string name="dialog_message_permission_write">È necessaria la tua autorizzazione per salvare questa circolare nella memoria interna</string>
+
+    <string name="snackbar_write_permission_not_granted">Impossibile salvare questa circolare nella memoria interna. Autorizzazioni non concesse</string>
+    <string name="snackbar_circular_downloaded">La circolare sarà salvata nella cartella Download</string>
+
+    <string name="snackbar_connection_not_available">Rete non disponibile. I risultati potrebbero non essere aggiornati</string>
+</resources>
