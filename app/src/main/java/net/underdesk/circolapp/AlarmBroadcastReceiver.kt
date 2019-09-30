@@ -67,7 +67,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
             PendingIntent.getActivity(context, 0, intent, 0)
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.notification_title_reminder))
             .setContentText(circular.name)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

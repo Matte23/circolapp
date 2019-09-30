@@ -115,7 +115,7 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
                         circularCount
                     )
                 )
-                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setStyle(summaryStyle)
                 .setGroup(CHANNEL_ID)
                 .setGroupSummary(true)
@@ -141,7 +141,7 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
             PendingIntent.getActivity(applicationContext, 0, intent, 0)
 
         val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(applicationContext.getString(R.string.notification_title, circular.id))
             .setContentText(circular.name)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
