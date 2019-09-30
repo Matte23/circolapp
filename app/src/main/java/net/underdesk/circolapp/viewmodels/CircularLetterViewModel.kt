@@ -60,11 +60,11 @@ class CircularLetterViewModel(application: Application) : AndroidViewModel(appli
                             AppDatabase.getInstance(getApplication()).circularDao()
                                 .insertAll(newCirculars)
                         }
-                        circularsUpdated.postValue(true)
                     } catch (exception: IOException) {
                         showMessage.postValue(true)
                     } finally {
                         isNotUpdating = true
+                        circularsUpdated.postValue(true)
                     }
                 }
             }.start()
