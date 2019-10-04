@@ -53,6 +53,7 @@
             android:layout_marginEnd="8dp"
             android:adjustViewBounds="true"
             android:src="@drawable/baseline_expand_more_24"
+            android:contentDescription="@string/image_expand"
             app:layout_constraintBottom_toTopOf="@+id/circular_reminder_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -65,6 +66,7 @@
             android:layout_marginStart="8dp"
             android:src="@drawable/baseline_visibility_24"
             android:tint="@color/colorAccent"
+            android:contentDescription="@string/image_view_circular"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
             app:layout_constraintStart_toStartOf="parent" />
@@ -77,6 +79,7 @@
             android:gravity="center"
             android:src="@drawable/baseline_get_app_24"
             android:tint="@color/colorAccent"
+            android:contentDescription="@string/image_download_circular"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
             app:layout_constraintEnd_toStartOf="@+id/circular_guideline"
@@ -89,6 +92,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_star_24"
             android:tint="@color/colorAccent"
+            android:contentDescription="@string/image_add_favourite"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
             app:layout_constraintEnd_toStartOf="@+id/circular_reminder_button"
@@ -102,6 +106,7 @@
             android:layout_marginEnd="8dp"
             android:src="@drawable/baseline_notifications_24"
             android:tint="@color/colorAccent"
+            android:contentDescription="@string/image_add_reminder"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
             app:layout_constraintEnd_toEndOf="parent" />

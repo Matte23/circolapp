@@ -34,6 +34,7 @@
         android:adjustViewBounds="true"
         android:src="@drawable/baseline_visibility_24"
         android:tint="@color/colorAccent"
+        android:contentDescription="@string/image_view_attachment"
         app:layout_constraintEnd_toStartOf="@+id/attachment_download_button"
         app:layout_constraintTop_toBottomOf="@+id/attachment_divider" />
 
@@ -46,6 +47,7 @@
         android:adjustViewBounds="true"
         android:src="@drawable/baseline_get_app_24"
         android:tint="@color/colorAccent"
+        android:contentDescription="@string/image_download_attachment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/attachment_divider" />
 </androidx.constraintlayout.widget.ConstraintLayout>

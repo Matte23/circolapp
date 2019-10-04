@@ -90,22 +90,31 @@ class CircularLetterAdapter(
 
         holder.favouriteButton.setImageResource(
             if (circulars[position].favourite) {
+                holder.favouriteButton.contentDescription =
+                    context.getString(R.string.image_remove_favourite)
                 R.drawable.baseline_star_24
             } else {
+                holder.favouriteButton.contentDescription =
+                    context.getString(R.string.image_add_favourite)
                 R.drawable.baseline_star_border_24
             }
         )
 
         holder.reminderButton.setImageResource(
             if (circulars[position].reminder) {
+                holder.reminderButton.contentDescription =
+                    context.getString(R.string.image_remove_reminder)
                 R.drawable.baseline_notifications_active_24
             } else {
+                holder.reminderButton.contentDescription =
+                    context.getString(R.string.image_add_reminder)
                 R.drawable.baseline_notifications_none_24
             }
         )
 
         if (collapsedItems != position) {
             holder.collapseButton.setImageDrawable(context.getDrawable(R.drawable.baseline_expand_more_24))
+            holder.collapseButton.contentDescription = context.getString(R.string.image_expand)
 
             holder.viewButton.visibility = View.GONE
             holder.downloadButton.visibility = View.GONE
@@ -116,6 +125,7 @@ class CircularLetterAdapter(
             holder.attachmentsList.adapter = null
         } else {
             holder.collapseButton.setImageDrawable(context.getDrawable(R.drawable.baseline_expand_less_24))
+            holder.collapseButton.contentDescription = context.getString(R.string.image_collapse)
 
             holder.viewButton.visibility = View.VISIBLE
             holder.downloadButton.visibility = View.VISIBLE

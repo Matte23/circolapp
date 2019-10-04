@@ -52,4 +52,15 @@
     <string name="snackbar_circular_downloaded">La circolare sarà salvata nella cartella Download</string>
 
     <string name="snackbar_connection_not_available">Rete non disponibile. I risultati potrebbero non essere aggiornati</string>
+
+    <string name="image_view_attachment">Visualizza allegato</string>
+    <string name="image_download_attachment">Scarica allegato</string>
+    <string name="image_view_circular">Visualizza circolare</string>
+    <string name="image_download_circular">Scarica circolare</string>
+    <string name="image_add_favourite">Aggiungi ai preferiti</string>
+    <string name="image_add_reminder">Aggiungi promemoria</string>
+    <string name="image_remove_favourite">Rimuovi dai preferiti</string>
+    <string name="image_remove_reminder">Rimuovi promemoria</string>
+    <string name="image_expand">Espandi</string>
+    <string name="image_collapse">Compatta</string>
 </resources>
