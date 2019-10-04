@@ -47,7 +47,7 @@ interface CircularDao {
     @Query("SELECT * FROM circulars WHERE reminder AND name LIKE :query ORDER BY id DESC")
     fun searchReminders(query: String): LiveData<List<Circular>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(circulars: List<Circular>)
 
     @Update
