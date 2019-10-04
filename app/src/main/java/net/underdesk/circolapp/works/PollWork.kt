@@ -27,8 +27,10 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.TaskStackBuilder
 import androidx.preference.PreferenceManager
 import androidx.work.*
+import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
@@ -132,13 +134,18 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
     }
 
     private fun createNotification(circular: Circular) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(Uri.parse(circular.url), "application/pdf").apply {
+        val mainIntent = Intent(applicationContext, MainActivity::class.java)
+        val viewIntent = Intent(Intent.ACTION_VIEW)
+        viewIntent.setDataAndType(Uri.parse(circular.url), "application/pdf").apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
-        val pendingIntent: PendingIntent =
-            PendingIntent.getActivity(applicationContext, 0, intent, 0)
+        val taskStackBuilder = TaskStackBuilder.create(applicationContext)
+        taskStackBuilder.addParentStack(MainActivity::class.java)
+        taskStackBuilder.addNextIntent(mainIntent)
+        taskStackBuilder.addNextIntent(viewIntent)
+
+        val pendingIntent = taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
