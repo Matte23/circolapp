@@ -38,7 +38,10 @@ data class Circular(
 ) : Parcelable {
     companion object {
         fun generateFromString(string: String, url: String): Circular {
-            val id = string.split(" ")[1]
+            val idRegex = """(\d+)"""
+            val matcherId = Pattern.compile(idRegex).matcher(string)
+            matcherId.find()
+            val id = matcherId.group(1)
 
             val dateRegex = """(\d{2}/\d{2}/\d{4})"""
             val matcherDate = Pattern.compile(dateRegex).matcher(string)
