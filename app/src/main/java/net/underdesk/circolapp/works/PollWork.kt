@@ -127,7 +127,6 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
                 notify(-1, summaryNotification)
             }
 
-            AppDatabase.getInstance(applicationContext).circularDao().deleteAll()
             AppDatabase.getInstance(applicationContext).circularDao().insertAll(newCirculars)
         }
         return Result.success()
