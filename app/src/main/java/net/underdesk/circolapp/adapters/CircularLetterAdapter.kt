@@ -138,6 +138,8 @@ class CircularLetterAdapter(
                     circulars[position].attachmentsNames,
                     circulars[position].attachmentsUrls
                 )
+            } else {
+                holder.attachmentsList.adapter = null
             }
         }
 
