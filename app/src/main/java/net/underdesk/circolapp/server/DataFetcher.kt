@@ -43,10 +43,10 @@ class DataFetcher {
         val list = ArrayList<Circular>()
 
         htmlList.forEach { element ->
-            if (element.text().startsWith("All", true)) {
+            if (element.parents().size == 6) {
                 list.last().attachmentsNames.add(element.text())
                 list.last().attachmentsUrls.add(element.attr("href"))
-            } else {
+            } else if (element.parents().size == 4) {
                 list.add(Circular.generateFromString(element.text(), element.attr("href")))
             }
         }
