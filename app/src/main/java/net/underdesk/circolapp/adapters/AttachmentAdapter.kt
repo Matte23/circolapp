@@ -28,6 +28,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_attachment.view.*
 import net.underdesk.circolapp.R
@@ -59,7 +60,22 @@ class AttachmentAdapter(
         holder.viewButton.setOnClickListener {
             val viewIntent = Intent(Intent.ACTION_VIEW)
             viewIntent.setDataAndType(Uri.parse(attachmentsUrls[position]), "application/pdf")
-            context.startActivity(viewIntent)
+            if (viewIntent.resolveActivity(context.packageManager) != null) {
+                context.startActivity(viewIntent)
+            } else {
+                val builder = AlertDialog.Builder(context)
+                builder.apply {
+                    setTitle(R.string.dialog_install_pdf_reader_title)
+                    setMessage(R.string.dialog_install_pdf_reader_content)
+                    setPositiveButton(
+                        R.string.dialog_ok
+                    ) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                }
+
+                builder.create().show()
+            }
         }
 
         holder.downloadButton.setOnClickListener {

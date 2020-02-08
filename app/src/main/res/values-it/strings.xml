@@ -45,6 +45,9 @@
     Le circolari sono scritte e pubblicate dal Liceo Scientifico Maria Curie di Pinerolo, e sono scaricate direttamente da https://curiepinerolo.edu.it/.\n
     Questi documenti sono rilasciati secondo la licenza "Attribution-NonCommercial-ShareAlike 3.0 Unported" (CC BY-NC-SA 3.0)(https://creativecommons.org/licenses/by-nc-sa/3.0/), come specificato in questa pagina: https://curiepinerolo.edu.it/note-legali/</string>
 
+    <string name="dialog_install_pdf_reader_title">Lettore PDF non installato</string>
+    <string name="dialog_install_pdf_reader_content">Installa un lettore di PDF per aprire le circolari</string>
+
     <string name="dialog_title_permission_required">Autorizzazioni richieste</string>
     <string name="dialog_message_permission_write">È necessaria la tua autorizzazione per salvare questa circolare nella memoria interna</string>
 

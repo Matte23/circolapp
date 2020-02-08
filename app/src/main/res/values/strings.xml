@@ -46,6 +46,9 @@
     Circulars letters are written by the Liceo Scientifico Maria Curie Pinerolo, and are downloaded directly from https://curiepinerolo.edu.it/.\n
     Those documents are released under the "Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)(https://creativecommons.org/licenses/by-nc-sa/3.0/), as specified in this page: https://curiepinerolo.edu.it/note-legali</string>
 
+    <string name="dialog_install_pdf_reader_title">PDF reader not found</string>
+    <string name="dialog_install_pdf_reader_content">Please install an external application to open circular letters</string>
+
     <string name="dialog_title_permission_required">Permission required</string>
     <string name="dialog_message_permission_write">We need your permission to save this circular letter to local storage</string>
 

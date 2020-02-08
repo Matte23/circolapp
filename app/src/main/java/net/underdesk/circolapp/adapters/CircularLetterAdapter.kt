@@ -146,7 +146,22 @@ class CircularLetterAdapter(
         holder.viewButton.setOnClickListener {
             val viewIntent = Intent(Intent.ACTION_VIEW)
             viewIntent.setDataAndType(Uri.parse(circulars[position].url), "application/pdf")
-            context.startActivity(viewIntent)
+            if (viewIntent.resolveActivity(context.packageManager) != null) {
+                context.startActivity(viewIntent)
+            } else {
+                val builder = AlertDialog.Builder(context)
+                builder.apply {
+                    setTitle(R.string.dialog_install_pdf_reader_title)
+                    setMessage(R.string.dialog_install_pdf_reader_content)
+                    setPositiveButton(
+                        R.string.dialog_ok
+                    ) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                }
+
+                builder.create().show()
+            }
         }
 
         holder.downloadButton.setOnClickListener {
