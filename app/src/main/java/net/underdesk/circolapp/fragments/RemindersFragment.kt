@@ -48,7 +48,7 @@ class RemindersFragment : Fragment(), MainActivity.SearchCallback {
 
         remindersViewModel =
             ViewModelProviders.of(this).get(RemindersViewModel::class.java)
-        remindersViewModel.circulars.observe(this, Observer {
+        remindersViewModel.circulars.observe(viewLifecycleOwner, Observer {
             if (root.circulars_list.adapter == null) {
                 root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
             } else {

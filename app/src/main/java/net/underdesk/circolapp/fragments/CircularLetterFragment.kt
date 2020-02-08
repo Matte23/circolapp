@@ -51,14 +51,14 @@ class CircularLetterFragment : Fragment(), MainActivity.SearchCallback,
 
         circularLetterViewModel =
             ViewModelProviders.of(this).get(CircularLetterViewModel::class.java)
-        circularLetterViewModel.circulars.observe(this, Observer {
+        circularLetterViewModel.circulars.observe(viewLifecycleOwner, Observer {
             if (root.circulars_list.adapter == null) {
                 root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
             } else {
                 (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
             }
         })
-        circularLetterViewModel.showMessage.observe(this, Observer {
+        circularLetterViewModel.showMessage.observe(viewLifecycleOwner, Observer {
             if (it) activity?.findViewById<ConstraintLayout>(R.id.container)?.let { view ->
                 Snackbar.make(
                     view,
@@ -69,7 +69,7 @@ class CircularLetterFragment : Fragment(), MainActivity.SearchCallback,
                 circularLetterViewModel.showMessage.postValue(false)
             }
         })
-        circularLetterViewModel.circularsUpdated.observe(this, Observer {
+        circularLetterViewModel.circularsUpdated.observe(viewLifecycleOwner, Observer {
             if (it) {
                 root.circulars_refresh.isRefreshing = false
 
