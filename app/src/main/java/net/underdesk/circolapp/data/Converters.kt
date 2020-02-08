@@ -27,7 +27,7 @@ class Converters {
         val list: MutableList<String> = mutableListOf()
 
         if (data != null) {
-            for (attachment in data.split(",")) {
+            for (attachment in data.split("˜")) {
                 list.add(attachment)
             }
         }
@@ -40,7 +40,7 @@ class Converters {
         var string = ""
 
         for (attachment in list) {
-            string += "$attachment,"
+            string += "$attachment˜"
         }
 
         return string
