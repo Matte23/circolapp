@@ -19,6 +19,8 @@
 package net.underdesk.circolapp.server
 
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.server.pojo.Response
 import org.jsoup.Jsoup
@@ -34,49 +36,53 @@ class DataFetcher {
     }
 
     @Throws(IOException::class)
-    fun getCircularsFromServer(): List<Circular> {
-        val json = gson.fromJson(retrieveDataFromServer(), Response::class.java)
+    suspend fun getCircularsFromServer(): List<Circular> {
+        return withContext(Dispatchers.Default) {
+            val json = gson.fromJson(retrieveDataFromServer(), Response::class.java)
 
-        val document = Jsoup.parseBodyFragment(json.content!!.rendered)
-        val htmlList = document.getElementsByTag("ul")[0].getElementsByTag("a")
+            val document = Jsoup.parseBodyFragment(json.content!!.rendered)
+            val htmlList = document.getElementsByTag("ul")[0].getElementsByTag("a")
 
-        val list = ArrayList<Circular>()
+            val list = ArrayList<Circular>()
 
-        htmlList.forEach { element ->
-            if (element.parents().size == 6) {
-                list.last().attachmentsNames.add(element.text())
-                list.last().attachmentsUrls.add(element.attr("href"))
-            } else if (element.parents().size == 4) {
-                list.add(Circular.generateFromString(element.text(), element.attr("href")))
+            htmlList.forEach { element ->
+                if (element.parents().size == 6) {
+                    list.last().attachmentsNames.add(element.text())
+                    list.last().attachmentsUrls.add(element.attr("href"))
+                } else if (element.parents().size == 4) {
+                    list.add(Circular.generateFromString(element.text(), element.attr("href")))
+                }
             }
-        }
 
-        return list
+            list
+        }
     }
 
     @Throws(IOException::class)
-    fun retrieveDataFromServer(): String? {
+    private suspend fun retrieveDataFromServer(): String? {
         var connection: HttpsURLConnection? = null
-        return try {
-            connection = (URL(ENDPOINT_URL).openConnection() as? HttpsURLConnection)
-            connection?.run {
-                // Set GET HTTP method
-                requestMethod = "GET"
 
-                setRequestProperty("Accept-Encoding", "none")
+        return withContext(Dispatchers.IO) {
+            try {
+                connection = (URL(ENDPOINT_URL).openConnection() as? HttpsURLConnection)
+                connection?.run {
+                    // Set GET HTTP method
+                    requestMethod = "GET"
 
-                connect()
-                if (responseCode != HttpsURLConnection.HTTP_OK) {
-                    throw IOException("HTTP error code: $responseCode")
+                    setRequestProperty("Accept-Encoding", "none")
+
+                    connect()
+                    if (responseCode != HttpsURLConnection.HTTP_OK) {
+                        throw IOException("HTTP error code: $responseCode")
+                    }
+
+                    inputStream?.reader()?.readText()
                 }
-
-                inputStream?.reader()?.readText()
+            } finally {
+                // Close Stream and disconnect HTTPS connection.
+                connection?.inputStream?.close()
+                connection?.disconnect()
             }
-        } finally {
-            // Close Stream and disconnect HTTPS connection.
-            connection?.inputStream?.close()
-            connection?.disconnect()
         }
-
     }
 }

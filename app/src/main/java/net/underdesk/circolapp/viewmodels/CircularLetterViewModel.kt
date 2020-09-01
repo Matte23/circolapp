@@ -19,10 +19,8 @@
 package net.underdesk.circolapp.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.server.DataFetcher
@@ -48,25 +46,23 @@ class CircularLetterViewModel(application: Application) : AndroidViewModel(appli
 
     fun updateCirculars() {
         if (isNotUpdating) {
-            object : Thread() {
-                override fun run() {
-                    isNotUpdating = false
-                    val fetcher = DataFetcher()
+            viewModelScope.launch {
+                isNotUpdating = false
+                val fetcher = DataFetcher()
 
-                    try {
-                        val newCirculars = fetcher.getCircularsFromServer()
-                        if (newCirculars.size != circulars.value?.size ?: true) {
-                            AppDatabase.getInstance(getApplication()).circularDao()
-                                .insertAll(newCirculars)
-                        }
-                    } catch (exception: IOException) {
-                        showMessage.postValue(true)
-                    } finally {
-                        isNotUpdating = true
-                        circularsUpdated.postValue(true)
+                try {
+                    val newCirculars = fetcher.getCircularsFromServer()
+                    if (newCirculars.size != circulars.value?.size ?: true) {
+                        AppDatabase.getInstance(getApplication()).circularDao()
+                            .insertAll(newCirculars)
                     }
+                } catch (exception: IOException) {
+                    showMessage.postValue(true)
+                } finally {
+                    isNotUpdating = true
+                    circularsUpdated.postValue(true)
                 }
-            }.start()
+            }
         }
     }
 }
