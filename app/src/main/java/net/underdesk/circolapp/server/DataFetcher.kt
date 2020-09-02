@@ -18,7 +18,7 @@
 
 package net.underdesk.circolapp.server
 
-import com.google.gson.Gson
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.underdesk.circolapp.data.Circular
@@ -32,16 +32,17 @@ class DataFetcher {
     companion object {
         const val ENDPOINT_URL = "https://www.curiepinerolo.edu.it/wp-json/wp/v2/pages/5958"
 
-        val gson = Gson()
-        val client = OkHttpClient()
+        private val moshi = Moshi.Builder().build()
+        private val responseAdapter = moshi.adapter(Response::class.java)
+        private val client = OkHttpClient()
     }
 
     @Throws(IOException::class)
     suspend fun getCircularsFromServer(): List<Circular> {
         return withContext(Dispatchers.Default) {
-            val json = gson.fromJson(retrieveDataFromServer(), Response::class.java)
+            val json = retrieveDataFromServer()
 
-            val document = Jsoup.parseBodyFragment(json.content!!.rendered)
+            val document = Jsoup.parseBodyFragment(json.content.rendered)
             val htmlList = document.getElementsByTag("ul")[0].getElementsByTag("a")
 
             val list = ArrayList<Circular>()
@@ -54,13 +55,12 @@ class DataFetcher {
                     list.add(Circular.generateFromString(element.text(), element.attr("href")))
                 }
             }
-
             list
         }
     }
 
     @Throws(IOException::class)
-    private suspend fun retrieveDataFromServer(): String? {
+    private suspend fun retrieveDataFromServer(): Response {
         val request = Request.Builder()
             .url(ENDPOINT_URL)
             .build()
@@ -72,7 +72,9 @@ class DataFetcher {
                 throw IOException("HTTP error code: ${response.code})")
             }
 
-            response.body?.string()
+            responseAdapter.fromJson(
+                response.body!!.string()
+            )!!
         }
     }
 }
