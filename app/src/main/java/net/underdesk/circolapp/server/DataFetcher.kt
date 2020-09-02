@@ -23,16 +23,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.server.pojo.Response
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.jsoup.Jsoup
 import java.io.IOException
-import java.net.URL
-import javax.net.ssl.HttpsURLConnection
 
 class DataFetcher {
     companion object {
         const val ENDPOINT_URL = "https://www.curiepinerolo.edu.it/wp-json/wp/v2/pages/5958"
 
         val gson = Gson()
+        val client = OkHttpClient()
     }
 
     @Throws(IOException::class)
@@ -60,29 +61,18 @@ class DataFetcher {
 
     @Throws(IOException::class)
     private suspend fun retrieveDataFromServer(): String? {
-        var connection: HttpsURLConnection? = null
+        val request = Request.Builder()
+            .url(ENDPOINT_URL)
+            .build()
 
         return withContext(Dispatchers.IO) {
-            try {
-                connection = (URL(ENDPOINT_URL).openConnection() as? HttpsURLConnection)
-                connection?.run {
-                    // Set GET HTTP method
-                    requestMethod = "GET"
+            val response = client.newCall(request).execute()
 
-                    setRequestProperty("Accept-Encoding", "none")
-
-                    connect()
-                    if (responseCode != HttpsURLConnection.HTTP_OK) {
-                        throw IOException("HTTP error code: $responseCode")
-                    }
-
-                    inputStream?.reader()?.readText()
-                }
-            } finally {
-                // Close Stream and disconnect HTTPS connection.
-                connection?.inputStream?.close()
-                connection?.disconnect()
+            if (!response.isSuccessful) {
+                throw IOException("HTTP error code: ${response.code})")
             }
+
+            response.body?.string()
         }
     }
 }
