@@ -100,6 +100,9 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
             }
 
             if (newCirculars.size != oldCirculars.size) {
+                val oldCircularsSize =
+                    if (newCirculars.size < oldCirculars.size) 0 else oldCirculars.size
+
                 withContext(Dispatchers.Main) {
                     createNotificationChannel()
 
@@ -107,7 +110,7 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
                         .setBigContentTitle(applicationContext.getString(R.string.notification_summary_title))
                         .setSummaryText(applicationContext.getString(R.string.notification_summary))
 
-                    val circularCount = newCirculars.size - oldCirculars.size
+                    val circularCount = newCirculars.size - oldCircularsSize
 
                     for (i in 0 until circularCount) {
                         createNotification(newCirculars[i])
@@ -133,6 +136,11 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
                     with(NotificationManagerCompat.from(applicationContext)) {
                         notify(-1, summaryNotification)
                     }
+                }
+
+                if (newCirculars.size < oldCirculars.size) {
+                    AppDatabase.getInstance(applicationContext).circularDao()
+                        .deleteAll()
                 }
 
                 AppDatabase.getInstance(applicationContext).circularDao()

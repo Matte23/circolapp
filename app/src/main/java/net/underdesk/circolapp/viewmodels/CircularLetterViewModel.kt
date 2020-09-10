@@ -56,6 +56,11 @@ class CircularLetterViewModel(application: Application) : AndroidViewModel(appli
                     withContext(Dispatchers.IO) {
                         val newCirculars = fetcher.getCircularsFromServer()
                         if (newCirculars.size != circulars.value?.size ?: true) {
+                            if (newCirculars.size < circulars.value?.size ?: 0) {
+                                AppDatabase.getInstance(getApplication()).circularDao()
+                                    .deleteAll()
+                            }
+
                             AppDatabase.getInstance(getApplication()).circularDao()
                                 .insertAll(newCirculars)
                         }
