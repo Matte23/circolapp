@@ -20,7 +20,9 @@ package net.underdesk.circolapp.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.server.DataFetcher
@@ -51,10 +53,12 @@ class CircularLetterViewModel(application: Application) : AndroidViewModel(appli
                 val fetcher = DataFetcher()
 
                 try {
-                    val newCirculars = fetcher.getCircularsFromServer()
-                    if (newCirculars.size != circulars.value?.size ?: true) {
-                        AppDatabase.getInstance(getApplication()).circularDao()
-                            .insertAll(newCirculars)
+                    withContext(Dispatchers.IO) {
+                        val newCirculars = fetcher.getCircularsFromServer()
+                        if (newCirculars.size != circulars.value?.size ?: true) {
+                            AppDatabase.getInstance(getApplication()).circularDao()
+                                .insertAll(newCirculars)
+                        }
                     }
                 } catch (exception: IOException) {
                     showMessage.postValue(true)
