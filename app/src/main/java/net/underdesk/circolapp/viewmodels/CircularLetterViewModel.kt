@@ -33,7 +33,7 @@ class CircularLetterViewModel(application: Application) : AndroidViewModel(appli
         updateCirculars()
     }
 
-    val query = MutableLiveData<String>("")
+    val query = MutableLiveData("")
     val circulars: LiveData<List<Circular>> = Transformations.switchMap(query) { input ->
         if (input == null || input == "") {
             AppDatabase.getInstance(getApplication()).circularDao().getLiveCirculars()

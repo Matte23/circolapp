@@ -23,8 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_circular_letters.view.*
 import net.underdesk.circolapp.MainActivity
@@ -34,7 +33,7 @@ import net.underdesk.circolapp.viewmodels.FavouritesViewModel
 
 class FavouritesFragment : Fragment(), MainActivity.SearchCallback {
 
-    private lateinit var favouritesViewModel: FavouritesViewModel
+    private val favouritesViewModel by viewModels<FavouritesViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,9 +45,7 @@ class FavouritesFragment : Fragment(), MainActivity.SearchCallback {
         root.circulars_list.layoutManager = LinearLayoutManager(context)
         root.circulars_refresh.isEnabled = false
 
-        favouritesViewModel =
-            ViewModelProviders.of(this).get(FavouritesViewModel::class.java)
-        favouritesViewModel.circulars.observe(viewLifecycleOwner, Observer {
+        favouritesViewModel.circulars.observe(viewLifecycleOwner, {
             if (root.circulars_list.adapter == null) {
                 root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
             } else {

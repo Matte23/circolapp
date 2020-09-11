@@ -24,8 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_circular_letters.*
@@ -38,7 +37,7 @@ import net.underdesk.circolapp.viewmodels.CircularLetterViewModel
 class CircularLetterFragment : Fragment(), MainActivity.SearchCallback,
     MainActivity.RefreshCallback {
 
-    private lateinit var circularLetterViewModel: CircularLetterViewModel
+    private val circularLetterViewModel by viewModels<CircularLetterViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,16 +48,14 @@ class CircularLetterFragment : Fragment(), MainActivity.SearchCallback,
 
         root.circulars_list.layoutManager = LinearLayoutManager(context)
 
-        circularLetterViewModel =
-            ViewModelProviders.of(this).get(CircularLetterViewModel::class.java)
-        circularLetterViewModel.circulars.observe(viewLifecycleOwner, Observer {
+        circularLetterViewModel.circulars.observe(viewLifecycleOwner, {
             if (root.circulars_list.adapter == null) {
                 root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
             } else {
                 (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
             }
         })
-        circularLetterViewModel.showMessage.observe(viewLifecycleOwner, Observer {
+        circularLetterViewModel.showMessage.observe(viewLifecycleOwner, {
             if (it) activity?.findViewById<ConstraintLayout>(R.id.container)?.let { view ->
                 Snackbar.make(
                     view,
@@ -69,7 +66,7 @@ class CircularLetterFragment : Fragment(), MainActivity.SearchCallback,
                 circularLetterViewModel.showMessage.postValue(false)
             }
         })
-        circularLetterViewModel.circularsUpdated.observe(viewLifecycleOwner, Observer {
+        circularLetterViewModel.circularsUpdated.observe(viewLifecycleOwner, {
             if (it) {
                 root.circulars_refresh.isRefreshing = false
 

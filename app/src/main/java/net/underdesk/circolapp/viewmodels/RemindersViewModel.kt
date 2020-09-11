@@ -27,7 +27,7 @@ import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 
 class RemindersViewModel(application: Application) : AndroidViewModel(application) {
-    val query = MutableLiveData<String>("")
+    val query = MutableLiveData("")
     val circulars: LiveData<List<Circular>> = Transformations.switchMap(query) { input ->
         if (input == null || input == "") {
             AppDatabase.getInstance(getApplication()).circularDao().getReminders()

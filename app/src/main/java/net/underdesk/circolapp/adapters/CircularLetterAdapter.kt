@@ -34,6 +34,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -113,7 +114,12 @@ class CircularLetterAdapter(
         )
 
         if (collapsedItems != position) {
-            holder.collapseButton.setImageDrawable(context.getDrawable(R.drawable.baseline_expand_more_24))
+            holder.collapseButton.setImageDrawable(
+                getDrawable(
+                    context,
+                    R.drawable.baseline_expand_more_24
+                )
+            )
             holder.collapseButton.contentDescription = context.getString(R.string.image_expand)
 
             holder.viewButton.visibility = View.GONE
@@ -124,7 +130,12 @@ class CircularLetterAdapter(
             holder.attachmentsList.visibility = View.GONE
             holder.attachmentsList.adapter = null
         } else {
-            holder.collapseButton.setImageDrawable(context.getDrawable(R.drawable.baseline_expand_less_24))
+            holder.collapseButton.setImageDrawable(
+                getDrawable(
+                    context,
+                    R.drawable.baseline_expand_less_24
+                )
+            )
             holder.collapseButton.contentDescription = context.getString(R.string.image_collapse)
 
             holder.viewButton.visibility = View.VISIBLE
