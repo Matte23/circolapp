@@ -27,7 +27,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
@@ -38,6 +37,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.mikepenz.aboutlibraries.LibsBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
 import net.underdesk.circolapp.data.Circular
@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         loadDarkTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(main_toolbar)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         PollWork.enqueue(this)
 
         if (getPreferences(Context.MODE_PRIVATE).getBoolean("first_start", true)) {
-            showInfoDialog()
+            startInfoActivity()
 
             getPreferences(Context.MODE_PRIVATE).edit().apply {
                 putBoolean("first_start", false)
@@ -116,7 +117,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
                 true
             }
             R.id.menu_main_about -> {
-                showInfoDialog()
+                startInfoActivity()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -161,24 +162,17 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         ).show()
     }
 
-    private fun showInfoDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.apply {
-            setTitle(R.string.dialog_info_title)
-            setMessage(R.string.dialog_info_content)
-            setPositiveButton(
-                R.string.dialog_ok
-            ) { dialog, _ ->
-                dialog.dismiss()
-            }
-            setNeutralButton(
-                R.string.dialog_licenses
-            ) { _, _ ->
-                startActivity(Intent(this@MainActivity, LicensesActivity::class.java))
-            }
-        }
-
-        builder.create().show()
+    private fun startInfoActivity() {
+        LibsBuilder()
+            .withAboutAppName(getString(R.string.app_name))
+            .withAboutDescription(getString(R.string.activity_info_content))
+            .withActivityTitle(getString(R.string.activity_info_title))
+            .withAboutSpecial1(getString(R.string.activity_info_license))
+            .withAboutSpecial1Description(getString(R.string.activity_info_license_description))
+            .withAboutSpecial2(getString(R.string.activity_info_source_code))
+            .withAboutSpecial2Description(getString(R.string.activity_info_source_code_description))
+            .withLicenseShown(true)
+            .start(this@MainActivity)
     }
 
     private fun loadDarkTheme() {

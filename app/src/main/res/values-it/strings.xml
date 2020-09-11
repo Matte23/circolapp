@@ -3,7 +3,6 @@
     <string name="title_circular_letters">Circolari</string>
     <string name="title_favourites">Preferiti</string>
     <string name="title_reminders">Promemoria</string>
-    <string name="title_licenses">Licenze di terze parti</string>
     <string name="title_settings">Impostazioni</string>
 
     <string name="menu_about">Informazioni</string>
@@ -37,13 +36,15 @@
     <string name="dialog_next">Avanti</string>
     <string name="dialog_back">Indietro</string>
     <string name="dialog_cancel">Annulla</string>
-    <string name="dialog_licenses">Mostra licenze di terze parti</string>
 
-    <string name="dialog_info_title">Informazioni su Circolapp</string>
-    <string name="dialog_info_content">Circolapp è rilasciata secondo la licenza GPL v3 (https://github.com/Matte23/circolapp/blob/master/LICENSE):\n\n
-    © 2019 - 2020  Matteo Schiff\nQuesto programma è rilasciato SENZA ALCUNA GARANZIA E SENZA ALCUNA RESPONSABILITÀ A CARICO DELLO SVILUPPATORE.\nQuesto è software libero, e sei invitato a condividerlo nei termini della licenza. \n\n
-    Le circolari sono scritte e pubblicate dal Liceo Scientifico Maria Curie di Pinerolo, e sono scaricate direttamente da https://curiepinerolo.edu.it/.\n
-    Questi documenti sono rilasciati secondo la licenza "Attribution-NonCommercial-ShareAlike 3.0 Unported" (CC BY-NC-SA 3.0)(https://creativecommons.org/licenses/by-nc-sa/3.0/), come specificato in questa pagina: https://curiepinerolo.edu.it/note-legali/</string>
+    <string name="activity_info_title">Informazioni su Circolapp</string>
+    <string name="activity_info_content">Le circolari sono scritte e pubblicate dal Liceo Scientifico Maria Curie di Pinerolo, e sono scaricate direttamente da &lt;a href="https://curiepinerolo.edu.it/"&gt;https://curiepinerolo.edu.it/&lt;/a&gt;.&lt;br /&gt;
+    Questi documenti sono rilasciati secondo la licenza &lt;a href="https://creativecommons.org/licenses/by-nc-sa/3.0/"&gt; &lt;i&gt;Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)&lt;/i&gt;&lt;/a&gt;, come specificato in questa pagina: &lt;a href="https://curiepinerolo.edu.it/note-legali/"&gt;https://curiepinerolo.edu.it/note-legali/&lt;/a&gt;</string>
+    <string name="activity_info_license">Licenza</string>
+    <string name="activity_info_license_description">Circolapp è rilasciata secondo la licenza GPL v3 (&lt;a href="https://github.com/Matte23/circolapp/blob/master/LICENSE"&gt;https://github.com/Matte23/circolapp/blob/master/LICENSE&lt;/a&gt;):&lt;br /&gt;&lt;br /&gt;
+    © 2019 - 2020  Matteo Schiff&lt;br /&gt;Questo programma è rilasciato SENZA ALCUNA GARANZIA E SENZA ALCUNA RESPONSABILITÀ A CARICO DELLO SVILUPPATORE.&lt;br /&gt;Questo è software libero, e sei invitato a condividerlo nei termini della licenza</string>
+    <string name="activity_info_source_code">Codice sorgente</string>
+    <string name="activity_info_source_code_description">Puoi scaricare il codice sorgente da &lt;a href="https://github.com/Matte23/circolapp"&gt;https://github.com/Matte23/circolapp&lt;/a&gt;</string>
 
     <string name="dialog_install_pdf_reader_title">Lettore PDF non installato</string>
     <string name="dialog_install_pdf_reader_content">Installa un lettore di PDF per aprire le circolari</string>
