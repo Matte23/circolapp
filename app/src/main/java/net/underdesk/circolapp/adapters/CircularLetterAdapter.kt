@@ -46,7 +46,6 @@ import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.fragments.NewReminderFragment
 
-
 class CircularLetterAdapter(
     private var circulars: List<Circular>,
     private val adapterCallback: AdapterCallback
@@ -199,7 +198,6 @@ class CircularLetterAdapter(
                             MainActivity.PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE
                         )
                     }
-
                 }
 
                 builder.create().show()

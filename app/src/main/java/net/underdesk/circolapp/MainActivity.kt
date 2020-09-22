@@ -100,7 +100,8 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
                     searchCallback?.search(query)
                     return false
                 }
-            })
+            }
+        )
 
         return true
     }
@@ -126,7 +127,8 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String>, grantResults: IntArray
+        permissions: Array<String>,
+        grantResults: IntArray
     ) {
         when (requestCode) {
             PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE -> {

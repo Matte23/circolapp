@@ -45,13 +45,17 @@ class FavouritesFragment : Fragment(), MainActivity.SearchCallback {
         root.circulars_list.layoutManager = LinearLayoutManager(context)
         root.circulars_refresh.isEnabled = false
 
-        favouritesViewModel.circulars.observe(viewLifecycleOwner, {
-            if (root.circulars_list.adapter == null) {
-                root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
-            } else {
-                (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
+        favouritesViewModel.circulars.observe(
+            viewLifecycleOwner,
+            {
+                if (root.circulars_list.adapter == null) {
+                    root.circulars_list.adapter =
+                        CircularLetterAdapter(it, activity as MainActivity)
+                } else {
+                    (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
+                }
             }
-        })
+        )
 
         (activity as MainActivity).searchCallback = this
         (activity as MainActivity).refreshCallback = null

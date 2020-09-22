@@ -34,7 +34,9 @@ import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
 import net.underdesk.circolapp.viewmodels.CircularLetterViewModel
 
-class CircularLetterFragment : Fragment(), MainActivity.SearchCallback,
+class CircularLetterFragment :
+    Fragment(),
+    MainActivity.SearchCallback,
     MainActivity.RefreshCallback {
 
     private val circularLetterViewModel by viewModels<CircularLetterViewModel>()
@@ -48,31 +50,41 @@ class CircularLetterFragment : Fragment(), MainActivity.SearchCallback,
 
         root.circulars_list.layoutManager = LinearLayoutManager(context)
 
-        circularLetterViewModel.circulars.observe(viewLifecycleOwner, {
-            if (root.circulars_list.adapter == null) {
-                root.circulars_list.adapter = CircularLetterAdapter(it, activity as MainActivity)
-            } else {
-                (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
+        circularLetterViewModel.circulars.observe(
+            viewLifecycleOwner,
+            {
+                if (root.circulars_list.adapter == null) {
+                    root.circulars_list.adapter =
+                        CircularLetterAdapter(it, activity as MainActivity)
+                } else {
+                    (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
+                }
             }
-        })
-        circularLetterViewModel.showMessage.observe(viewLifecycleOwner, {
-            if (it) activity?.findViewById<ConstraintLayout>(R.id.container)?.let { view ->
-                Snackbar.make(
-                    view,
-                    getString(R.string.snackbar_connection_not_available),
-                    Snackbar.LENGTH_LONG
-                ).show()
+        )
+        circularLetterViewModel.showMessage.observe(
+            viewLifecycleOwner,
+            {
+                if (it) activity?.findViewById<ConstraintLayout>(R.id.container)?.let { view ->
+                    Snackbar.make(
+                        view,
+                        getString(R.string.snackbar_connection_not_available),
+                        Snackbar.LENGTH_LONG
+                    ).show()
 
-                circularLetterViewModel.showMessage.postValue(false)
+                    circularLetterViewModel.showMessage.postValue(false)
+                }
             }
-        })
-        circularLetterViewModel.circularsUpdated.observe(viewLifecycleOwner, {
-            if (it) {
-                root.circulars_refresh.isRefreshing = false
+        )
+        circularLetterViewModel.circularsUpdated.observe(
+            viewLifecycleOwner,
+            {
+                if (it) {
+                    root.circulars_refresh.isRefreshing = false
 
-                circularLetterViewModel.showMessage.postValue(false)
+                    circularLetterViewModel.showMessage.postValue(false)
+                }
             }
-        })
+        )
 
         root.circulars_refresh.setOnRefreshListener { circularLetterViewModel.updateCirculars() }
 

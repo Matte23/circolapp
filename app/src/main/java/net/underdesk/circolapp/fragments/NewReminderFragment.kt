@@ -36,7 +36,6 @@ import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 import java.util.*
 
-
 class NewReminderFragment : DialogFragment() {
 
     companion object {

@@ -41,7 +41,6 @@ import net.underdesk.circolapp.server.DataFetcher
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-
 class PollWork(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
@@ -196,5 +195,4 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
             notificationManager.createNotificationChannel(channel)
         }
     }
-
 }

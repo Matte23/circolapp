@@ -46,4 +46,3 @@ class Converters {
         return string
     }
 }
-

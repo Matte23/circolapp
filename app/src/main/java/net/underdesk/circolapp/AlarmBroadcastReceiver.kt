@@ -45,7 +45,8 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
                 createNotificationChannel(context)
                 val circular = AppDatabase.getInstance(context).circularDao().getCircular(
                     intent.getLongExtra(
-                        CIRCULAR_ID, 0
+                        CIRCULAR_ID,
+                        0
                     )
                 )
                 createNotification(
