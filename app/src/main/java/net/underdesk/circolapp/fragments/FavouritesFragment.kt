@@ -31,6 +31,7 @@ import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.CircularRepository
+import net.underdesk.circolapp.server.ServerAPI
 import net.underdesk.circolapp.viewmodels.FavouritesViewModel
 import net.underdesk.circolapp.viewmodels.FavouritesViewModelFactory
 
@@ -39,7 +40,8 @@ class FavouritesFragment : Fragment(), MainActivity.SearchCallback {
     private val favouritesViewModel: FavouritesViewModel by viewModels {
         FavouritesViewModelFactory(
             CircularRepository.getInstance(
-                AppDatabase.getInstance(requireContext()).circularDao()
+                AppDatabase.getInstance(requireContext()).circularDao(),
+                ServerAPI.getInstance(ServerAPI.Companion.Servers.CURIE)
             )
         )
     }

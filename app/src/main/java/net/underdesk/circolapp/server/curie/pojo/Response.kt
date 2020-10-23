@@ -1,4 +1,4 @@
-package net.underdesk.circolapp.server.pojo
+package net.underdesk.circolapp.server.curie.pojo
 
 import com.squareup.moshi.JsonClass
 

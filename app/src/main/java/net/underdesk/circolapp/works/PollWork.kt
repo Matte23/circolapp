@@ -36,6 +36,7 @@ import net.underdesk.circolapp.R
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.data.CircularRepository
+import net.underdesk.circolapp.server.ServerAPI
 import java.util.concurrent.TimeUnit
 
 class PollWork(appContext: Context, workerParams: WorkerParameters) :
@@ -85,7 +86,8 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
 
     override suspend fun doWork(): Result = coroutineScope {
         val circularRepository = CircularRepository.getInstance(
-            AppDatabase.getInstance(applicationContext).circularDao()
+            AppDatabase.getInstance(applicationContext).circularDao(),
+            ServerAPI.getInstance(ServerAPI.Companion.Servers.CURIE)
         )
 
         val result = circularRepository.updateCirculars()
