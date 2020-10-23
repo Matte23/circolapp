@@ -177,12 +177,12 @@ class CircularLetterAdapter(
         holder.downloadButton.setOnClickListener {
             adapterCallback.circularToDownload = circulars[position]
 
-            if (ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-                != PackageManager.PERMISSION_GRANTED
-            ) {
+            val permission = ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
 
                 val builder = AlertDialog.Builder(context)
 
