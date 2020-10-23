@@ -29,11 +29,20 @@ import kotlinx.android.synthetic.main.fragment_circular_letters.view.*
 import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
+import net.underdesk.circolapp.data.AppDatabase
+import net.underdesk.circolapp.data.CircularRepository
 import net.underdesk.circolapp.viewmodels.RemindersViewModel
+import net.underdesk.circolapp.viewmodels.RemindersViewModelFactory
 
 class RemindersFragment : Fragment(), MainActivity.SearchCallback {
 
-    private val remindersViewModel by viewModels<RemindersViewModel>()
+    private val remindersViewModel: RemindersViewModel by viewModels {
+        RemindersViewModelFactory(
+            CircularRepository.getInstance(
+                AppDatabase.getInstance(requireContext()).circularDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

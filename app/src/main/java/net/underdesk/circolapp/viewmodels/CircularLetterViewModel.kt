@@ -18,17 +18,14 @@
 
 package net.underdesk.circolapp.viewmodels
 
-import android.app.Application
 import androidx.lifecycle.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
-import net.underdesk.circolapp.server.DataFetcher
-import java.io.IOException
+import net.underdesk.circolapp.data.CircularRepository
 
-class CircularLetterViewModel(application: Application) : AndroidViewModel(application) {
+class CircularLetterViewModel internal constructor(
+    private val circularRepository: CircularRepository
+) : ViewModel() {
     init {
         updateCirculars()
     }
@@ -36,9 +33,9 @@ class CircularLetterViewModel(application: Application) : AndroidViewModel(appli
     val query = MutableLiveData("")
     val circulars: LiveData<List<Circular>> = Transformations.switchMap(query) { input ->
         if (input == null || input == "") {
-            AppDatabase.getInstance(getApplication()).circularDao().getLiveCirculars()
+            circularRepository.circularDao.getLiveCirculars()
         } else {
-            AppDatabase.getInstance(getApplication()).circularDao().searchCirculars("%$input%")
+            circularRepository.circularDao.searchCirculars("%$input%")
         }
     }
 
@@ -50,27 +47,13 @@ class CircularLetterViewModel(application: Application) : AndroidViewModel(appli
         if (isNotUpdating) {
             viewModelScope.launch {
                 isNotUpdating = false
-                val fetcher = DataFetcher()
 
-                try {
-                    withContext(Dispatchers.IO) {
-                        val newCirculars = fetcher.getCircularsFromServer()
-                        if (newCirculars.size != circulars.value?.size ?: true) {
-                            if (newCirculars.size < circulars.value?.size ?: 0) {
-                                AppDatabase.getInstance(getApplication()).circularDao()
-                                    .deleteAll()
-                            }
-
-                            AppDatabase.getInstance(getApplication()).circularDao()
-                                .insertAll(newCirculars)
-                        }
-                    }
-                } catch (exception: IOException) {
+                if (!circularRepository.updateCirculars(false).second) {
                     showMessage.postValue(true)
-                } finally {
-                    isNotUpdating = true
-                    circularsUpdated.postValue(true)
                 }
+
+                isNotUpdating = true
+                circularsUpdated.postValue(true)
             }
         }
     }

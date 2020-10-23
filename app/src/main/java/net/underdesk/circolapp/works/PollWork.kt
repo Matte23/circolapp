@@ -30,15 +30,12 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.preference.PreferenceManager
 import androidx.work.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
 import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
-import net.underdesk.circolapp.server.DataFetcher
-import java.io.IOException
+import net.underdesk.circolapp.data.CircularRepository
 import java.util.concurrent.TimeUnit
 
 class PollWork(appContext: Context, workerParams: WorkerParameters) :
@@ -87,66 +84,50 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
     }
 
     override suspend fun doWork(): Result = coroutineScope {
-        val fetcher = DataFetcher()
+        val circularRepository = CircularRepository.getInstance(
+            AppDatabase.getInstance(applicationContext).circularDao()
+        )
 
-        withContext(Dispatchers.IO) {
-            val oldCirculars =
-                AppDatabase.getInstance(applicationContext).circularDao().getCirculars()
-            val newCirculars = try {
-                fetcher.getCircularsFromServer()
-            } catch (exception: IOException) {
-                return@withContext Result.retry()
+        val result = circularRepository.updateCirculars()
+        if (!result.second)
+            return@coroutineScope Result.retry()
+
+        val newCirculars = result.first
+
+        if (newCirculars.isNotEmpty()) {
+            createNotificationChannel()
+
+            val summaryStyle = NotificationCompat.InboxStyle()
+                .setBigContentTitle(applicationContext.getString(R.string.notification_summary_title))
+                .setSummaryText(applicationContext.getString(R.string.notification_summary))
+
+            for (circular in newCirculars) {
+                createNotification(circular)
+                summaryStyle.addLine(circular.name)
             }
 
-            if (newCirculars.size != oldCirculars.size) {
-                val oldCircularsSize =
-                    if (newCirculars.size < oldCirculars.size) 0 else oldCirculars.size
+            val summaryNotification =
+                NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+                    .setContentTitle(applicationContext.getString(R.string.notification_summary_title))
+                    .setContentText(
+                        applicationContext.resources.getQuantityString(
+                            R.plurals.notification_summary_text,
+                            newCirculars.size,
+                            newCirculars.size
+                        )
+                    )
+                    .setSmallIcon(R.drawable.ic_notification)
+                    .setStyle(summaryStyle)
+                    .setGroup(CHANNEL_ID)
+                    .setGroupSummary(true)
+                    .build()
 
-                withContext(Dispatchers.Main) {
-                    createNotificationChannel()
-
-                    val summaryStyle = NotificationCompat.InboxStyle()
-                        .setBigContentTitle(applicationContext.getString(R.string.notification_summary_title))
-                        .setSummaryText(applicationContext.getString(R.string.notification_summary))
-
-                    val circularCount = newCirculars.size - oldCircularsSize
-
-                    for (i in 0 until circularCount) {
-                        createNotification(newCirculars[i])
-                        summaryStyle.addLine(newCirculars[i].name)
-                    }
-
-                    val summaryNotification =
-                        NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-                            .setContentTitle(applicationContext.getString(R.string.notification_summary_title))
-                            .setContentText(
-                                applicationContext.resources.getQuantityString(
-                                    R.plurals.notification_summary_text,
-                                    circularCount,
-                                    circularCount
-                                )
-                            )
-                            .setSmallIcon(R.drawable.ic_notification)
-                            .setStyle(summaryStyle)
-                            .setGroup(CHANNEL_ID)
-                            .setGroupSummary(true)
-                            .build()
-
-                    with(NotificationManagerCompat.from(applicationContext)) {
-                        notify(-1, summaryNotification)
-                    }
-                }
-
-                if (newCirculars.size < oldCirculars.size) {
-                    AppDatabase.getInstance(applicationContext).circularDao()
-                        .deleteAll()
-                }
-
-                AppDatabase.getInstance(applicationContext).circularDao()
-                    .insertAll(newCirculars)
+            with(NotificationManagerCompat.from(applicationContext)) {
+                notify(-1, summaryNotification)
             }
-            Result.success()
         }
+
+        Result.success()
     }
 
     private fun createNotification(circular: Circular) {

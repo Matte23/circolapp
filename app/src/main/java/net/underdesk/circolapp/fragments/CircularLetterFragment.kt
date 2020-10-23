@@ -32,14 +32,23 @@ import kotlinx.android.synthetic.main.fragment_circular_letters.view.*
 import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
+import net.underdesk.circolapp.data.AppDatabase
+import net.underdesk.circolapp.data.CircularRepository
 import net.underdesk.circolapp.viewmodels.CircularLetterViewModel
+import net.underdesk.circolapp.viewmodels.CircularLetterViewModelFactory
 
 class CircularLetterFragment :
     Fragment(),
     MainActivity.SearchCallback,
     MainActivity.RefreshCallback {
 
-    private val circularLetterViewModel by viewModels<CircularLetterViewModel>()
+    private val circularLetterViewModel: CircularLetterViewModel by viewModels {
+        CircularLetterViewModelFactory(
+            CircularRepository.getInstance(
+                AppDatabase.getInstance(requireContext()).circularDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

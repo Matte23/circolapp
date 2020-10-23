@@ -18,21 +18,22 @@
 
 package net.underdesk.circolapp.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import net.underdesk.circolapp.data.AppDatabase
+import androidx.lifecycle.ViewModel
 import net.underdesk.circolapp.data.Circular
+import net.underdesk.circolapp.data.CircularRepository
 
-class RemindersViewModel(application: Application) : AndroidViewModel(application) {
+class RemindersViewModel internal constructor(
+    private val circularRepository: CircularRepository
+) : ViewModel() {
     val query = MutableLiveData("")
     val circulars: LiveData<List<Circular>> = Transformations.switchMap(query) { input ->
         if (input == null || input == "") {
-            AppDatabase.getInstance(getApplication()).circularDao().getReminders()
+            circularRepository.circularDao.getReminders()
         } else {
-            AppDatabase.getInstance(getApplication()).circularDao().searchReminders("%$input%")
+            circularRepository.circularDao.searchReminders("%$input%")
         }
     }
 }
