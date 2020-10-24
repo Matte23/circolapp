@@ -41,7 +41,7 @@ class RemindersFragment : Fragment(), MainActivity.SearchCallback {
         RemindersViewModelFactory(
             CircularRepository.getInstance(
                 AppDatabase.getInstance(requireContext()).circularDao(),
-                ServerAPI.getInstance(ServerAPI.Companion.Servers.CURIE)
+                ServerAPI.getInstance(requireContext())
             )
         )
     }

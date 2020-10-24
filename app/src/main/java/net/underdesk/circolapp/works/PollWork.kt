@@ -87,7 +87,7 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
     override suspend fun doWork(): Result = coroutineScope {
         val circularRepository = CircularRepository.getInstance(
             AppDatabase.getInstance(applicationContext).circularDao(),
-            ServerAPI.getInstance(ServerAPI.Companion.Servers.CURIE)
+            ServerAPI.getInstance(applicationContext)
         )
 
         val result = circularRepository.updateCirculars()

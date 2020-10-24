@@ -41,7 +41,7 @@ class FavouritesFragment : Fragment(), MainActivity.SearchCallback {
         FavouritesViewModelFactory(
             CircularRepository.getInstance(
                 AppDatabase.getInstance(requireContext()).circularDao(),
-                ServerAPI.getInstance(ServerAPI.Companion.Servers.CURIE)
+                ServerAPI.getInstance(requireContext())
             )
         )
     }

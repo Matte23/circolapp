@@ -22,11 +22,9 @@ import android.os.Bundle
 import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.preference.EditTextPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
+import androidx.preference.*
 import kotlinx.android.synthetic.main.settings_activity.*
+import net.underdesk.circolapp.server.ServerAPI
 import net.underdesk.circolapp.works.PollWork
 
 class SettingsActivity : AppCompatActivity() {
@@ -46,8 +44,17 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
+            val schoolPreference = findPreference<ListPreference>("school")
+            schoolPreference?.let { setSchoolListPreference(it) }
+            val schoolPreferenceListener =
+                Preference.OnPreferenceChangeListener { _, value ->
+                    ServerAPI.changeServer(value.toString().toInt())
+                    true
+                }
+            schoolPreference?.onPreferenceChangeListener = schoolPreferenceListener
+
             val darkThemePreference = findPreference<Preference>("dark_theme")
-            val listener =
+            val themePreferenceListener =
                 Preference.OnPreferenceChangeListener { _, value ->
                     when (value) {
                         "auto" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
@@ -56,7 +63,7 @@ class SettingsActivity : AppCompatActivity() {
                     }
                     true
                 }
-            darkThemePreference?.onPreferenceChangeListener = listener
+            darkThemePreference?.onPreferenceChangeListener = themePreferenceListener
 
             val pollIntervalPreference = findPreference<EditTextPreference>("poll_interval")
             pollIntervalPreference?.setOnBindEditTextListener { editText ->
@@ -73,6 +80,21 @@ class SettingsActivity : AppCompatActivity() {
                 }
             pollIntervalPreference?.onPreferenceChangeListener = notificationPrefChangedListener
             notificationPreference?.onPreferenceChangeListener = notificationPrefChangedListener
+        }
+
+        private fun setSchoolListPreference(listPreference: ListPreference) {
+            val servers = ServerAPI.Companion.Servers.values()
+            val entryValues = arrayListOf<CharSequence>()
+            val entryNames = arrayListOf<CharSequence>()
+
+            for (i in servers.indices) {
+                entryValues.add(i.toString())
+                entryNames.add(ServerAPI.getServerName(servers[i]))
+            }
+
+            listPreference.setDefaultValue("0")
+            listPreference.entryValues = entryValues.toTypedArray()
+            listPreference.entries = entryNames.toTypedArray()
         }
     }
 }

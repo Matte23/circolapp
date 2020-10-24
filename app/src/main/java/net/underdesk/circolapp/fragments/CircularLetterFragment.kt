@@ -47,7 +47,7 @@ class CircularLetterFragment :
         CircularLetterViewModelFactory(
             CircularRepository.getInstance(
                 AppDatabase.getInstance(requireContext()).circularDao(),
-                ServerAPI.getInstance(ServerAPI.Companion.Servers.CURIE)
+                ServerAPI.getInstance(requireContext())
             )
         )
     }

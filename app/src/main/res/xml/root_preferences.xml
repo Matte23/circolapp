@@ -4,6 +4,11 @@
     <PreferenceCategory app:title="@string/preferences_general_header">
 
         <ListPreference
+            app:key="school"
+            app:title="@string/preferences_school"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
             app:defaultValue="auto"
             app:entries="@array/dark_theme_entries"
             app:entryValues="@array/dark_theme_values"

@@ -11,6 +11,7 @@
 
     <string name="preferences_general_header">Generale</string>
     <string name="preference_notifications_header">Notifiche</string>
+    <string name="preferences_school">Scuola</string>
     <string name="preferences_dark_theme">Tema scuro</string>
     <string name="preferences_notify_new_circulars">Mostra notifiche</string>
     <string name="preferences_poll_interval">Intervallo di sincronizzazione</string>
