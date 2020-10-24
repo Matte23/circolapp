@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.jsoup.Jsoup
 import java.io.IOException
+import java.util.regex.Pattern
 
 class CurieServer : Server() {
     private val moshi = Moshi.Builder().build()
@@ -32,7 +33,7 @@ class CurieServer : Server() {
                         list.last().attachmentsNames.add(element.text())
                         list.last().attachmentsUrls.add(element.attr("href"))
                     } else if (element.parents().size == 4) {
-                        list.add(Circular.generateFromString(element.text(), element.attr("href")))
+                        list.add(generateFromString(element.text(), element.attr("href")))
                     }
                 }
                 Pair(list, ServerAPI.Companion.Result.SUCCESS)
@@ -62,6 +63,31 @@ class CurieServer : Server() {
             responseAdapter.fromJson(
                 response.body!!.string()
             )!!
+        }
+    }
+
+    private fun generateFromString(string: String, url: String): Circular {
+        val idRegex =
+            """(\d+)"""
+        val matcherId = Pattern.compile(idRegex).matcher(string)
+        matcherId.find()
+        val id = matcherId.group(1)
+
+        val dateRegex =
+            """(\d{2}/\d{2}/\d{4})"""
+        val matcherDate = Pattern.compile(dateRegex).matcher(string)
+
+        var title = string.removeSuffix("-signed")
+
+        return if (matcherDate.find()) {
+            title = title.removeRange(0, matcherDate.end())
+                .removePrefix(" ")
+                .removePrefix("_")
+                .removePrefix(" ")
+
+            Circular(id.toLong(), title, url, matcherDate.group(1) ?: "")
+        } else {
+            Circular(id.toLong(), title, url, "")
         }
     }
 

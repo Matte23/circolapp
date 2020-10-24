@@ -20,6 +20,7 @@ package net.underdesk.circolapp.server
 
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.server.curie.CurieServer
+import net.underdesk.circolapp.server.porporato.PorporatoServer
 
 class ServerAPI(
     private val server: Server
@@ -57,7 +58,7 @@ class ServerAPI(
         private fun createServerAPI(server: Servers): ServerAPI {
             return when (server) {
                 Servers.CURIE -> ServerAPI(CurieServer())
-                Servers.PORPORATO -> TODO()
+                Servers.PORPORATO -> ServerAPI(PorporatoServer())
             }
         }
     }
