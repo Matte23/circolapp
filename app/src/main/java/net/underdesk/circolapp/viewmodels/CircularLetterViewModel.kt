@@ -18,26 +18,42 @@
 
 package net.underdesk.circolapp.viewmodels
 
+import android.app.Application
+import android.content.SharedPreferences
 import androidx.lifecycle.*
+import androidx.preference.PreferenceManager
 import kotlinx.coroutines.launch
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.data.CircularRepository
+import net.underdesk.circolapp.utils.DoubleTrigger
 
 class CircularLetterViewModel internal constructor(
-    private val circularRepository: CircularRepository
-) : ViewModel() {
+    private val circularRepository: CircularRepository,
+    application: Application
+) : AndroidViewModel(application), SharedPreferences.OnSharedPreferenceChangeListener {
+    private val preferenceManager = PreferenceManager.getDefaultSharedPreferences(application)
+
+    private val schoolID =
+        MutableLiveData(preferenceManager.getString("school", "0")?.toInt() ?: 0)
+
     init {
         updateCirculars()
+
+        preferenceManager.registerOnSharedPreferenceChangeListener(this)
     }
 
     val query = MutableLiveData("")
-    val circulars: LiveData<List<Circular>> = Transformations.switchMap(query) { input ->
-        if (input == null || input == "") {
-            circularRepository.circularDao.getLiveCirculars()
-        } else {
-            circularRepository.circularDao.searchCirculars("%$input%")
+    val circulars: LiveData<List<Circular>> =
+        Transformations.switchMap(DoubleTrigger(query, schoolID)) { input ->
+            if (input.first == null || input.first == "") {
+                circularRepository.circularDao.getLiveCirculars(input.second ?: 0)
+            } else {
+                circularRepository.circularDao.searchCirculars(
+                    "%${input.first}%",
+                    input.second ?: 0
+                )
+            }
         }
-    }
 
     val showMessage = MutableLiveData<Boolean>().apply { value = false }
     val circularsUpdated = MutableLiveData<Boolean>().apply { value = false }
@@ -56,5 +72,10 @@ class CircularLetterViewModel internal constructor(
                 circularsUpdated.postValue(true)
             }
         }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == "school")
+            schoolID.postValue(preferenceManager.getString("school", "0")?.toInt() ?: 0)
     }
 }

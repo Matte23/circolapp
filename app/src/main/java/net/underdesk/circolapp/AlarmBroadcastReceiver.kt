@@ -37,6 +37,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
     companion object {
         const val CHANNEL_ID = "net.underdesk.circolapp.REMINDER"
         const val CIRCULAR_ID = "circular_id"
+        const val SCHOOL_ID = "school_id"
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -46,6 +47,10 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
                 val circular = AppDatabase.getInstance(context).circularDao().getCircular(
                     intent.getLongExtra(
                         CIRCULAR_ID,
+                        0
+                    ),
+                    intent.getIntExtra(
+                        SCHOOL_ID,
                         0
                     )
                 )

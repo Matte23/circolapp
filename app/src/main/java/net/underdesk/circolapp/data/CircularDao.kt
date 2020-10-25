@@ -23,29 +23,29 @@ import androidx.room.*
 
 @Dao
 interface CircularDao {
-    @Query("SELECT * FROM circulars ORDER BY id DESC")
-    fun getCirculars(): List<Circular>
+    @Query("SELECT * FROM circulars WHERE school is :school ORDER BY id DESC")
+    fun getCirculars(school: Int): List<Circular>
 
-    @Query("SELECT * FROM circulars ORDER BY id DESC")
-    fun getLiveCirculars(): LiveData<List<Circular>>
+    @Query("SELECT * FROM circulars WHERE school is :school ORDER BY id DESC")
+    fun getLiveCirculars(school: Int): LiveData<List<Circular>>
 
-    @Query("SELECT * FROM circulars WHERE name LIKE :query ORDER BY id DESC")
-    fun searchCirculars(query: String): LiveData<List<Circular>>
+    @Query("SELECT * FROM circulars WHERE school is :school AND name LIKE :query ORDER BY id DESC")
+    fun searchCirculars(query: String, school: Int): LiveData<List<Circular>>
 
-    @Query("SELECT * FROM circulars WHERE id = :id ORDER BY id DESC")
-    fun getCircular(id: Long): Circular
+    @Query("SELECT * FROM circulars WHERE school is :school AND id = :id ORDER BY id DESC")
+    fun getCircular(id: Long, school: Int): Circular
 
-    @Query("SELECT * FROM circulars WHERE favourite ORDER BY id DESC")
-    fun getFavourites(): LiveData<List<Circular>>
+    @Query("SELECT * FROM circulars WHERE school is :school AND favourite ORDER BY id DESC")
+    fun getFavourites(school: Int): LiveData<List<Circular>>
 
-    @Query("SELECT * FROM circulars WHERE favourite AND name LIKE :query ORDER BY id DESC")
-    fun searchFavourites(query: String): LiveData<List<Circular>>
+    @Query("SELECT * FROM circulars WHERE school is :school AND favourite AND name LIKE :query ORDER BY id DESC")
+    fun searchFavourites(query: String, school: Int): LiveData<List<Circular>>
 
-    @Query("SELECT * FROM circulars WHERE reminder ORDER BY id DESC")
-    fun getReminders(): LiveData<List<Circular>>
+    @Query("SELECT * FROM circulars WHERE school is :school AND reminder ORDER BY id DESC")
+    fun getReminders(school: Int): LiveData<List<Circular>>
 
-    @Query("SELECT * FROM circulars WHERE reminder AND name LIKE :query ORDER BY id DESC")
-    fun searchReminders(query: String): LiveData<List<Circular>>
+    @Query("SELECT * FROM circulars WHERE school is :school AND reminder AND name LIKE :query ORDER BY id DESC")
+    fun searchReminders(query: String, school: Int): LiveData<List<Circular>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(circulars: List<Circular>)

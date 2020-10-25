@@ -20,13 +20,13 @@ package net.underdesk.circolapp.data
 
 import android.os.Parcelable
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "circulars")
+@Entity(tableName = "circulars", primaryKeys = ["id", "school"])
 data class Circular(
-    @PrimaryKey val id: Long,
+    val id: Long,
+    val school: Int,
     val name: String,
     val url: String,
     val date: String,

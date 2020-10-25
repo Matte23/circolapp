@@ -48,7 +48,8 @@ class CircularLetterFragment :
             CircularRepository.getInstance(
                 AppDatabase.getInstance(requireContext()).circularDao(),
                 ServerAPI.getInstance(requireContext())
-            )
+            ),
+            requireActivity().application
         )
     }
 

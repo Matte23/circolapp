@@ -24,7 +24,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Circular::class], version = 1, exportSchema = false)
+@Database(entities = [Circular::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun circularDao(): CircularDao
@@ -42,7 +42,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context,
                     AppDatabase::class.java,
                     DATABASE_NAME
-                ).build().also { instance = it }
+                ).fallbackToDestructiveMigration().build().also { instance = it }
             }
         }
     }

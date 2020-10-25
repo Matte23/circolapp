@@ -27,6 +27,8 @@ import net.underdesk.circolapp.server.porporato.PorporatoServer
 class ServerAPI(
     private var server: Server
 ) {
+    fun serverID(): Int = server.serverID
+
     suspend fun getCircularsFromServer(): Pair<List<Circular>, Result> {
         val newCircularsAvailable = server.newCircularsAvailable()
 
@@ -50,6 +52,10 @@ class ServerAPI(
 
         enum class Result {
             SUCCESS, ERROR
+        }
+
+        fun getServerId(server: Servers): Int {
+            return Servers.values().indexOf(server)
         }
 
         fun getServerName(server: Servers) = when (server) {

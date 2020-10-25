@@ -16,7 +16,7 @@ class CircularRepository(
             if (result.second == ServerAPI.Companion.Result.ERROR)
                 return@withContext Pair(emptyList(), false)
 
-            val oldCirculars = circularDao.getCirculars()
+            val oldCirculars = circularDao.getCirculars(serverAPI.serverID())
             val newCirculars = result.first
 
             if (newCirculars.size != oldCirculars.size) {

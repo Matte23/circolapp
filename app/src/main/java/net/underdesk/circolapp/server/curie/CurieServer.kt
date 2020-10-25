@@ -18,6 +18,8 @@ class CurieServer : Server() {
     private val responseAdapter = moshi.adapter(Response::class.java)
     private val client = OkHttpClient()
 
+    override val serverID = ServerAPI.getServerId(ServerAPI.Companion.Servers.CURIE)
+
     override suspend fun getCircularsFromServer(): Pair<List<Circular>, ServerAPI.Companion.Result> {
         return try {
             withContext(Dispatchers.Default) {
@@ -85,9 +87,9 @@ class CurieServer : Server() {
                 .removePrefix("_")
                 .removePrefix(" ")
 
-            Circular(id.toLong(), title, url, matcherDate.group(1) ?: "")
+            Circular(id.toLong(), serverID, title, url, matcherDate.group(1) ?: "")
         } else {
-            Circular(id.toLong(), title, url, "")
+            Circular(id.toLong(), serverID, title, url, "")
         }
     }
 

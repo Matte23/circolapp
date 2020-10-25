@@ -30,6 +30,8 @@ class PorporatoServer : Server() {
         "https://www.liceoporporato.edu.it/ARCHIVIO/PR/VP/circolari.php?dirname=CIRCOLARIP/- CIRCOLARI 2020-21/-12-Agosto/"
     )
 
+    override val serverID = ServerAPI.getServerId(ServerAPI.Companion.Servers.PORPORATO)
+
     override suspend fun getCircularsFromServer(): Pair<List<Circular>, ServerAPI.Companion.Result> {
         return try {
             val list = arrayListOf<Circular>()
@@ -150,9 +152,9 @@ class PorporatoServer : Server() {
             title = title.removeRange(matcherDate.start(), matcherDate.end())
                 .removeSuffix(" (pubb.: )")
 
-            Circular(id, title, fullUrl, matcherDate.group(1)?.replace("-", "/") ?: "")
+            Circular(id, serverID, title, fullUrl, matcherDate.group(1)?.replace("-", "/") ?: "")
         } else {
-            Circular(id, title, fullUrl, "")
+            Circular(id, serverID, title, fullUrl, "")
         }
     }
 }

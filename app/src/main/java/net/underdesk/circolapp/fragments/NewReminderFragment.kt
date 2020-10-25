@@ -112,7 +112,8 @@ class NewReminderFragment : DialogFragment() {
                                 context,
                                 circular.id.toInt(),
                                 Intent(context, AlarmBroadcastReceiver::class.java)
-                                    .putExtra(AlarmBroadcastReceiver.CIRCULAR_ID, circular.id),
+                                    .putExtra(AlarmBroadcastReceiver.CIRCULAR_ID, circular.id)
+                                    .putExtra(AlarmBroadcastReceiver.SCHOOL_ID, circular.school),
                                 0
                             )
 

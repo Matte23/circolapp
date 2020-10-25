@@ -18,22 +18,45 @@
 
 package net.underdesk.circolapp.viewmodels
 
+import android.app.Application
+import android.content.SharedPreferences
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.preference.PreferenceManager
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.data.CircularRepository
+import net.underdesk.circolapp.utils.DoubleTrigger
 
 class RemindersViewModel internal constructor(
-    private val circularRepository: CircularRepository
-) : ViewModel() {
+    private val circularRepository: CircularRepository,
+    application: Application
+) : AndroidViewModel(application), SharedPreferences.OnSharedPreferenceChangeListener {
+    private val preferenceManager = PreferenceManager.getDefaultSharedPreferences(application)
+
+    private val schoolID =
+        MutableLiveData(preferenceManager.getString("school", "0")?.toInt() ?: 0)
+
+    init {
+        preferenceManager.registerOnSharedPreferenceChangeListener(this)
+    }
+
     val query = MutableLiveData("")
-    val circulars: LiveData<List<Circular>> = Transformations.switchMap(query) { input ->
-        if (input == null || input == "") {
-            circularRepository.circularDao.getReminders()
-        } else {
-            circularRepository.circularDao.searchReminders("%$input%")
+    val circulars: LiveData<List<Circular>> =
+        Transformations.switchMap(DoubleTrigger(query, schoolID)) { input ->
+            if (input.first == null || input.first == "") {
+                circularRepository.circularDao.getReminders(input.second ?: 0)
+            } else {
+                circularRepository.circularDao.searchReminders(
+                    "%${input.first}%",
+                    input.second ?: 0
+                )
+            }
         }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == "school")
+            schoolID.postValue(preferenceManager.getString("school", "0")?.toInt() ?: 0)
     }
 }
