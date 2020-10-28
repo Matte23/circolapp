@@ -40,8 +40,8 @@
     <string name="dialog_cancel">Cancel</string>
 
     <string name="activity_info_title">About Circolapp</string>
-    <string name="activity_info_content">Circulars letters are written and published by the Liceo Scientifico Maria Curie Pinerolo, and are downloaded directly from &lt;a href="https://curiepinerolo.edu.it/"&gt;https://curiepinerolo.edu.it/&lt;/a&gt;.&lt;br /&gt;
-    Those documents are released under the license &lt;a href="https://creativecommons.org/licenses/by-nc-sa/3.0/"&gt; &lt;i&gt;Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)&lt;/i&gt;&lt;/a&gt;, as specified in this page: &lt;a href="https://curiepinerolo.edu.it/note-legali/"&gt;https://curiepinerolo.edu.it/note-legali/&lt;/a&gt;</string>
+    <string name="activity_info_content">Circular letters are written and published by the school of your choice, and are downloaded directly from public pages of the corresponding website.&lt;br /&gt;
+    Those documents are released under the license &lt;a href="https://creativecommons.org/licenses/by-nc-sa/3.0/"&gt; &lt;i&gt;Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)&lt;/i&gt;&lt;/a&gt;</string>
     <string name="activity_info_license">License</string>
     <string name="activity_info_license_description">Circolapp is released under the GPL v3 license (&lt;a href="https://github.com/Matte23/circolapp/blob/master/LICENSE"&gt;https://github.com/Matte23/circolapp/blob/master/LICENSE&lt;/a&gt;):&lt;br /&gt;&lt;br /&gt;
     © 2019 - 2020  Matteo Schiff&lt;br /&gt;This program comes with ABSOLUTELY NO WARRANTY.&lt;br /&gt;This is free software, and you are welcome to redistribute it
