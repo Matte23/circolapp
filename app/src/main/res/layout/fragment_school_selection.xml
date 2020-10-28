@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/appintro_statusbar_height"
+    android:paddingBottom="@dimen/appintro2_bottombar_height"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/school_selection_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintVertical_weight="2"
+        app:layout_constraintBottom_toTopOf="@+id/school_selection_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread"
+        style="@style/AppIntroDefaultHeading"
+        android:text="@string/activity_intro_school_selection_title" />
+
+    <com.tiper.MaterialSpinner
+        android:id="@+id/school_selection_spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/activity_intro_school_selection_hint"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        app:spinnerMode="bottomsheet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/school_selection_note"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoLink="web"
+        app:layout_constraintVertical_weight="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/school_selection_spinner"
+        style="@style/AppIntroDefaultText"
+        android:text="@string/activity_intro_school_selection_description" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

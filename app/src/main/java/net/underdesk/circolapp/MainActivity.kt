@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         PollWork.enqueue(this)
 
         if (getPreferences(Context.MODE_PRIVATE).getBoolean("first_start", true)) {
-            startInfoActivity()
+            startIntroActivity()
 
             getPreferences(Context.MODE_PRIVATE).edit().apply {
                 putBoolean("first_start", false)
@@ -175,6 +175,10 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
             .withAboutSpecial2Description(getString(R.string.activity_info_source_code_description))
             .withLicenseShown(true)
             .start(this@MainActivity)
+    }
+
+    private fun startIntroActivity() {
+        startActivity(Intent(this, IntroActivity::class.java))
     }
 
     private fun loadDarkTheme() {

@@ -73,9 +73,10 @@ class ServerAPI(
         }
 
         fun getInstance(context: Context): ServerAPI {
+            val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
+
             val server = Servers.values()[
-                    PreferenceManager.getDefaultSharedPreferences(context).getString("school", "0")
-                        ?.toInt() ?: 0
+                    preferenceManager.getString("school", "0")?.toInt() ?: 0
             ]
 
             return instance ?: synchronized(this) {
