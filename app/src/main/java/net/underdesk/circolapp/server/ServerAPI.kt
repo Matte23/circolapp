@@ -21,6 +21,7 @@ package net.underdesk.circolapp.server
 import android.content.Context
 import androidx.preference.PreferenceManager
 import net.underdesk.circolapp.data.Circular
+import net.underdesk.circolapp.push.FirebaseTopicUtils
 import net.underdesk.circolapp.server.curie.CurieServer
 import net.underdesk.circolapp.server.porporato.PorporatoServer
 
@@ -84,8 +85,18 @@ class ServerAPI(
             }
         }
 
-        fun changeServer(index: Int) {
-            instance?.changeServer(createServer(Servers.values()[index]))
+        fun changeServer(index: Int, context: Context) {
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val newServer = Servers.values()[index]
+
+            if (sharedPreferences.getBoolean(
+                    "notify_new_circulars",
+                    true
+                ) && !sharedPreferences.getBoolean("enable_polling", false)
+            )
+                FirebaseTopicUtils.selectTopic(newServer.toString(), context)
+
+            instance?.changeServer(createServer(newServer))
         }
 
         private fun createServer(server: Servers) = when (server) {

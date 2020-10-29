@@ -53,7 +53,7 @@ class SchoolSelectionFragment : Fragment(), SlidePolicy, MaterialSpinner.OnItemS
         editor.putString("school", position.toString())
         editor.apply()
 
-        ServerAPI.changeServer(position)
+        ServerAPI.changeServer(position, requireContext())
         schoolSelected = true
 
         parent.error = null

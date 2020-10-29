@@ -18,12 +18,14 @@
 
 package net.underdesk.circolapp
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.*
 import kotlinx.android.synthetic.main.settings_activity.*
+import net.underdesk.circolapp.push.FirebaseTopicUtils
 import net.underdesk.circolapp.server.ServerAPI
 import net.underdesk.circolapp.works.PollWork
 
@@ -40,15 +42,19 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    class SettingsFragment : PreferenceFragmentCompat() {
+    class SettingsFragment : PreferenceFragmentCompat(),
+        SharedPreferences.OnSharedPreferenceChangeListener {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            sharedPreferences.registerOnSharedPreferenceChangeListener(this)
 
             val schoolPreference = findPreference<ListPreference>("school")
             schoolPreference?.let { setSchoolListPreference(it) }
             val schoolPreferenceListener =
                 Preference.OnPreferenceChangeListener { _, value ->
-                    ServerAPI.changeServer(value.toString().toInt())
+                    ServerAPI.changeServer(value.toString().toInt(), requireContext())
                     true
                 }
             schoolPreference?.onPreferenceChangeListener = schoolPreferenceListener
@@ -69,17 +75,6 @@ class SettingsActivity : AppCompatActivity() {
             pollIntervalPreference?.setOnBindEditTextListener { editText ->
                 editText.inputType = InputType.TYPE_CLASS_NUMBER
             }
-
-            val notificationPreference =
-                findPreference<SwitchPreferenceCompat>("notify_new_circulars")
-
-            val notificationPrefChangedListener =
-                Preference.OnPreferenceChangeListener { _, _ ->
-                    activity?.let { PollWork.enqueue(it) }
-                    true
-                }
-            pollIntervalPreference?.onPreferenceChangeListener = notificationPrefChangedListener
-            notificationPreference?.onPreferenceChangeListener = notificationPrefChangedListener
         }
 
         private fun setSchoolListPreference(listPreference: ListPreference) {
@@ -95,6 +90,32 @@ class SettingsActivity : AppCompatActivity() {
             listPreference.setDefaultValue("0")
             listPreference.entryValues = entryValues.toTypedArray()
             listPreference.entries = entryNames.toTypedArray()
+        }
+
+        override fun onSharedPreferenceChanged(
+            sharedPreferences: SharedPreferences?,
+            key: String?
+        ) {
+            if (key != "notify_new_circulars" && key != "enable_polling" && key != "poll_interval")
+                return
+
+            if (sharedPreferences == null)
+                return
+
+            activity?.let { PollWork.enqueue(it) }
+
+            if (sharedPreferences.getBoolean(
+                    "notify_new_circulars",
+                    true
+                ) && !sharedPreferences.getBoolean("enable_polling", false)
+            ) {
+                val serverID = ServerAPI.getInstance(requireContext()).serverID()
+                val serverToken = ServerAPI.Companion.Servers.values()[serverID].toString()
+
+                FirebaseTopicUtils.selectTopic(serverToken, requireContext())
+            } else {
+                FirebaseTopicUtils.unsubscribe(requireContext())
+            }
         }
     }
 }

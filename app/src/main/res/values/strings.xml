@@ -15,8 +15,10 @@
     <string name="preferences_school">School</string>
     <string name="preferences_dark_theme">Dark theme</string>
     <string name="preferences_notify_new_circulars">Show notifications</string>
+    <string name="preferences_polling">Run checks from this device</string>
     <string name="preferences_poll_interval">Synchronization interval</string>
     <string name="preferences_notify_new_circulars_summary">Show a notification when a new circular is published</string>
+    <string name="preferences_polling_summary">Not recommended. Disable this option to use push notifications</string>
     <string name="preferences_poll_interval_summary">How long to wait before checking if new circulars are published</string>
 
     <string name="notification_title">Circular letter number %1$d</string>

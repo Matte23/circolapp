@@ -26,9 +26,16 @@
             app:key="notify_new_circulars"
             app:title="@string/preferences_notify_new_circulars" />
 
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:summary="@string/preferences_polling_summary"
+            app:dependency="notify_new_circulars"
+            app:key="enable_polling"
+            app:title="@string/preferences_polling" />
+
         <EditTextPreference
             android:defaultValue="15"
-            android:dependency="notify_new_circulars"
+            android:dependency="enable_polling"
             android:key="poll_interval"
             android:selectAllOnFocus="true"
             android:singleLine="true"
