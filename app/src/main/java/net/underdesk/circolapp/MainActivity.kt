@@ -75,13 +75,10 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
 
         PollWork.enqueue(this)
 
-        if (getPreferences(Context.MODE_PRIVATE).getBoolean("first_start", true)) {
-            startIntroActivity()
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-            getPreferences(Context.MODE_PRIVATE).edit().apply {
-                putBoolean("first_start", false)
-                apply()
-            }
+        if (sharedPreferences.getBoolean("first_start", true)) {
+            startIntroActivity()
         }
     }
 
