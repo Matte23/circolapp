@@ -50,12 +50,20 @@
     under certain conditions</string>
     <string name="activity_info_source_code">Source code</string>
     <string name="activity_info_source_code_description">The source code can be downloaded from &lt;a href="https://github.com/Matte23/circolapp"&gt;https://github.com/Matte23/circolapp&lt;/a&gt;</string>
+    <string name="activity_info_privacy_policy">Privacy policy</string>
+    <string name="activity_info_privacy_policy_description">&lt;a href="https://www.iubenda.com/privacy-policy/13230834"&gt;Privacy policy&lt;/a&gt;</string>
 
     <string name="activity_intro_welcome_description">With Circolapp you can stay updated on the circulars of your school. Viewing and downloading circulars has never been easier</string>
     <string name="activity_intro_school_selection_title">Start by choosing your school</string>
     <string name="activity_intro_school_selection_description">You can change your choice later in the settings</string>
     <string name="activity_intro_school_selection_error">Please select a school</string>
     <string name="activity_intro_school_selection_hint">School</string>
+
+    <string name="activity_intro_legal_text">Circolapp is released under the GPL v3 license. This program comes with ABSOLUTELY NO WARRANTY.&lt;br /&gt; This is free software, and you are welcome to redistribute it
+    under certain conditions.&lt;br /&gt;&lt;br /&gt; This application may collect personal data, as specified in this &lt;a href="https://www.iubenda.com/privacy-policy/13230834"&gt;privacy policy&lt;/a&gt;</string>
+    <string name="activity_intro_legal_checkbox">I have read and I accept the privacy policy and the license</string>
+    <string name="activity_intro_legal_error">You must accept those conditions to use Circolapp</string>
+
     <string name="activity_intro_last_slide_title">You\'re done</string>
     <string name="activity_intro_last_slide_description">Now you can start using Circolapp</string>
 

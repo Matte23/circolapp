@@ -8,6 +8,7 @@ import androidx.preference.PreferenceManager
 import com.github.appintro.AppIntro2
 import com.github.appintro.AppIntroFragment
 import com.github.appintro.AppIntroPageTransformerType
+import net.underdesk.circolapp.fragments.intro.LegalFragment
 import net.underdesk.circolapp.fragments.intro.SchoolSelectionFragment
 
 class IntroActivity : AppIntro2() {
@@ -26,6 +27,7 @@ class IntroActivity : AppIntro2() {
                 backgroundColor = ContextCompat.getColor(this, R.color.colorPrimary)
             )
         )
+        addSlide(LegalFragment.newInstance())
         addSlide(SchoolSelectionFragment.newInstance())
         addSlide(
             AppIntroFragment.newInstance(

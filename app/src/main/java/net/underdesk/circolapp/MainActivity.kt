@@ -170,6 +170,8 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
             .withAboutSpecial1Description(getString(R.string.activity_info_license_description))
             .withAboutSpecial2(getString(R.string.activity_info_source_code))
             .withAboutSpecial2Description(getString(R.string.activity_info_source_code_description))
+            .withAboutSpecial3(getString(R.string.activity_info_privacy_policy))
+            .withAboutSpecial3Description(getString(R.string.activity_info_privacy_policy_description))
             .withLicenseShown(true)
             .start(this@MainActivity)
     }
