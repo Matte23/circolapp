@@ -65,11 +65,10 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
         fun enqueue(context: Context) {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-            if (sharedPreferences.getBoolean(
-                    "notify_new_circulars",
-                    true
-                ) && sharedPreferences.getBoolean("enable_polling", false)
-            ) {
+            val notifyNewCirculars = sharedPreferences.getBoolean("notify_new_circulars", true)
+            val enablePolling = sharedPreferences.getBoolean("enable_polling", false)
+
+            if (notifyNewCirculars && enablePolling) {
                 WorkManager.getInstance(context)
                     .enqueueUniquePeriodicWork(
                         pollWorkName,

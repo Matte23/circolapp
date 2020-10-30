@@ -74,11 +74,10 @@ class ServerAPI(
         }
 
         fun getInstance(context: Context): ServerAPI {
-            val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val serverID = sharedPreferences.getString("school", "0")?.toInt() ?: 0
 
-            val server = Servers.values()[
-                    preferenceManager.getString("school", "0")?.toInt() ?: 0
-            ]
+            val server = Servers.values()[serverID]
 
             return instance ?: synchronized(this) {
                 instance ?: ServerAPI(createServer(server)).also { instance = it }
@@ -89,11 +88,10 @@ class ServerAPI(
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             val newServer = Servers.values()[index]
 
-            if (sharedPreferences.getBoolean(
-                    "notify_new_circulars",
-                    true
-                ) && !sharedPreferences.getBoolean("enable_polling", false)
-            )
+            val notifyNewCirculars = sharedPreferences.getBoolean("notify_new_circulars", true)
+            val enablePolling = sharedPreferences.getBoolean("enable_polling", false)
+
+            if (notifyNewCirculars && !enablePolling)
                 FirebaseTopicUtils.selectTopic(newServer.toString(), context)
 
             instance?.changeServer(createServer(newServer))

@@ -17,6 +17,11 @@ jobs:
         uses: actions/setup-java@v1.4.2
         with:
           java-version: 1.8
+      - name: Inflate google-services.json
+        shell: bash
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES }}
+        run: echo $GOOGLE_SERVICES_JSON > app/google-services.json
       - name: Unit tests
         run: bash ./gradlew test
 
@@ -30,6 +35,11 @@ jobs:
         uses: actions/setup-java@v1.4.2
         with:
           java-version: 1.8
+      - name: Inflate google-services.json
+        shell: bash
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES }}
+        run: echo $GOOGLE_SERVICES_JSON > app/google-services.json
       - name: Run Android Lint
         run: bash ./gradlew lint
 
@@ -43,6 +53,11 @@ jobs:
         uses: actions/setup-java@v1.4.2
         with:
           java-version: 1.8
+      - name: Inflate google-services.json
+        shell: bash
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES }}
+        run: echo $GOOGLE_SERVICES_JSON > app/google-services.json
       - name: Run Kotlin Lint
         run: bash ./gradlew ktlintCheck
 
@@ -56,6 +71,11 @@ jobs:
         uses: actions/setup-java@v1.4.2
         with:
           java-version: 1.8
+      - name: Inflate google-services.json
+        shell: bash
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES }}
+        run: echo $GOOGLE_SERVICES_JSON > app/google-services.json
       - name: Build debug APK
         run: bash ./gradlew assembleDebug
       - name: Upload APK

@@ -42,7 +42,8 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    class SettingsFragment : PreferenceFragmentCompat(),
+    class SettingsFragment :
+        PreferenceFragmentCompat(),
         SharedPreferences.OnSharedPreferenceChangeListener {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
@@ -104,11 +105,10 @@ class SettingsActivity : AppCompatActivity() {
 
             activity?.let { PollWork.enqueue(it) }
 
-            if (sharedPreferences.getBoolean(
-                    "notify_new_circulars",
-                    true
-                ) && !sharedPreferences.getBoolean("enable_polling", false)
-            ) {
+            val notifyNewCirculars = sharedPreferences.getBoolean("notify_new_circulars", true)
+            val enablePolling = sharedPreferences.getBoolean("enable_polling", false)
+
+            if (notifyNewCirculars && !enablePolling) {
                 val serverID = ServerAPI.getInstance(requireContext()).serverID()
                 val serverToken = ServerAPI.Companion.Servers.values()[serverID].toString()
 
