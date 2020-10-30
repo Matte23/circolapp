@@ -31,16 +31,10 @@ class CircularLetterViewModel internal constructor(
     private val circularRepository: CircularRepository,
     application: Application
 ) : AndroidViewModel(application), SharedPreferences.OnSharedPreferenceChangeListener {
-    private val preferenceManager = PreferenceManager.getDefaultSharedPreferences(application)
+    private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
 
     private val schoolID =
-        MutableLiveData(preferenceManager.getString("school", "0")?.toInt() ?: 0)
-
-    init {
-        updateCirculars()
-
-        preferenceManager.registerOnSharedPreferenceChangeListener(this)
-    }
+        MutableLiveData(sharedPreferences.getString("school", "0")?.toInt() ?: 0)
 
     val query = MutableLiveData("")
     val circulars: LiveData<List<Circular>> =
@@ -59,6 +53,13 @@ class CircularLetterViewModel internal constructor(
     val circularsUpdated = MutableLiveData<Boolean>().apply { value = false }
     private var isNotUpdating = true
 
+    init {
+        if (!sharedPreferences.getBoolean("first_start", true))
+            updateCirculars()
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+    }
+
     fun updateCirculars() {
         if (isNotUpdating) {
             viewModelScope.launch {
@@ -75,7 +76,12 @@ class CircularLetterViewModel internal constructor(
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == "school")
-            schoolID.postValue(preferenceManager.getString("school", "0")?.toInt() ?: 0)
+        val firstStart = sharedPreferences?.getBoolean("first_start", true) ?: true
+
+        if (!firstStart && key == "school" || key == "first_start") {
+            schoolID.postValue(sharedPreferences?.getString("school", "0")?.toInt() ?: 0)
+
+            updateCirculars()
+        }
     }
 }
