@@ -12,3 +12,23 @@
 /captures
 .externalNativeBuild
 .cxx
+
+# Fastlane specific
+/fastlane/report.xml
+
+# Deliver temporary files
+/fastlane/Preview.html
+
+# Snapshot generated screenshots
+/fastlane/screenshots
+
+# Scan temporary files
+/fastlane/test_output
+
+# Supply store metadata
+/fastlane/metadata
+
+# Credentials
+fastlane-service-account.json
+firebase-service-account.json
+google-services.json

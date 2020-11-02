@@ -1,0 +1,42 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Submit a new Nightly Build to Firebase App Distribution"
+  lane :nightly do
+    ENV["VERSION_CODE"] = number_of_commits(all: true).to_s
+    ENV["VERSION_NAME"] = last_git_commit[:abbreviated_commit_hash]
+
+    gradle(task: "clean assembleDebug")
+
+    changelog_from_git_commits
+
+    firebase_app_distribution(
+      app: "1:455942942122:android:8036e8ee6d3f24ef150fd3",
+      groups: "interni"
+    )
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    ENV["VERSION_CODE"] = number_of_commits(all: true).to_s
+    ENV["VERSION_NAME"] = last_git_commit[:abbreviated_commit_hash]
+
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store
+  end
+end

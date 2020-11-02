@@ -66,7 +66,7 @@ dependencies {
     // Google
     implementation(Dependencies.Google.material)
 
-    //Firebase
+    // Firebase
     implementation(platform(Dependencies.Firebase.bom))
     implementation(Dependencies.Firebase.messaging)
 
