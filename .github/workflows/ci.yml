@@ -62,7 +62,7 @@ jobs:
         run: bash ./gradlew ktlintCheck
 
   apk:
-    name: Generate APK
+    name: Generate and upload APK
     runs-on: ubuntu-latest
 
     steps:
@@ -71,13 +71,30 @@ jobs:
         uses: actions/setup-java@v1.4.2
         with:
           java-version: 1.8
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
       - name: Inflate google-services.json
         shell: bash
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES }}
         run: echo $GOOGLE_SERVICES_JSON > app/google-services.json
-      - name: Build debug APK
-        run: bash ./gradlew assembleDebug
+      - name: Inflate fastlane-service-account.json
+        shell: bash
+        env:
+          FASTLANE_SERVICE_ACCOUNT_JSON: ${{ secrets.FASTLANE_SERVICE_ACCOUNT }}
+        run: echo $FASTLANE_SERVICE_ACCOUNT_JSON > fastlane-service-account.json
+      - name: Inflate firebase-service-accounts.json
+        shell: bash
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: echo $FIREBASE_SERVICE_ACCOUNT_JSON > firebase-service-account.json
+      - name: Setup fastlane
+        run: bundle install
+      - name: Build APK and deploy to Firebase App Distribution
+        run: bundle exec fastlane nightly
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: "firebase-service-account.json"
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
