@@ -24,7 +24,9 @@ class IntroActivity : AppIntro2() {
                 title = getString(R.string.title_intro),
                 description = getString(R.string.activity_intro_welcome_description),
                 imageDrawable = R.mipmap.ic_launcher,
-                backgroundColor = ContextCompat.getColor(this, R.color.colorPrimary)
+                backgroundColor = ContextCompat.getColor(this, R.color.colorPrimary),
+                titleColor = ContextCompat.getColor(this, R.color.colorOnPrimary),
+                descriptionColor = ContextCompat.getColor(this, R.color.colorOnPrimary)
             )
         )
         addSlide(LegalFragment.newInstance())
@@ -33,7 +35,9 @@ class IntroActivity : AppIntro2() {
             AppIntroFragment.newInstance(
                 title = getString(R.string.activity_intro_last_slide_title),
                 description = getString(R.string.activity_intro_last_slide_description),
-                backgroundColor = ContextCompat.getColor(this, R.color.colorPrimary)
+                backgroundColor = ContextCompat.getColor(this, R.color.colorPrimary),
+                titleColor = ContextCompat.getColor(this, R.color.colorOnPrimary),
+                descriptionColor = ContextCompat.getColor(this, R.color.colorOnPrimary)
             )
         )
     }

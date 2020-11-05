@@ -22,7 +22,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread"
         style="@style/AppIntroDefaultHeading"
-        android:text="@string/activity_intro_school_selection_title" />
+        android:text="@string/activity_intro_school_selection_title"
+        android:textColor="@color/colorOnPrimary" />
 
     <com.tiper.MaterialSpinner
         android:id="@+id/school_selection_spinner"
@@ -49,7 +50,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/school_selection_spinner"
         style="@style/AppIntroDefaultText"
-        android:text="@string/activity_intro_school_selection_description" />
+        android:text="@string/activity_intro_school_selection_description"
+        android:textColor="@color/colorOnPrimary" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
