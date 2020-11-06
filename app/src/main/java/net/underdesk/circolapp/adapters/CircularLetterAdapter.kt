@@ -18,33 +18,27 @@
 
 package net.underdesk.circolapp.adapters
 
-import android.Manifest
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_circular.view.*
 import net.underdesk.circolapp.AlarmBroadcastReceiver
-import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.data.AppDatabase
 import net.underdesk.circolapp.data.Circular
 import net.underdesk.circolapp.fragments.NewReminderFragment
+import net.underdesk.circolapp.utils.DownloadableFile
+import net.underdesk.circolapp.utils.FileUtils
 
 class CircularLetterAdapter(
     private var circulars: List<Circular>,
@@ -146,7 +140,8 @@ class CircularLetterAdapter(
                 holder.attachmentsList.visibility = View.VISIBLE
                 holder.attachmentsList.adapter = AttachmentAdapter(
                     circulars[position].attachmentsNames,
-                    circulars[position].attachmentsUrls
+                    circulars[position].attachmentsUrls,
+                    adapterCallback
                 )
             } else {
                 holder.attachmentsList.adapter = null
@@ -154,56 +149,12 @@ class CircularLetterAdapter(
         }
 
         holder.viewButton.setOnClickListener {
-            val viewIntent = Intent(Intent.ACTION_VIEW)
-            viewIntent.setDataAndType(Uri.parse(circulars[position].url), "application/pdf")
-            if (viewIntent.resolveActivity(context.packageManager) != null) {
-                context.startActivity(viewIntent)
-            } else {
-                val builder = AlertDialog.Builder(context)
-                builder.apply {
-                    setTitle(R.string.dialog_install_pdf_reader_title)
-                    setMessage(R.string.dialog_install_pdf_reader_content)
-                    setPositiveButton(
-                        R.string.dialog_ok
-                    ) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                }
-
-                builder.create().show()
-            }
+            FileUtils.viewFile(circulars[position].url, context)
         }
 
         holder.downloadButton.setOnClickListener {
-            adapterCallback.circularToDownload = circulars[position]
-
-            val permission = ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-
-            if (permission != PackageManager.PERMISSION_GRANTED) {
-
-                val builder = AlertDialog.Builder(context)
-
-                builder.apply {
-                    setMessage(context.getString(R.string.dialog_message_permission_write))
-                    setTitle(context.getString(R.string.dialog_title_permission_required))
-                    setPositiveButton(
-                        context.getString(R.string.dialog_next)
-                    ) { _, _ ->
-                        ActivityCompat.requestPermissions(
-                            adapterCallback as AppCompatActivity,
-                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                            MainActivity.PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE
-                        )
-                    }
-                }
-
-                builder.create().show()
-            } else {
-                adapterCallback.downloadCircular()
-            }
+            val file = DownloadableFile(circulars[position].name, circulars[position].url)
+            FileUtils.downloadFile(file, adapterCallback, context)
         }
 
         holder.favouriteButton.setOnClickListener {
@@ -274,7 +225,7 @@ class CircularLetterAdapter(
     override fun getItemId(position: Int) = circulars[position].id
 
     interface AdapterCallback {
-        var circularToDownload: Circular?
-        fun downloadCircular()
+        var fileToDownload: DownloadableFile?
+        fun downloadFile()
     }
 }

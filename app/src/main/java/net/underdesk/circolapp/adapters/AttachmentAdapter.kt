@@ -18,24 +18,22 @@
 
 package net.underdesk.circolapp.adapters
 
-import android.app.DownloadManager
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_attachment.view.*
 import net.underdesk.circolapp.R
+import net.underdesk.circolapp.utils.DownloadableFile
+import net.underdesk.circolapp.utils.FileUtils
 
 class AttachmentAdapter(
     private val attachmentsNames: List<String>,
-    private val attachmentsUrls: List<String>
+    private val attachmentsUrls: List<String>,
+    private val adapterCallback: CircularLetterAdapter.AdapterCallback
 ) :
     RecyclerView.Adapter<AttachmentAdapter.AttachmentViewHolder>() {
     private lateinit var context: Context
@@ -58,35 +56,12 @@ class AttachmentAdapter(
         holder.title.text = attachmentsNames[position]
 
         holder.viewButton.setOnClickListener {
-            val viewIntent = Intent(Intent.ACTION_VIEW)
-            viewIntent.setDataAndType(Uri.parse(attachmentsUrls[position]), "application/pdf")
-            if (viewIntent.resolveActivity(context.packageManager) != null) {
-                context.startActivity(viewIntent)
-            } else {
-                val builder = AlertDialog.Builder(context)
-                builder.apply {
-                    setTitle(R.string.dialog_install_pdf_reader_title)
-                    setMessage(R.string.dialog_install_pdf_reader_content)
-                    setPositiveButton(
-                        R.string.dialog_ok
-                    ) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                }
-
-                builder.create().show()
-            }
+            FileUtils.viewFile(attachmentsUrls[position], context)
         }
 
         holder.downloadButton.setOnClickListener {
-            val request = DownloadManager.Request(Uri.parse(attachmentsUrls[position]))
-            request.setTitle(attachmentsNames[position])
-            request.setDestinationInExternalPublicDir(
-                Environment.DIRECTORY_DOWNLOADS,
-                "Circolapp/" + attachmentsNames[position] + ".pdf"
-            )
-
-            (context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+            val file = DownloadableFile(attachmentsNames[position], attachmentsUrls[position])
+            FileUtils.downloadFile(file, adapterCallback, context)
         }
     }
 

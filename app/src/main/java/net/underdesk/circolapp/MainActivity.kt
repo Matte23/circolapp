@@ -40,7 +40,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.aboutlibraries.LibsBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
-import net.underdesk.circolapp.data.Circular
+import net.underdesk.circolapp.utils.DownloadableFile
 import net.underdesk.circolapp.works.PollWork
 
 class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback {
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
 
     var searchCallback: SearchCallback? = null
     var refreshCallback: RefreshCallback? = null
-    override var circularToDownload: Circular? = null
+    override var fileToDownload: DownloadableFile? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         loadDarkTheme()
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
             PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE -> {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    downloadCircular()
+                    downloadFile()
                 } else {
                     Snackbar.make(
                         container,
@@ -144,12 +144,18 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         }
     }
 
-    override fun downloadCircular() {
-        val request = DownloadManager.Request(Uri.parse(circularToDownload!!.url))
-        request.setTitle(circularToDownload!!.name)
+    override fun downloadFile() {
+        val regexDots = Regex("""\.+$""")
+        val safeFilename = fileToDownload!!.name.replace(regexDots, "")
+
+        var extension = fileToDownload!!.url.substringAfterLast(".", "html")
+        if (!extension.matches(Regex("""[a-zA-Z]+"""))) extension = "html"
+
+        val request = DownloadManager.Request(Uri.parse(fileToDownload!!.url))
+        request.setTitle(fileToDownload!!.name)
         request.setDestinationInExternalPublicDir(
             Environment.DIRECTORY_DOWNLOADS,
-            "Circolapp/" + circularToDownload!!.id + ".pdf"
+            "Circolapp/$safeFilename.$extension"
         )
 
         (getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
