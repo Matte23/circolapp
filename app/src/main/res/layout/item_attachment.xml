@@ -20,34 +20,35 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/attachment_view_button"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/attachment_view_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/attachment_view_button" />
+        app:layout_constraintTop_toBottomOf="@+id/attachment_divider" />
 
     <ImageButton
         android:id="@+id/attachment_view_button"
         style="?borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:adjustViewBounds="true"
         android:src="@drawable/baseline_visibility_24"
         android:tint="@color/colorSecondary"
         android:contentDescription="@string/image_view_attachment"
         app:layout_constraintEnd_toStartOf="@+id/attachment_download_button"
-        app:layout_constraintTop_toBottomOf="@+id/attachment_divider" />
+        app:layout_constraintTop_toTopOf="@+id/attachment_title_textview"
+        app:layout_constraintBottom_toBottomOf="@+id/attachment_title_textview" />
 
     <ImageButton
         android:id="@+id/attachment_download_button"
         style="?borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:adjustViewBounds="true"
         android:src="@drawable/baseline_get_app_24"
         android:tint="@color/colorSecondary"
         android:contentDescription="@string/image_download_attachment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/attachment_divider" />
+        app:layout_constraintTop_toTopOf="@+id/attachment_title_textview"
+        app:layout_constraintBottom_toBottomOf="@+id/attachment_title_textview" />
 </androidx.constraintlayout.widget.ConstraintLayout>
