@@ -143,9 +143,14 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
     private fun createNotification(circular: Circular) {
         val mainIntent = Intent(applicationContext, MainActivity::class.java)
         val viewIntent = Intent(Intent.ACTION_VIEW)
-        viewIntent.setDataAndType(Uri.parse(circular.url), "application/pdf").apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+        if (circular.url.endsWith(".pdf")) {
+            viewIntent.setDataAndType(Uri.parse(circular.url), "application/pdf")
+        } else {
+            viewIntent.data = Uri.parse(circular.url)
         }
+
+        viewIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
         val taskStackBuilder = TaskStackBuilder.create(applicationContext)
         taskStackBuilder.addParentStack(MainActivity::class.java)
