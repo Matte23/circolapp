@@ -46,8 +46,13 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    // Shared module
+    implementation(project(":shared"))
+
     // Kotlin
     implementation(Dependencies.Kotlin.core)
+    implementation(Dependencies.Kotlin.coroutinesCore)
+    implementation(Dependencies.Kotlin.coroutinesAndroid)
 
     // AndroidX
     implementation(Dependencies.AndroidX.appcompat)
@@ -55,13 +60,11 @@ dependencies {
     implementation(Dependencies.AndroidX.constraintLayout)
     implementation(Dependencies.AndroidX.swipeRefreshLayout)
     implementation(Dependencies.AndroidX.lifecycleExtensions)
+    implementation(Dependencies.AndroidX.lifecycleLiveData)
     implementation(Dependencies.AndroidX.preference)
     implementation(Dependencies.AndroidX.navigationFragment)
     implementation(Dependencies.AndroidX.navigationUi)
     implementation(Dependencies.AndroidX.workManager)
-    implementation(Dependencies.AndroidX.Room.roomRuntime)
-    implementation(Dependencies.AndroidX.Room.roomKtx)
-    kapt(Dependencies.AndroidX.Room.roomCompiler)
 
     // Google
     implementation(Dependencies.Google.material)
@@ -70,17 +73,11 @@ dependencies {
     implementation(platform(Dependencies.Firebase.bom))
     implementation(Dependencies.Firebase.messaging)
 
-    // Square
-    implementation(Dependencies.Square.okhttp)
-    implementation(Dependencies.Square.moshi)
-    kapt(Dependencies.Square.moshiCodegen)
-
     // AboutLibraries
     implementation(Dependencies.AboutLibraries.aboutLibrariesCore)
     implementation(Dependencies.AboutLibraries.aboutLibraries)
 
     // Misc
-    implementation(Dependencies.Misc.jsoup)
     implementation(Dependencies.Misc.appIntro)
     implementation(Dependencies.Misc.materialSpinner)
 

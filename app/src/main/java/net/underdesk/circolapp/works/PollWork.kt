@@ -33,10 +33,8 @@ import androidx.work.*
 import kotlinx.coroutines.coroutineScope
 import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
-import net.underdesk.circolapp.data.AppDatabase
-import net.underdesk.circolapp.data.Circular
-import net.underdesk.circolapp.data.CircularRepository
-import net.underdesk.circolapp.server.ServerAPI
+import net.underdesk.circolapp.data.AndroidCircularRepository
+import net.underdesk.circolapp.shared.data.Circular
 import java.util.concurrent.TimeUnit
 
 class PollWork(appContext: Context, workerParams: WorkerParameters) :
@@ -93,10 +91,7 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
     }
 
     override suspend fun doWork(): Result = coroutineScope {
-        val circularRepository = CircularRepository.getInstance(
-            AppDatabase.getInstance(applicationContext).circularDao(),
-            ServerAPI.getInstance(applicationContext)
-        )
+        val circularRepository = AndroidCircularRepository.getInstance(applicationContext)
 
         val result = circularRepository.updateCirculars()
         if (!result.second)

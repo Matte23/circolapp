@@ -12,7 +12,8 @@ import com.github.appintro.SlidePolicy
 import com.tiper.MaterialSpinner
 import kotlinx.android.synthetic.main.fragment_school_selection.view.*
 import net.underdesk.circolapp.R
-import net.underdesk.circolapp.server.ServerAPI
+import net.underdesk.circolapp.server.AndroidServerApi
+import net.underdesk.circolapp.shared.server.ServerAPI
 
 class SchoolSelectionFragment : Fragment(), SlidePolicy, MaterialSpinner.OnItemSelectedListener {
     private lateinit var preferenceManager: SharedPreferences
@@ -53,7 +54,7 @@ class SchoolSelectionFragment : Fragment(), SlidePolicy, MaterialSpinner.OnItemS
         editor.putString("school", position.toString())
         editor.apply()
 
-        ServerAPI.changeServer(position, requireContext())
+        AndroidServerApi.changeServer(position, requireContext())
         schoolSelected = true
 
         parent.error = null

@@ -16,22 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.underdesk.circolapp.data
+package net.underdesk.circolapp.shared.server
 
-import android.os.Parcelable
-import androidx.room.Entity
-import kotlinx.android.parcel.Parcelize
+import net.underdesk.circolapp.shared.data.Circular
 
-@Parcelize
-@Entity(tableName = "circulars", primaryKeys = ["id", "school"])
-data class Circular(
-    val id: Long,
-    val school: Int,
-    val name: String,
-    val url: String,
-    val date: String,
-    var favourite: Boolean = false,
-    var reminder: Boolean = false,
-    val attachmentsNames: MutableList<String> = mutableListOf(),
-    val attachmentsUrls: MutableList<String> = mutableListOf()
-) : Parcelable
+abstract class Server {
+    abstract val serverID: Int
+    abstract suspend fun getCircularsFromServer(): Pair<List<Circular>, ServerAPI.Companion.Result>
+    abstract suspend fun newCircularsAvailable(): Pair<Boolean, ServerAPI.Companion.Result>
+}

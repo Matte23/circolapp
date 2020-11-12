@@ -3,7 +3,7 @@ package net.underdesk.circolapp.viewmodels
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import net.underdesk.circolapp.data.CircularRepository
+import net.underdesk.circolapp.shared.data.CircularRepository
 
 class FavouritesViewModelFactory(
     private val circularRepository: CircularRepository,

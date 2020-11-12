@@ -32,17 +32,20 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_circular.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import net.underdesk.circolapp.AlarmBroadcastReceiver
 import net.underdesk.circolapp.R
-import net.underdesk.circolapp.data.AppDatabase
-import net.underdesk.circolapp.data.Circular
+import net.underdesk.circolapp.data.AndroidDatabase
 import net.underdesk.circolapp.fragments.NewReminderFragment
+import net.underdesk.circolapp.shared.data.Circular
 import net.underdesk.circolapp.utils.DownloadableFile
 import net.underdesk.circolapp.utils.FileUtils
 
 class CircularLetterAdapter(
     private var circulars: List<Circular>,
-    private val adapterCallback: AdapterCallback
+    private val adapterCallback: AdapterCallback,
+    private val adapterScope: CoroutineScope
 ) :
     RecyclerView.Adapter<CircularLetterAdapter.CircularLetterViewHolder>() {
     private lateinit var context: Context
@@ -158,31 +161,37 @@ class CircularLetterAdapter(
         }
 
         holder.favouriteButton.setOnClickListener {
-            object : Thread() {
-                override fun run() {
-                    AppDatabase.getInstance(context).circularDao()
-                        .update(circulars[position].apply { favourite = !favourite })
-                }
-            }.start()
+            adapterScope.launch {
+                AndroidDatabase.getDaoInstance(context).update(
+                    circulars[position].id,
+                    circulars[position].school,
+                    !circulars[position].favourite,
+                    circulars[position].reminder
+                )
+            }
         }
 
         holder.reminderButton.setOnClickListener {
             if (circulars[position].reminder) {
-                object : Thread() {
-                    override fun run() {
-                        val pendingIntent = PendingIntent.getBroadcast(
-                            context,
-                            circulars[position].id.toInt(),
-                            Intent(context, AlarmBroadcastReceiver::class.java),
-                            0
+
+                adapterScope.launch {
+                    val pendingIntent = PendingIntent.getBroadcast(
+                        context,
+                        circulars[position].id.toInt(),
+                        Intent(context, AlarmBroadcastReceiver::class.java),
+                        0
+                    )
+
+                    pendingIntent.cancel()
+
+                    AndroidDatabase.getDaoInstance(context)
+                        .update(
+                            circulars[position].id,
+                            circulars[position].school,
+                            circulars[position].favourite,
+                            false
                         )
-
-                        pendingIntent.cancel()
-
-                        AppDatabase.getInstance(context).circularDao()
-                            .update(circulars[position].apply { reminder = false })
-                    }
-                }.start()
+                }
             } else {
                 NewReminderFragment.create(circulars[position])
                     .show((context as FragmentActivity).supportFragmentManager, "NewReminderDialog")

@@ -1,0 +1,59 @@
+CREATE TABLE Circulars (
+    id INTEGER NOT NULL,
+    school INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    url TEXT NOT NULL,
+    date TEXT NOT NULL,
+    favourite INTEGER NOT NULL DEFAULT 0,
+    reminder INTEGER NOT NULL DEFAULT 0,
+    attachmentsNames TEXT NOT NULL,
+    attachmentsUrls TEXT NOT NULL,
+    PRIMARY KEY (id, school)
+);
+
+insertCircular:
+INSERT OR IGNORE INTO Circulars(id, school, name, url, date, favourite, reminder, attachmentsNames, attachmentsUrls)
+VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateCircular:
+UPDATE Circulars
+SET favourite = ?, reminder = ?
+WHERE id = ? AND school = ?;
+
+deleteAllCirculars:
+DELETE FROM Circulars;
+
+getCirculars:
+SELECT * FROM Circulars
+WHERE school IS ?
+ORDER BY id DESC;
+
+getCircular:
+SELECT * FROM Circulars
+WHERE id IS ? AND school = ?
+ORDER BY id DESC;
+
+searchCirculars:
+SELECT * FROM Circulars
+WHERE school IS ? AND name LIKE ?
+ORDER BY id DESC;
+
+getFavourites:
+SELECT * FROM Circulars
+WHERE school IS ? AND favourite
+ORDER BY id DESC;
+
+searchFavourites:
+SELECT * FROM Circulars
+WHERE school IS ? AND favourite AND name LIKE ?
+ORDER BY id DESC;
+
+getReminders:
+SELECT * FROM Circulars
+WHERE school IS ? AND reminder
+ORDER BY id DESC;
+
+searchReminders:
+SELECT * FROM Circulars
+WHERE school IS ? AND reminder AND name LIKE ?
+ORDER BY id DESC;

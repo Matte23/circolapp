@@ -18,31 +18,27 @@
 
 package net.underdesk.circolapp.data
 
-import androidx.room.TypeConverter
+import android.content.Context
+import net.underdesk.circolapp.shared.data.AppDatabase
+import net.underdesk.circolapp.shared.data.CircularDao
+import net.underdesk.circolapp.shared.data.DatabaseDriverFactory
 
-class Converters {
+object AndroidDatabase {
 
-    @TypeConverter
-    fun stringToList(data: String?): List<String> {
-        val list: MutableList<String> = mutableListOf()
+    @Volatile
+    private var instance: AppDatabase? = null
 
-        if (data != null) {
-            for (attachment in data.split("˜")) {
-                list.add(attachment)
-            }
+    fun getInstance(context: Context): AppDatabase {
+        return instance ?: synchronized(this) {
+            instance ?: AppDatabase(
+                DatabaseDriverFactory(
+                    context
+                ).createDriver()
+            ).also { instance = it }
         }
-
-        return list.dropLast(1)
     }
 
-    @TypeConverter
-    fun listToString(list: List<String>): String {
-        var string = ""
-
-        for (attachment in list) {
-            string += "$attachment˜"
-        }
-
-        return string
+    fun getDaoInstance(context: Context): CircularDao {
+        return CircularDao(getInstance(context))
     }
 }

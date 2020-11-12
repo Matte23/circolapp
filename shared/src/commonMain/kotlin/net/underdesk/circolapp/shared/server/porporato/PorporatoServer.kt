@@ -1,18 +1,19 @@
-package net.underdesk.circolapp.server.porporato
+package net.underdesk.circolapp.shared.server.porporato
 
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.utils.io.charsets.*
+import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import net.underdesk.circolapp.data.Circular
-import net.underdesk.circolapp.server.Server
-import net.underdesk.circolapp.server.ServerAPI
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.jsoup.Jsoup
-import java.io.IOException
-import java.util.regex.Pattern
+import net.underdesk.circolapp.shared.data.Circular
+import net.underdesk.circolapp.shared.server.KtorFactory
+import net.underdesk.circolapp.shared.server.Server
+import net.underdesk.circolapp.shared.server.ServerAPI
+import kotlin.coroutines.cancellation.CancellationException
 
 class PorporatoServer : Server() {
-    private val client = OkHttpClient()
+    private val client = KtorFactory().createClient()
 
     private val baseUrl = "https://www.liceoporporato.edu.it/ARCHIVIO/PR/VP/"
     private val endpointUrls = listOf(
@@ -52,27 +53,13 @@ class PorporatoServer : Server() {
         return Pair(true, ServerAPI.Companion.Result.SUCCESS)
     }
 
-    @Throws(IOException::class)
+    @OptIn(ExperimentalStdlibApi::class)
+    @Throws(IOException::class, CancellationException::class)
     private suspend fun parsePage(url: String): List<Circular> {
         val response = retrieveDataFromServer(url)
 
         return withContext(Dispatchers.Default) {
-            val document = Jsoup.parseBodyFragment(response)
-            val htmlList = document.getElementsByTag("table")[2]
-                .getElementsByTag("td")[2]
-                .getElementsByTag("a")
-
-            val list = ArrayList<Circular>()
-
-            for (i in 0 until htmlList.size) {
-                list.add(
-                    generateFromString(
-                        htmlList[i].text(),
-                        htmlList[i].attr("href"),
-                        i.toLong()
-                    )
-                )
-            }
+            val list = SpecificPorporatoServer(this@PorporatoServer).parseHtml(response).toMutableList()
 
             // Identify and group all attachments
             list.removeAll { attachment ->
@@ -109,52 +96,45 @@ class PorporatoServer : Server() {
         }
     }
 
-    @Throws(IOException::class)
+    @OptIn(ExperimentalStdlibApi::class)
+    @Throws(IOException::class, CancellationException::class)
     private suspend fun retrieveDataFromServer(url: String): String {
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        return withContext(Dispatchers.IO) {
-            val response = client.newCall(request).execute()
-
-            if (!response.isSuccessful) {
-                throw IOException("HTTP error code: ${response.code})")
-            }
-
-            response.body!!.string()
-        }
+        return client.request<HttpResponse>(url).readText(Charsets.ISO_8859_1)
     }
 
-    private fun generateFromString(string: String, path: String, index: Long): Circular {
+    fun generateFromString(string: String, path: String, index: Long): Circular {
         val fullUrl = baseUrl + path
         var title = string
 
         val idRegex =
-            """(\d+)"""
-        val matcherId = Pattern.compile(idRegex).matcher(string)
-        val id = if (!string.startsWith("Avviso") && matcherId.find()) {
-            title = title.removeRange(matcherId.start(), matcherId.end())
+            """(\d+)""".toRegex()
+        val idMatcher = idRegex.find(string)
+        val id = if (!string.startsWith("Avviso") && idMatcher != null) {
+            title = title.removeRange(idMatcher.range)
                 .removePrefix(" ")
                 .removePrefix("-")
                 .removePrefix(" ")
 
-            matcherId.group(1)?.toLong() ?: -index
+            idMatcher.value.toLong()
         } else {
             -index
         }
 
         val dateRegex =
-            """(\d{2}-\d{2}-\d{4})"""
-        val matcherDate = Pattern.compile(dateRegex).matcher(title)
+            """(\d{2}-\d{2}-\d{4})""".toRegex()
+        val dateMatcher = dateRegex.find(title)
 
-        return if (matcherDate.find()) {
-            title = title.removeRange(matcherDate.start(), matcherDate.end())
+        return if (dateMatcher != null) {
+            title = title.removeRange(dateMatcher.range)
                 .removeSuffix(" (pubb.: )")
 
-            Circular(id, serverID, title, fullUrl, matcherDate.group(1)?.replace("-", "/") ?: "")
+            Circular(id, serverID, title, fullUrl, dateMatcher.value.replace("-", "/"))
         } else {
             Circular(id, serverID, title, fullUrl, "")
         }
     }
+}
+
+expect class SpecificPorporatoServer(porporatoServer: PorporatoServer) {
+    fun parseHtml(string: String): List<Circular>
 }

@@ -20,13 +20,10 @@ package net.underdesk.circolapp.viewmodels
 
 import android.app.Application
 import android.content.SharedPreferences
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
-import net.underdesk.circolapp.data.Circular
-import net.underdesk.circolapp.data.CircularRepository
+import net.underdesk.circolapp.shared.data.Circular
+import net.underdesk.circolapp.shared.data.CircularRepository
 import net.underdesk.circolapp.utils.DoubleTrigger
 
 class RemindersViewModel internal constructor(
@@ -46,12 +43,12 @@ class RemindersViewModel internal constructor(
     val circulars: LiveData<List<Circular>> =
         Transformations.switchMap(DoubleTrigger(query, schoolID)) { input ->
             if (input.first == null || input.first == "") {
-                circularRepository.circularDao.getReminders(input.second ?: 0)
+                circularRepository.circularDao.getReminders(input.second ?: 0).asLiveData()
             } else {
                 circularRepository.circularDao.searchReminders(
                     "%${input.first}%",
                     input.second ?: 0
-                )
+                ).asLiveData()
             }
         }
 

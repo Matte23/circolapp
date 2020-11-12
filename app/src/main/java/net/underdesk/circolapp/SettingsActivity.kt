@@ -26,7 +26,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.*
 import kotlinx.android.synthetic.main.settings_activity.*
 import net.underdesk.circolapp.push.FirebaseTopicUtils
-import net.underdesk.circolapp.server.ServerAPI
+import net.underdesk.circolapp.server.AndroidServerApi
+import net.underdesk.circolapp.shared.server.ServerAPI
 import net.underdesk.circolapp.works.PollWork
 
 class SettingsActivity : AppCompatActivity() {
@@ -55,7 +56,7 @@ class SettingsActivity : AppCompatActivity() {
             schoolPreference?.let { setSchoolListPreference(it) }
             val schoolPreferenceListener =
                 Preference.OnPreferenceChangeListener { _, value ->
-                    ServerAPI.changeServer(value.toString().toInt(), requireContext())
+                    AndroidServerApi.changeServer(value.toString().toInt(), requireContext())
                     true
                 }
             schoolPreference?.onPreferenceChangeListener = schoolPreferenceListener
@@ -109,7 +110,7 @@ class SettingsActivity : AppCompatActivity() {
             val enablePolling = sharedPreferences.getBoolean("enable_polling", false)
 
             if (notifyNewCirculars && !enablePolling) {
-                val serverID = ServerAPI.getInstance(requireContext()).serverID()
+                val serverID = AndroidServerApi.getInstance(requireContext()).serverID()
                 val serverToken = ServerAPI.Companion.Servers.values()[serverID].toString()
 
                 FirebaseTopicUtils.selectTopic(serverToken, requireContext())

@@ -11,7 +11,9 @@ buildscript {
     dependencies {
         classpath(Config.Plugin.android)
         classpath(Config.Plugin.kotlin)
+        classpath(Config.Plugin.serialization)
         classpath(Config.Plugin.google)
+        classpath(Config.Plugin.sqlDelight)
         classpath(Config.Plugin.ktlint)
         classpath(Config.Plugin.aboutLibraries)
         // NOTE: Do not place your application dependencies here; they belong

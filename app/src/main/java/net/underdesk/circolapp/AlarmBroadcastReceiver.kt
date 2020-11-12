@@ -29,8 +29,10 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
-import net.underdesk.circolapp.data.AppDatabase
-import net.underdesk.circolapp.data.Circular
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import net.underdesk.circolapp.data.AndroidDatabase
+import net.underdesk.circolapp.shared.data.Circular
 
 class AlarmBroadcastReceiver : BroadcastReceiver() {
 
@@ -41,27 +43,25 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        object : Thread() {
-            override fun run() {
-                createNotificationChannel(context)
-                val circular = AppDatabase.getInstance(context).circularDao().getCircular(
-                    intent.getLongExtra(
-                        CIRCULAR_ID,
-                        0
-                    ),
-                    intent.getIntExtra(
-                        SCHOOL_ID,
-                        0
-                    )
+        GlobalScope.launch {
+            createNotificationChannel(context)
+            val circular = AndroidDatabase.getDaoInstance(context).getCircular(
+                intent.getLongExtra(
+                    CIRCULAR_ID,
+                    0
+                ),
+                intent.getIntExtra(
+                    SCHOOL_ID,
+                    0
                 )
-                createNotification(
-                    context,
-                    circular
-                )
-                AppDatabase.getInstance(context).circularDao()
-                    .update(circular.apply { reminder = false })
-            }
-        }.start()
+            )
+            createNotification(
+                context,
+                circular
+            )
+            AndroidDatabase.getDaoInstance(context)
+                .update(circular.id, circular.school, circular.favourite, false)
+        }
     }
 
     private fun createNotification(context: Context, circular: Circular) {

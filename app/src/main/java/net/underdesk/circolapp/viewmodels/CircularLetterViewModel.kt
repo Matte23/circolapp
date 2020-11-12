@@ -23,8 +23,8 @@ import android.content.SharedPreferences
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.launch
-import net.underdesk.circolapp.data.Circular
-import net.underdesk.circolapp.data.CircularRepository
+import net.underdesk.circolapp.shared.data.Circular
+import net.underdesk.circolapp.shared.data.CircularRepository
 import net.underdesk.circolapp.utils.DoubleTrigger
 
 class CircularLetterViewModel internal constructor(
@@ -40,12 +40,12 @@ class CircularLetterViewModel internal constructor(
     val circulars: LiveData<List<Circular>> =
         Transformations.switchMap(DoubleTrigger(query, schoolID)) { input ->
             if (input.first == null || input.first == "") {
-                circularRepository.circularDao.getLiveCirculars(input.second ?: 0)
+                circularRepository.circularDao.getFlowCirculars(input.second ?: 0).asLiveData()
             } else {
                 circularRepository.circularDao.searchCirculars(
                     "%${input.first}%",
                     input.second ?: 0
-                )
+                ).asLiveData()
             }
         }
 

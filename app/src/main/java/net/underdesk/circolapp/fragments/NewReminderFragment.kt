@@ -29,36 +29,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.AlarmManagerCompat
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.dialog_reminder.*
+import kotlinx.coroutines.launch
 import net.underdesk.circolapp.AlarmBroadcastReceiver
 import net.underdesk.circolapp.R
-import net.underdesk.circolapp.data.AppDatabase
-import net.underdesk.circolapp.data.Circular
+import net.underdesk.circolapp.data.AndroidDatabase
+import net.underdesk.circolapp.shared.data.Circular
 import java.util.*
 
 class NewReminderFragment : DialogFragment() {
 
     companion object {
-        private const val CIRCULAR = "circular"
-
         fun create(circular: Circular): NewReminderFragment {
             val dialog = NewReminderFragment()
-            dialog.arguments = Bundle().apply {
-                putParcelable(CIRCULAR, circular)
-            }
+            dialog.circular = circular
             return dialog
         }
     }
 
     private var dateNotChosen = true
-    var circular: Circular? = null
+    lateinit var circular: Circular
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        circular = arguments?.getParcelable(CIRCULAR)
         return inflater.inflate(R.layout.dialog_reminder, container)
     }
 
@@ -101,33 +98,31 @@ class NewReminderFragment : DialogFragment() {
                 minute
             )
 
-            object : Thread() {
-                override fun run() {
-                    context?.let { context ->
-                        circular?.let { circular ->
-                            AppDatabase.getInstance(context).circularDao()
-                                .update(circular.apply { reminder = true })
+            lifecycleScope.launch {
+                context?.let { context ->
+                    circular.let { circular ->
+                        AndroidDatabase.getDaoInstance(context)
+                            .update(circular.id, circular.school, circular.favourite, true)
 
-                            val pendingIntent = PendingIntent.getBroadcast(
-                                context,
-                                circular.id.toInt(),
-                                Intent(context, AlarmBroadcastReceiver::class.java)
-                                    .putExtra(AlarmBroadcastReceiver.CIRCULAR_ID, circular.id)
-                                    .putExtra(AlarmBroadcastReceiver.SCHOOL_ID, circular.school),
-                                0
-                            )
+                        val pendingIntent = PendingIntent.getBroadcast(
+                            context,
+                            circular.id.toInt(),
+                            Intent(context, AlarmBroadcastReceiver::class.java)
+                                .putExtra(AlarmBroadcastReceiver.CIRCULAR_ID, circular.id)
+                                .putExtra(AlarmBroadcastReceiver.SCHOOL_ID, circular.school),
+                            0
+                        )
 
-                            AlarmManagerCompat.setExactAndAllowWhileIdle(
-                                context.getSystemService(Context.ALARM_SERVICE) as AlarmManager,
-                                AlarmManager.RTC_WAKEUP,
-                                calendar.timeInMillis,
-                                pendingIntent
-                            )
-                        }
+                        AlarmManagerCompat.setExactAndAllowWhileIdle(
+                            context.getSystemService(Context.ALARM_SERVICE) as AlarmManager,
+                            AlarmManager.RTC_WAKEUP,
+                            calendar.timeInMillis,
+                            pendingIntent
+                        )
                     }
-                    dismiss()
                 }
-            }.start()
+                dismiss()
+            }
         }
     }
 

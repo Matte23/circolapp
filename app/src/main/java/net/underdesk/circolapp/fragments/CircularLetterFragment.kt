@@ -25,6 +25,7 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_circular_letters.*
@@ -32,9 +33,7 @@ import kotlinx.android.synthetic.main.fragment_circular_letters.view.*
 import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
-import net.underdesk.circolapp.data.AppDatabase
-import net.underdesk.circolapp.data.CircularRepository
-import net.underdesk.circolapp.server.ServerAPI
+import net.underdesk.circolapp.data.AndroidCircularRepository
 import net.underdesk.circolapp.viewmodels.CircularLetterViewModel
 import net.underdesk.circolapp.viewmodels.CircularLetterViewModelFactory
 
@@ -45,10 +44,7 @@ class CircularLetterFragment :
 
     private val circularLetterViewModel: CircularLetterViewModel by viewModels {
         CircularLetterViewModelFactory(
-            CircularRepository.getInstance(
-                AppDatabase.getInstance(requireContext()).circularDao(),
-                ServerAPI.getInstance(requireContext())
-            ),
+            AndroidCircularRepository.getInstance(requireContext()),
             requireActivity().application
         )
     }
@@ -67,7 +63,7 @@ class CircularLetterFragment :
             {
                 if (root.circulars_list.adapter == null) {
                     root.circulars_list.adapter =
-                        CircularLetterAdapter(it, activity as MainActivity)
+                        CircularLetterAdapter(it, activity as MainActivity, lifecycleScope)
                 } else {
                     (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
                 }

@@ -24,14 +24,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_circular_letters.view.*
 import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
-import net.underdesk.circolapp.data.AppDatabase
-import net.underdesk.circolapp.data.CircularRepository
-import net.underdesk.circolapp.server.ServerAPI
+import net.underdesk.circolapp.data.AndroidCircularRepository
 import net.underdesk.circolapp.viewmodels.FavouritesViewModel
 import net.underdesk.circolapp.viewmodels.FavouritesViewModelFactory
 
@@ -39,10 +38,7 @@ class FavouritesFragment : Fragment(), MainActivity.SearchCallback {
 
     private val favouritesViewModel: FavouritesViewModel by viewModels {
         FavouritesViewModelFactory(
-            CircularRepository.getInstance(
-                AppDatabase.getInstance(requireContext()).circularDao(),
-                ServerAPI.getInstance(requireContext())
-            ),
+            AndroidCircularRepository.getInstance(requireContext()),
             requireActivity().application
         )
     }
@@ -62,7 +58,7 @@ class FavouritesFragment : Fragment(), MainActivity.SearchCallback {
             {
                 if (root.circulars_list.adapter == null) {
                     root.circulars_list.adapter =
-                        CircularLetterAdapter(it, activity as MainActivity)
+                        CircularLetterAdapter(it, activity as MainActivity, lifecycleScope)
                 } else {
                     (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
                 }
