@@ -8,6 +8,7 @@ import net.underdesk.circolapp.shared.utils.SqlUtils.joinToString
 import net.underdesk.circolapp.shared.utils.SqlUtils.toBoolean
 import net.underdesk.circolapp.shared.utils.SqlUtils.toList
 import net.underdesk.circolapp.shared.utils.SqlUtils.toLong
+import net.underdesk.circolapp.shared.utils.wrap
 
 class CircularDao(
     database: AppDatabase
@@ -66,22 +67,28 @@ class CircularDao(
 
     fun getFlowCirculars(school: Int) =
         appDatabaseQueries.getCirculars(school.toLong(), circularMapper).asFlow().mapToList()
+    fun getCFlowCirculars(school: Int) = getFlowCirculars(school).wrap()
 
     fun searchCirculars(query: String, school: Int) =
         appDatabaseQueries.searchCirculars(school.toLong(), query, circularMapper).asFlow()
             .mapToList()
+    fun searchCircularsC(query: String, school: Int) = searchCirculars(query, school).wrap()
 
     fun getFavourites(school: Int) =
         appDatabaseQueries.getFavourites(school.toLong(), circularMapper).asFlow().mapToList()
+    fun getFavouritesC(school: Int) = getFavourites(school).wrap()
 
     fun searchFavourites(query: String, school: Int) =
         appDatabaseQueries.searchFavourites(school.toLong(), query, circularMapper).asFlow()
             .mapToList()
+    fun searchFavouritesC(query: String, school: Int) = searchFavourites(query, school).wrap()
 
     fun getReminders(school: Int) =
         appDatabaseQueries.getReminders(school.toLong(), circularMapper).asFlow().mapToList()
+    fun getRemindersC(school: Int) = getReminders(school).wrap()
 
     fun searchReminders(query: String, school: Int) =
         appDatabaseQueries.searchReminders(school.toLong(), query, circularMapper).asFlow()
             .mapToList()
+    fun searchRemindersC(query: String, school: Int) = searchReminders(query, school).wrap()
 }

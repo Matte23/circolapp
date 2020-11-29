@@ -2,11 +2,14 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     kotlin("plugin.serialization")
     id("com.android.library")
     id("kotlin-android-extensions")
     id("com.squareup.sqldelight")
 }
+
+version = "1.0"
 
 repositories {
     gradlePluginPortal()
@@ -24,27 +27,28 @@ kotlin {
     val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
 
     if (sdkName.startsWith("iphoneos")) {
-        iosArm64("ios") {
-            binaries {
-                framework {
-                    baseName = "Shared"
-                }
-            }
-        }
+        iosArm64("ios")
     } else {
-        iosX64("ios") {
-            binaries {
-                framework {
-                    baseName = "Shared"
-                }
-            }
-        }
+        iosX64("ios")
+    }
+
+    cocoapods {
+        summary = "Shared module for Circolapp"
+        homepage = "Link to a Kotlin/Native module homepage"
+
+        frameworkName = "Shared"
+
+        pod ("HTMLKit", "~> 3.1.0")
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Dependencies.Kotlin.coroutinesCore)
+                implementation(Dependencies.Kotlin.coroutinesCore) {
+                    version {
+                        strictly("1.3.9-native-mt")
+                    }
+                }
 
                 // Ktor
                 implementation(Dependencies.Ktor.ktorCore)
