@@ -16,6 +16,7 @@ buildscript {
         classpath(Config.Plugin.sqlDelight)
         classpath(Config.Plugin.ktlint)
         classpath(Config.Plugin.aboutLibraries)
+        classpath(Config.Plugin.dependencies)
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -30,6 +31,7 @@ allprojects {
         }
     }
 
+    apply(plugin = "com.github.ben-manes.versions")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 }
 

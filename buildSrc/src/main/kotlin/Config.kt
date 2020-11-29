@@ -11,6 +11,8 @@ object Config {
             "com.squareup.sqldelight:gradle-plugin:${Dependencies.SQLDelight.version}"
         const val aboutLibraries =
             "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:${Dependencies.AboutLibraries.version}"
+        const val dependencies =
+            "com.github.ben-manes:gradle-versions-plugin:0.36.0"
     }
 
     object Android {
