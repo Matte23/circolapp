@@ -3,7 +3,7 @@ object Dependencies {
         const val version = "1.4.20"
         const val core = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${version}"
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9-native-mt"
-        const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
+        const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9-native-mt"
     }
 
     object AndroidX {
