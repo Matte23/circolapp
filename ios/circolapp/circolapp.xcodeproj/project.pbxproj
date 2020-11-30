@@ -12,6 +12,7 @@
 		954E683D2574ED9E0034EBA8 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */; };
 		9553DB09257173ED006AE167 /* iOSDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9553DB08257173ED006AE167 /* iOSDatabase.swift */; };
 		95906F48257508660060F5D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95906F47257506360060F5D0 /* Assets.xcassets */; };
+		95906F4D257510370060F5D0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95906F4C257510370060F5D0 /* GoogleService-Info.plist */; };
 		95BC3BF82572BCF900F24400 /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BC3BF72572BCF900F24400 /* AttachmentView.swift */; };
 		95C46A51255D3A34007A75E5 /* CircularViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C46A50255D3A34007A75E5 /* CircularViewModel.swift */; };
 		95C9CBA32570EDEE005F879D /* Pods_circolapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BEA78E7C5BBEF0119834B33 /* Pods_circolapp.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -45,6 +46,7 @@
 		954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
 		9553DB08257173ED006AE167 /* iOSDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDatabase.swift; sourceTree = "<group>"; };
 		95906F47257506360060F5D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		95906F4C257510370060F5D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		95BC3BF72572BCF900F24400 /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		95C46A50255D3A34007A75E5 /* CircularViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularViewModel.swift; sourceTree = "<group>"; };
 		95CA31AC255C1EDE00AC095B /* circolapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = circolapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +134,7 @@
 				95C46A50255D3A34007A75E5 /* CircularViewModel.swift */,
 				954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */,
 				95CA31B8255C1EE000AC095B /* Info.plist */,
+				95906F4C257510370060F5D0 /* GoogleService-Info.plist */,
 				95906F47257506360060F5D0 /* Assets.xcassets */,
 				9547205A2573B688005AA401 /* Settings.bundle */,
 				95CA31B5255C1EE000AC095B /* Preview Content */,
@@ -208,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95CA31B7255C1EE000AC095B /* Preview Assets.xcassets in Resources */,
+				95906F4D257510370060F5D0 /* GoogleService-Info.plist in Resources */,
 				95906F48257508660060F5D0 /* Assets.xcassets in Resources */,
 				9547205B2573B688005AA401 /* Settings.bundle in Resources */,
 			);

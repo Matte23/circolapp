@@ -4,4 +4,6 @@ target 'circolapp' do
   platform :ios, '14.2'
   # Pods for iosApp
   pod 'shared', :path => '../../shared'
+  pod 'Firebase/Messaging'
+  pod 'Firebase/AppDistribution'
 end
