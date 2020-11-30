@@ -19,7 +19,7 @@ object AndroidServerApi {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val serverID = sharedPreferences.getString("school", "0")?.toInt() ?: 0
 
-        val server = ServerAPI.Companion.Servers.values()[serverID]
+        val server = ServerAPI.getServer(serverID)
 
         return instance ?: synchronized(this) {
             instance ?: ServerAPI(ServerAPI.createServer(server)).also { instance = it }

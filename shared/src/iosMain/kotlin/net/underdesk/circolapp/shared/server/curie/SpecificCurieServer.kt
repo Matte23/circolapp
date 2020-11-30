@@ -12,7 +12,7 @@ actual class SpecificCurieServer actual constructor(private val curieServer: Cur
         val list = ArrayList<Circular>()
 
         htmlList?.forEach { element ->
-            if (element.parentElement?.parentElement?.parentElement?.tagName  == "li") {
+            if (element.parentElement?.parentElement?.parentElement?.tagName == "li") {
                 list.last().attachmentsNames.add(element.textContent)
                 list.last().attachmentsUrls.add(element.attributes.objectForKey("href").toString())
             } else {

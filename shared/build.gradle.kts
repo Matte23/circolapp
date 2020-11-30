@@ -38,7 +38,7 @@ kotlin {
 
         frameworkName = "Shared"
 
-        pod ("HTMLKit", "~> 3.1.0")
+        pod("HTMLKit", "~> 3.1.0")
     }
 
     sourceSets {

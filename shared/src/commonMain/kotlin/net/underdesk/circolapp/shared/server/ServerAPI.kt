@@ -54,6 +54,10 @@ class ServerAPI(
             SUCCESS, ERROR
         }
 
+        fun getServer(serverID: Int): Servers {
+            return Servers.values()[serverID]
+        }
+
         fun getServerId(server: Servers): Int {
             return Servers.values().indexOf(server)
         }
