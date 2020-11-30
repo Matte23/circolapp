@@ -1,0 +1,23 @@
+PODS:
+  - HTMLKit (3.1.0)
+  - shared (1.0):
+    - HTMLKit (~> 3.1.0)
+
+DEPENDENCIES:
+  - shared (from `../../shared`)
+
+SPEC REPOS:
+  trunk:
+    - HTMLKit
+
+EXTERNAL SOURCES:
+  shared:
+    :path: "../../shared"
+
+SPEC CHECKSUMS:
+  HTMLKit: 4ed10a911462cbf972329ec6aaaa827208dfd70c
+  shared: fb3154b4def038b2b13aa88e01dd9f91bb2de9b5
+
+PODFILE CHECKSUM: 90ac34abdd7012dde25705873407c94d0f26fa6b
+
+COCOAPODS: 1.10.0
