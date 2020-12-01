@@ -26,10 +26,52 @@ struct AttachmentView: View {
     
     var body: some View {
         Divider()
-        Text(attachmentName)
-            .font(.subheadline)
-            .multilineTextAlignment(.leading)
-        
+        HStack {
+            Text(attachmentName)
+                .font(.subheadline)
+                .multilineTextAlignment(.leading)
+            Spacer()
+            
+            Button(action: {
+                guard let url = URL(string: attachmentUrl) else { return }
+                openURL(url)
+            }) {
+                Image(systemName: "envelope.open")
+                    .foregroundColor(.blue)
+                    .font(.body)
+                    .padding()
+            }
+            .buttonStyle(PlainButtonStyle())
+            
+            Button(action: {
+                guard let url = URL(string: attachmentUrl) else { return }
+                
+                let downloadTask = URLSession.shared.downloadTask(with: url) {
+                    urlOrNil, responseOrNil, errorOrNil in
+                    
+                    guard let fileURL = urlOrNil else { return }
+                    do {
+                        let documentsURL = try
+                            FileManager.default.url(for: .documentDirectory,
+                                                    in: .userDomainMask,
+                                                    appropriateFor: nil,
+                                                    create: false)
+                        let savedURL = documentsURL.appendingPathComponent(fileURL.lastPathComponent)
+                        try FileManager.default.moveItem(at: fileURL, to: savedURL)
+                    } catch {
+                        print ("file error: \(error)")
+                    }
+                }
+                
+                downloadTask.resume()
+            }) {
+                Image(systemName: "square.and.arrow.down")
+                    .foregroundColor(.blue)
+                    .font(.body)
+                    .padding()
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
     }
 }
 

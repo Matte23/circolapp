@@ -60,6 +60,26 @@ struct CircularView: View {
                     .buttonStyle(PlainButtonStyle())
                     
                     Button(action: {
+                        guard let url = URL(string: circular.url) else { return }
+                        
+                        let downloadTask = URLSession.shared.downloadTask(with: url) {
+                            urlOrNil, responseOrNil, errorOrNil in
+                            
+                            guard let fileURL = urlOrNil else { return }
+                            do {
+                                let documentsURL = try
+                                    FileManager.default.url(for: .documentDirectory,
+                                                            in: .userDomainMask,
+                                                            appropriateFor: nil,
+                                                            create: false)
+                                let savedURL = documentsURL.appendingPathComponent(fileURL.lastPathComponent)
+                                try FileManager.default.moveItem(at: fileURL, to: savedURL)
+                            } catch {
+                                print ("file error: \(error)")
+                            }
+                        }
+                        
+                        downloadTask.resume()
                     }) {
                         Image(systemName: "square.and.arrow.down")
                             .foregroundColor(.blue)
