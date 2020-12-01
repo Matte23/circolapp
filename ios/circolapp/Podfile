@@ -1,6 +1,8 @@
 target 'circolapp' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+  # Inhibit warnings for all pods
+  inhibit_all_warnings!
   platform :ios, '14.2'
   # Pods for iosApp
   pod 'shared', :path => '../../shared'
