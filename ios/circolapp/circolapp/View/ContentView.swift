@@ -17,6 +17,7 @@
  */
 
 import SwiftUI
+import UIKit
 import Shared
 
 struct ContentView: View {
@@ -35,30 +36,27 @@ struct ContentView: View {
                 self.circularViewModel.stopObserving()
             })
         }
-        .toolbar {
-            ToolbarItem(placement: .bottomBar) {
-                HStack(spacing: 50) {
-                    
-                    Button(action: {
-                        self.circularViewModel.startObservingCirculars()
-                    }) {
-                        Image(systemName: "folder")
-                    }
-                    
-                    Button(action: {
-                        self.circularViewModel.startObservingFavourites()
-                    }) {
-                        Image(systemName: "book")
-                    }
-                    
-                    Button(action: {
-                        self.circularViewModel.startObservingAlarms()
-                    }) {
-                        Image(systemName: "alarm")
-                    }
-                }
+        
+        Divider()
+        HStack(spacing: 50) {
+            Button(action: {
+                self.circularViewModel.startObservingCirculars()
+            }) {
+                Image(systemName: "folder")
             }
-        }
+            
+            Button(action: {
+                self.circularViewModel.startObservingFavourites()
+            }) {
+                Image(systemName: "book")
+            }
+            
+            Button(action: {
+                self.circularViewModel.startObservingAlarms()
+            }) {
+                Image(systemName: "alarm")
+            }
+        }.frame(height: 50.0)
     }
 }
 

@@ -17,10 +17,10 @@
  */
 
 import SwiftUI
+import UIKit
 import Shared
 
 struct CircularView: View {
-    @Environment(\.openURL) var openURL
     @State private var showDetail = false
     var circular: Circular
     
@@ -50,7 +50,7 @@ struct CircularView: View {
                 HStack {
                     Button(action: {
                         guard let url = URL(string: circular.url) else { return }
-                        openURL(url)
+                        UIApplication.shared.open(url)
                     }) {
                         Image(systemName: "envelope.open")
                             .foregroundColor(.blue)
@@ -109,10 +109,8 @@ struct CircularView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
                 
-                LazyVStack {
-                    ForEach(0..<circular.attachmentsNames.count, id: \.self) { index in
+                ForEach(0..<circular.attachmentsNames.count, id: \.self) { index in
                         AttachmentView(attachmentName: circular.attachmentsNames[index] as! String, attachmentUrl: circular.attachmentsUrls[index] as! String)
-                    }
                 }
             }
         }

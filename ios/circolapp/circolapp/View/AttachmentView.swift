@@ -17,10 +17,10 @@
  */
 
 import SwiftUI
+import UIKit
 import Shared
 
 struct AttachmentView: View {
-    @Environment(\.openURL) var openURL
     var attachmentName: String
     var attachmentUrl: String
     
@@ -34,7 +34,7 @@ struct AttachmentView: View {
             
             Button(action: {
                 guard let url = URL(string: attachmentUrl) else { return }
-                openURL(url)
+                UIApplication.shared.open(url)
             }) {
                 Image(systemName: "envelope.open")
                     .foregroundColor(.blue)

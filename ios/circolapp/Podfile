@@ -3,7 +3,7 @@ target 'circolapp' do
   use_frameworks!
   # Inhibit warnings for all pods
   inhibit_all_warnings!
-  platform :ios, '14.2'
+  platform :ios, '13.0'
   # Pods for iosApp
   pod 'shared', :path => '../../shared'
   pod 'Firebase/Messaging'

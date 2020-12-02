@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		952DEDDF2576F8DC001DF85D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */; };
 		9547205B2573B688005AA401 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9547205A2573B688005AA401 /* Settings.bundle */; };
 		954E68352574E3890034EBA8 /* iOSServerApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E68342574E3890034EBA8 /* iOSServerApi.swift */; };
 		954E683D2574ED9E0034EBA8 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */; };
@@ -17,7 +18,7 @@
 		95C46A51255D3A34007A75E5 /* CircularViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C46A50255D3A34007A75E5 /* CircularViewModel.swift */; };
 		95C9CBA32570EDEE005F879D /* Pods_circolapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BEA78E7C5BBEF0119834B33 /* Pods_circolapp.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		95C9CBA42570EDEE005F879D /* Pods_circolapp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BEA78E7C5BBEF0119834B33 /* Pods_circolapp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		95CA31B0255C1EDE00AC095B /* CircolApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA31AF255C1EDE00AC095B /* CircolApp.swift */; };
+		95CA31B0255C1EDE00AC095B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA31AF255C1EDE00AC095B /* AppDelegate.swift */; };
 		95CA31B2255C1EDE00AC095B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA31B1255C1EDE00AC095B /* ContentView.swift */; };
 		95CA31B7255C1EE000AC095B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95CA31B6255C1EE000AC095B /* Preview Assets.xcassets */; };
 		95CA31C0255C28C300AC095B /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA31BF255C28C300AC095B /* CircularView.swift */; };
@@ -41,6 +42,7 @@
 		892B265487980F6A344AC2A7 /* Pods-circolapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-circolapp.debug.xcconfig"; path = "Target Support Files/Pods-circolapp/Pods-circolapp.debug.xcconfig"; sourceTree = "<group>"; };
 		8BEA78E7C5BBEF0119834B33 /* Pods_circolapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_circolapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		952C5954255C57650018C010 /* shared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = shared.framework; path = "../../shared/build/xcode-frameworks/shared.framework"; sourceTree = "<group>"; };
+		952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9547205A2573B688005AA401 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		954E68342574E3890034EBA8 /* iOSServerApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSServerApi.swift; sourceTree = "<group>"; };
 		954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
@@ -51,7 +53,7 @@
 		95BC3BF72572BCF900F24400 /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		95C46A50255D3A34007A75E5 /* CircularViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularViewModel.swift; sourceTree = "<group>"; };
 		95CA31AC255C1EDE00AC095B /* circolapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = circolapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		95CA31AF255C1EDE00AC095B /* CircolApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircolApp.swift; sourceTree = "<group>"; };
+		95CA31AF255C1EDE00AC095B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		95CA31B1255C1EDE00AC095B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		95CA31B6255C1EE000AC095B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		95CA31B8255C1EE000AC095B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -132,7 +134,8 @@
 				959B531E25764726009AD895 /* circolapp.entitlements */,
 				95906F46257506050060F5D0 /* Model */,
 				95906F45257505770060F5D0 /* View */,
-				95CA31AF255C1EDE00AC095B /* CircolApp.swift */,
+				95CA31AF255C1EDE00AC095B /* AppDelegate.swift */,
+				952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */,
 				95C46A50255D3A34007A75E5 /* CircularViewModel.swift */,
 				954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */,
 				95CA31B8255C1EE000AC095B /* Info.plist */,
@@ -270,9 +273,10 @@
 			files = (
 				9553DB09257173ED006AE167 /* iOSDatabase.swift in Sources */,
 				95CA31C0255C28C300AC095B /* CircularView.swift in Sources */,
+				952DEDDF2576F8DC001DF85D /* SceneDelegate.swift in Sources */,
 				95CA31B2255C1EDE00AC095B /* ContentView.swift in Sources */,
 				954E68352574E3890034EBA8 /* iOSServerApi.swift in Sources */,
-				95CA31B0255C1EDE00AC095B /* CircolApp.swift in Sources */,
+				95CA31B0255C1EDE00AC095B /* AppDelegate.swift in Sources */,
 				95BC3BF82572BCF900F24400 /* AttachmentView.swift in Sources */,
 				954E683D2574ED9E0034EBA8 /* UserDefaultsExtensions.swift in Sources */,
 				95C46A51255D3A34007A75E5 /* CircularViewModel.swift in Sources */,
@@ -413,7 +417,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = circolapp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -446,7 +450,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = circolapp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
