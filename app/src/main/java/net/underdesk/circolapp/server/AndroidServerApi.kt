@@ -11,7 +11,7 @@ object AndroidServerApi {
 
     fun getInstance(server: ServerAPI.Companion.Servers): ServerAPI {
         return instance ?: synchronized(this) {
-            instance ?: ServerAPI(ServerAPI.createServer(server)).also { instance = it }
+            instance ?: ServerAPI(server).also { instance = it }
         }
     }
 
@@ -22,7 +22,7 @@ object AndroidServerApi {
         val server = ServerAPI.getServer(serverID)
 
         return instance ?: synchronized(this) {
-            instance ?: ServerAPI(ServerAPI.createServer(server)).also { instance = it }
+            instance ?: ServerAPI(server).also { instance = it }
         }
     }
 
@@ -36,6 +36,6 @@ object AndroidServerApi {
         if (notifyNewCirculars && !enablePolling)
             FirebaseTopicUtils.selectTopic(newServer.toString(), context)
 
-        instance?.changeServer(ServerAPI.createServer(newServer))
+        instance?.changeServer(newServer)
     }
 }

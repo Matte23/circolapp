@@ -1,5 +1,6 @@
 package net.underdesk.circolapp.shared.server.porporato
 
+import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.utils.io.charsets.*
@@ -7,14 +8,11 @@ import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.underdesk.circolapp.shared.data.Circular
-import net.underdesk.circolapp.shared.server.KtorFactory
 import net.underdesk.circolapp.shared.server.Server
 import net.underdesk.circolapp.shared.server.ServerAPI
 import kotlin.coroutines.cancellation.CancellationException
 
-class PorporatoServer : Server() {
-    private val client = KtorFactory().createClient()
-
+class PorporatoServer(ktorClient: HttpClient) : Server(ktorClient) {
     private val baseUrl = "https://www.liceoporporato.edu.it/ARCHIVIO/PR/VP/"
     private val endpointUrls = listOf(
         "https://www.liceoporporato.edu.it/ARCHIVIO/PR/VP/circolari.php?dirname=CIRCOLARIP/- CIRCOLARI 2020-21/-01-Settembre/",
@@ -99,7 +97,7 @@ class PorporatoServer : Server() {
     @OptIn(ExperimentalStdlibApi::class)
     @Throws(IOException::class, CancellationException::class)
     private suspend fun retrieveDataFromServer(url: String): String {
-        return client.request<HttpResponse>(url).readText(Charsets.ISO_8859_1)
+        return ktorClient.request<HttpResponse>(url).readText(Charsets.ISO_8859_1)
     }
 
     fun generateFromString(string: String, path: String, index: Long): Circular {

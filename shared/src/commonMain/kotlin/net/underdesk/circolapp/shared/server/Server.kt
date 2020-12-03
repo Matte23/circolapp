@@ -18,9 +18,12 @@
 
 package net.underdesk.circolapp.shared.server
 
+import io.ktor.client.*
 import net.underdesk.circolapp.shared.data.Circular
 
-abstract class Server {
+abstract class Server(
+    val ktorClient: HttpClient
+) {
     abstract val serverID: Int
     abstract suspend fun getCircularsFromServer(): Pair<List<Circular>, ServerAPI.Companion.Result>
     abstract suspend fun newCircularsAvailable(): Pair<Boolean, ServerAPI.Companion.Result>

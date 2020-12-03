@@ -1,19 +1,17 @@
 package net.underdesk.circolapp.shared.server.curie
 
+import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.underdesk.circolapp.shared.data.Circular
-import net.underdesk.circolapp.shared.server.KtorFactory
 import net.underdesk.circolapp.shared.server.Server
 import net.underdesk.circolapp.shared.server.ServerAPI
 import net.underdesk.circolapp.shared.server.pojo.Response
 import kotlin.coroutines.cancellation.CancellationException
 
-class CurieServer : Server() {
-    private val client = KtorFactory().createClient()
-
+class CurieServer(ktorClient: HttpClient) : Server(ktorClient) {
     override val serverID = ServerAPI.getServerId(ServerAPI.Companion.Servers.CURIE)
 
     override suspend fun getCircularsFromServer(): Pair<List<Circular>, ServerAPI.Companion.Result> {
@@ -35,7 +33,7 @@ class CurieServer : Server() {
     @OptIn(ExperimentalStdlibApi::class)
     @Throws(IOException::class, CancellationException::class)
     private suspend fun retrieveDataFromServer(): Response {
-        return client.get(ENDPOINT_URL)
+        return ktorClient.get(ENDPOINT_URL)
     }
 
     fun generateFromString(string: String, url: String): Circular {

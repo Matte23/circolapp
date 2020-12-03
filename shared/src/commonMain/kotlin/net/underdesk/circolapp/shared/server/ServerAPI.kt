@@ -18,16 +18,22 @@
 
 package net.underdesk.circolapp.shared.server
 
+import io.ktor.client.*
 import kotlinx.coroutines.withContext
 import net.underdesk.circolapp.shared.PlatformDispatcher
 import net.underdesk.circolapp.shared.data.Circular
 import net.underdesk.circolapp.shared.server.curie.CurieServer
 import net.underdesk.circolapp.shared.server.porporato.PorporatoServer
 
-class ServerAPI(
+class ServerAPI(serverName: Servers) {
+    private val ktorClient = KtorFactory().createClient()
     private var server: Server
-) {
+
     fun serverID(): Int = server.serverID
+
+    init {
+        server = createServer(serverName, ktorClient)
+    }
 
     suspend fun getCircularsFromServer(): Pair<List<Circular>, Result> = withContext(PlatformDispatcher.IO) {
         val newCircularsAvailable = server.newCircularsAvailable()
@@ -41,8 +47,8 @@ class ServerAPI(
         server.getCircularsFromServer()
     }
 
-    fun changeServer(server: Server) {
-        this.server = server
+    fun changeServer(serverName: Servers) {
+        server = createServer(serverName, ktorClient)
     }
 
     companion object {
@@ -67,9 +73,9 @@ class ServerAPI(
             Servers.PORPORATO -> "Liceo G.F. Porporato"
         }
 
-        fun createServer(server: Servers) = when (server) {
-            Servers.CURIE -> CurieServer()
-            Servers.PORPORATO -> PorporatoServer()
+        fun createServer(server: Servers, ktorClient: HttpClient) = when (server) {
+            Servers.CURIE -> CurieServer(ktorClient)
+            Servers.PORPORATO -> PorporatoServer(ktorClient)
         }
     }
 }
