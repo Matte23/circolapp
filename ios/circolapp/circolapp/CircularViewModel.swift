@@ -41,8 +41,6 @@ class CircularViewModel: ObservableObject {
             if (self.circularWatcher != nil) {
                 self.startObservingCirculars()
             }
-            
-            self.updateCirculars()
         })
     }
     

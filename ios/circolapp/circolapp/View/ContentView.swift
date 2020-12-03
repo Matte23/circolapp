@@ -21,7 +21,7 @@ import UIKit
 import Shared
 
 struct ContentView: View {
-    @ObservedObject var circularViewModel = CircularViewModel(repository: CircularRepository(circularDao: iOSDatabase.getCircularDao(), serverAPI: ServerAPI(server: CurieServer())))
+    @ObservedObject var circularViewModel = CircularViewModel(repository: iOSRepository.getCircularRepository())
     
     var body: some View {
         NavigationView {

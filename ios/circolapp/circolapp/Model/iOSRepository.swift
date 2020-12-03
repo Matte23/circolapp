@@ -19,9 +19,15 @@
 import Foundation
 import Shared
 
-class iOSDatabase {
+class iOSRepository {
     static let database = DatabaseFactory().createDatabase(sqlDriver: DatabaseDriverFactory().createDriver())
+    
     public static func getCircularDao() -> CircularDao {
         return CircularDao(database: database)
+    }
+    
+    public static func getCircularRepository() -> CircularRepository {
+        let serverAPI = iOSServerApi.instance.serverAPI
+        return CircularRepository(circularDao: getCircularDao(), serverAPI: serverAPI)
     }
 }

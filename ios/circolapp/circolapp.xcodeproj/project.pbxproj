@@ -11,7 +11,7 @@
 		9547205B2573B688005AA401 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9547205A2573B688005AA401 /* Settings.bundle */; };
 		954E68352574E3890034EBA8 /* iOSServerApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E68342574E3890034EBA8 /* iOSServerApi.swift */; };
 		954E683D2574ED9E0034EBA8 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */; };
-		9553DB09257173ED006AE167 /* iOSDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9553DB08257173ED006AE167 /* iOSDatabase.swift */; };
+		9553DB09257173ED006AE167 /* iOSRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9553DB08257173ED006AE167 /* iOSRepository.swift */; };
 		95906F48257508660060F5D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95906F47257506360060F5D0 /* Assets.xcassets */; };
 		95906F4D257510370060F5D0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95906F4C257510370060F5D0 /* GoogleService-Info.plist */; };
 		95BC3BF82572BCF900F24400 /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BC3BF72572BCF900F24400 /* AttachmentView.swift */; };
@@ -46,7 +46,7 @@
 		9547205A2573B688005AA401 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		954E68342574E3890034EBA8 /* iOSServerApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSServerApi.swift; sourceTree = "<group>"; };
 		954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
-		9553DB08257173ED006AE167 /* iOSDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDatabase.swift; sourceTree = "<group>"; };
+		9553DB08257173ED006AE167 /* iOSRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSRepository.swift; sourceTree = "<group>"; };
 		95906F47257506360060F5D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95906F4C257510370060F5D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		959B531E25764726009AD895 /* circolapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = circolapp.entitlements; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 		95906F46257506050060F5D0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9553DB08257173ED006AE167 /* iOSDatabase.swift */,
+				9553DB08257173ED006AE167 /* iOSRepository.swift */,
 				954E68342574E3890034EBA8 /* iOSServerApi.swift */,
 			);
 			path = Model;
@@ -271,7 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9553DB09257173ED006AE167 /* iOSDatabase.swift in Sources */,
+				9553DB09257173ED006AE167 /* iOSRepository.swift in Sources */,
 				95CA31C0255C28C300AC095B /* CircularView.swift in Sources */,
 				952DEDDF2576F8DC001DF85D /* SceneDelegate.swift in Sources */,
 				95CA31B2255C1EDE00AC095B /* ContentView.swift in Sources */,

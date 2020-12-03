@@ -20,6 +20,8 @@ import Foundation
 import Shared
 
 class iOSServerApi {
+    static let instance = iOSServerApi()
+    
     private let key = "school"
     private let serverCompanion = ServerAPI.Companion()
     
@@ -29,7 +31,7 @@ class iOSServerApi {
     init() {
         let serverID = UserDefaults.standard.integer(forKey: key)
         let server = serverCompanion.getServer(serverID: Int32(serverID))
-        serverAPI = ServerAPI(server: serverCompanion.createServer(server: server))
+        serverAPI = ServerAPI(serverName: server)
         
         userDefaultsObserver = UserDefaults.standard.observe(\.school, options: [.initial, .new], changeHandler: { (defaults, change) in
             self.changeServer(serverID: change.newValue ?? 0)
@@ -43,7 +45,13 @@ class iOSServerApi {
     func changeServer(serverID: Int) {
         let serverID = UserDefaults.standard.integer(forKey: key)
         let server = serverCompanion.getServer(serverID: Int32(serverID))
+        serverAPI = ServerAPI(serverName: server)
         
-        serverAPI.changeServer(server: serverCompanion.createServer(server: server))
+        CircularRepository(circularDao: iOSRepository.getCircularDao(), serverAPI: serverAPI).updateCirculars(returnNewCirculars: false, completionHandler:
+                                                                                                                { result, error in
+                                                                                                                    if let errorReal = error {
+                                                                                                                        print(errorReal.localizedDescription)
+                                                                                                                    }
+                                                                                                                })
     }
 }

@@ -89,7 +89,7 @@ struct CircularView: View {
                     .buttonStyle(PlainButtonStyle())
                     
                     Button(action: {
-                        iOSDatabase.getCircularDao().update(id: circular.id, school: circular.school, favourite: !circular.favourite, reminder: circular.reminder, completionHandler: {_,_ in })
+                        iOSRepository.getCircularDao().update(id: circular.id, school: circular.school, favourite: !circular.favourite, reminder: circular.reminder, completionHandler: {_,_ in })
                     }) {
                         Image(systemName: circular.favourite ? "bookmark.fill" : "bookmark")
                             .foregroundColor(.blue)
@@ -99,7 +99,7 @@ struct CircularView: View {
                     .buttonStyle(PlainButtonStyle())
                     
                     Button(action: {
-                        iOSDatabase.getCircularDao().update(id: circular.id, school: circular.school, favourite: circular.favourite, reminder: !circular.reminder, completionHandler: {_,_ in })
+                        iOSRepository.getCircularDao().update(id: circular.id, school: circular.school, favourite: circular.favourite, reminder: !circular.reminder, completionHandler: {_,_ in })
                     }) {
                         Image(systemName: circular.reminder ? "alarm.fill" : "alarm")
                             .foregroundColor(.blue)
