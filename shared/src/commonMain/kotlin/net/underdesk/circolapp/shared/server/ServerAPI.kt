@@ -64,6 +64,10 @@ class ServerAPI(serverName: Servers) {
             return Servers.values()[serverID]
         }
 
+        fun getServerTopic(serverID: Int): String {
+            return getServer(serverID).toString()
+        }
+
         fun getServerId(server: Servers): Int {
             return Servers.values().indexOf(server)
         }

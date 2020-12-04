@@ -17,12 +17,24 @@
  */
 
 import UIKit
+import UserNotifications
 import Firebase
 
 @UIApplicationMain
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
+                
+        // For iOS 10 display notification (sent via APNS)
+        UNUserNotificationCenter.current().delegate = self
+
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+        options: authOptions,
+        completionHandler: {_, _ in })
+
+        application.registerForRemoteNotifications()
+        
         return true
     }
 
@@ -37,4 +49,34 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
+}
+
+extension AppDelegate : UNUserNotificationCenterDelegate {
+
+  // Receive displayed notifications for iOS 10 devices.
+  func userNotificationCenter(_ center: UNUserNotificationCenter,
+                              willPresent notification: UNNotification,
+    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    iOSRepository.getCircularRepository().updateCirculars(returnNewCirculars: false, completionHandler:
+                                                                    { result, error in
+                                                                        if let errorReal = error {
+                                                                            print(errorReal.localizedDescription)
+                                                                        }
+                                                                    })
+    
+    // UI is updated automatically
+  }
+
+  func userNotificationCenter(_ center: UNUserNotificationCenter,
+                              didReceive response: UNNotificationResponse,
+                              withCompletionHandler completionHandler: @escaping () -> Void) {
+    iOSRepository.getCircularRepository().updateCirculars(returnNewCirculars: false, completionHandler:
+                                                                    { result, error in
+                                                                        if let errorReal = error {
+                                                                            print(errorReal.localizedDescription)
+                                                                        }
+                                                                    })
+
+    completionHandler()
+  }
 }

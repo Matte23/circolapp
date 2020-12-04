@@ -17,19 +17,21 @@
  */
 
 import Foundation
+import Firebase
 import Shared
 
 class iOSServerApi {
     static let instance = iOSServerApi()
     
-    private let key = "school"
+    private let schoolKey = "school"
+    private let topicKey = "topic"
     private let serverCompanion = ServerAPI.Companion()
     
     var serverAPI: ServerAPI
     private var userDefaultsObserver: NSKeyValueObservation? = nil
     
     init() {
-        let serverID = UserDefaults.standard.integer(forKey: key)
+        let serverID = UserDefaults.standard.integer(forKey: schoolKey)
         let server = serverCompanion.getServer(serverID: Int32(serverID))
         serverAPI = ServerAPI(serverName: server)
         
@@ -43,9 +45,23 @@ class iOSServerApi {
     }
     
     func changeServer(serverID: Int) {
-        let serverID = UserDefaults.standard.integer(forKey: key)
+        let serverID = UserDefaults.standard.integer(forKey: schoolKey)
         let server = serverCompanion.getServer(serverID: Int32(serverID))
         serverAPI = ServerAPI(serverName: server)
+        
+        let nullableOldTopic = UserDefaults.standard.string(forKey: topicKey)
+        let newTopic = serverCompanion.getServerTopic(serverID: Int32(serverID))
+        if (nullableOldTopic == nil || nullableOldTopic != newTopic) {
+            if let oldTopic = nullableOldTopic {
+                Messaging.messaging().unsubscribe(fromTopic: oldTopic + "IOS")
+            }
+
+            Messaging.messaging().subscribe(toTopic: newTopic + "IOS") { error in
+              print("Subscribed to topic: " + newTopic)
+            }
+            
+            UserDefaults.standard.set(newTopic, forKey: topicKey)
+        }
         
         CircularRepository(circularDao: iOSRepository.getCircularDao(), serverAPI: serverAPI).updateCirculars(returnNewCirculars: false, completionHandler:
                                                                                                                 { result, error in
