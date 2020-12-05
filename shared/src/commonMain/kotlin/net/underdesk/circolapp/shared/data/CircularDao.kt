@@ -83,9 +83,10 @@ class CircularDao(
             .mapToList()
     fun searchFavouritesC(query: String, school: Int) = searchFavourites(query, school).wrap()
 
-    fun getReminders(school: Int) =
+    fun getReminders(school: Int) = appDatabaseQueries.getReminders(school.toLong(), circularMapper).executeAsList()
+    fun getFlowReminders(school: Int) =
         appDatabaseQueries.getReminders(school.toLong(), circularMapper).asFlow().mapToList()
-    fun getRemindersC(school: Int) = getReminders(school).wrap()
+    fun getCFlowReminders(school: Int) = getFlowReminders(school).wrap()
 
     fun searchReminders(query: String, school: Int) =
         appDatabaseQueries.searchReminders(school.toLong(), query, circularMapper).asFlow()

@@ -21,6 +21,7 @@ import UIKit
 import Shared
 
 struct CircularView: View {
+    @State private var creatingReminder: Bool = false
     @State private var showDetail = false
     var circular: Circular
     
@@ -99,7 +100,16 @@ struct CircularView: View {
                     .buttonStyle(PlainButtonStyle())
                     
                     Button(action: {
-                        iOSRepository.getCircularDao().update(id: circular.id, school: circular.school, favourite: circular.favourite, reminder: !circular.reminder, completionHandler: {_,_ in })
+                        if circular.reminder {
+                            let center =  UNUserNotificationCenter.current()
+                            center.removePendingNotificationRequests(withIdentifiers: [String(circular.id)])
+                            
+                            iOSRepository.getCircularDao().update(id: circular.id, school: circular.school, favourite: circular.favourite, reminder: false, completionHandler: {_,_ in })
+                            
+                            return
+                        }
+                        
+                        self.creatingReminder = true
                     }) {
                         Image(systemName: circular.reminder ? "alarm.fill" : "alarm")
                             .foregroundColor(.blue)
@@ -107,10 +117,13 @@ struct CircularView: View {
                             .padding()
                     }
                     .buttonStyle(PlainButtonStyle())
+                    .sheet(isPresented: self.$creatingReminder) {
+                        NewReminderView(circular: circular)
+                    }
                 }
                 
                 ForEach(0..<circular.attachmentsNames.count, id: \.self) { index in
-                        AttachmentView(attachmentName: circular.attachmentsNames[index] as! String, attachmentUrl: circular.attachmentsUrls[index] as! String)
+                    AttachmentView(attachmentName: circular.attachmentsNames[index] as! String, attachmentUrl: circular.attachmentsUrls[index] as! String)
                 }
             }
         }

@@ -43,7 +43,7 @@ class RemindersViewModel internal constructor(
     val circulars: LiveData<List<Circular>> =
         Transformations.switchMap(DoubleTrigger(query, schoolID)) { input ->
             if (input.first == null || input.first == "") {
-                circularRepository.circularDao.getReminders(input.second ?: 0).asLiveData()
+                circularRepository.circularDao.getFlowReminders(input.second ?: 0).asLiveData()
             } else {
                 circularRepository.circularDao.searchReminders(
                     "%${input.first}%",

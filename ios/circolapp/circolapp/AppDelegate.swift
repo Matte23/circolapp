@@ -24,26 +24,26 @@ import Firebase
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
-                
+        
         // For iOS 10 display notification (sent via APNS)
         UNUserNotificationCenter.current().delegate = self
-
+        
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(
-        options: authOptions,
-        completionHandler: {_, _ in })
-
+            options: authOptions,
+            completionHandler: {_, _ in })
+        
         application.registerForRemoteNotifications()
         
         return true
     }
-
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
+    
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
@@ -52,31 +52,57 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 
 extension AppDelegate : UNUserNotificationCenterDelegate {
-
-  // Receive displayed notifications for iOS 10 devices.
-  func userNotificationCenter(_ center: UNUserNotificationCenter,
-                              willPresent notification: UNNotification,
-    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-    iOSRepository.getCircularRepository().updateCirculars(returnNewCirculars: false, completionHandler:
-                                                                    { result, error in
-                                                                        if let errorReal = error {
-                                                                            print(errorReal.localizedDescription)
-                                                                        }
-                                                                    })
     
-    // UI is updated automatically
-  }
-
-  func userNotificationCenter(_ center: UNUserNotificationCenter,
-                              didReceive response: UNNotificationResponse,
-                              withCompletionHandler completionHandler: @escaping () -> Void) {
-    iOSRepository.getCircularRepository().updateCirculars(returnNewCirculars: false, completionHandler:
-                                                                    { result, error in
-                                                                        if let errorReal = error {
-                                                                            print(errorReal.localizedDescription)
-                                                                        }
-                                                                    })
-
-    completionHandler()
-  }
+    // Receive displayed notifications for iOS 10 devices.
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        
+        // Handle reminder
+        if ((userInfo["reminder"]) != nil) {
+            let circularDao = iOSRepository.getCircularDao()
+            let circular = circularDao.getCircular(id: userInfo["id"] as! Int64, school: userInfo["school"] as! Int32)
+            iOSRepository.getCircularDao().update(id: circular.id, school: circular.school, favourite: circular.favourite, reminder: false, completionHandler: {_,_ in })
+            
+            // Show notification
+            completionHandler([.alert, .sound, .badge])
+            return
+        }
+        
+        // Handle new circular notification
+        iOSRepository.getCircularRepository().updateCirculars(returnNewCirculars: false, completionHandler:
+                                                                { result, error in
+                                                                    if let errorReal = error {
+                                                                        print(errorReal.localizedDescription)
+                                                                    }
+                                                                })
+        
+        
+        
+        // UI is updated automatically
+        completionHandler([])
+    }
+    
+    // Handle user action
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        // Do nothing if it's a reminder
+        if ((userInfo["reminder"]) != nil) {
+            completionHandler()
+            return
+        }
+        
+        iOSRepository.getCircularRepository().updateCirculars(returnNewCirculars: false, completionHandler:
+                                                                { result, error in
+                                                                    if let errorReal = error {
+                                                                        print(errorReal.localizedDescription)
+                                                                    }
+                                                                })
+        
+        completionHandler()
+    }
 }

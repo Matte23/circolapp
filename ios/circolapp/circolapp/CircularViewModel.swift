@@ -73,7 +73,7 @@ class CircularViewModel: ObservableObject {
     
     func startObservingAlarms() {
         stopObserving()
-        circularWatcher = repository.circularDao.getRemindersC(school: Int32(schoolID)).watch { circulars in
+        circularWatcher = repository.circularDao.getCFlowReminders(school: Int32(schoolID)).watch { circulars in
             self.circulars = circulars as! Array<Circular>;
         }
     }
