@@ -42,3 +42,26 @@ platform :android do
     upload_to_play_store
   end
 end
+
+platform :ios do
+  desc "Submit a new Nightly Build to Firebase App Distribution"
+  lane :nightly do
+    Dir.chdir "../ios/circolapp/circolapp"
+    increment_build_number(build_number: number_of_commits)
+
+    build_app(scheme: "circolapp",
+              workspace: "circolapp.xcworkspace",
+              export_method: "ad-hoc",
+              export_xcargs: "-allowProvisioningUpdates",
+              include_bitcode: true)
+
+    changelog_from_git_commits(
+      between: ["HEAD~1", "HEAD"]
+    )
+
+    firebase_app_distribution(
+      app: "1:455942942122:ios:f8d0401f40144885150fd3",
+      groups: "closed-beta-ios"
+    )
+  end
+end
