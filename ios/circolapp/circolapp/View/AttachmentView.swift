@@ -33,7 +33,7 @@ struct AttachmentView: View {
             Spacer()
             
             Button(action: {
-                guard let url = URL(string: attachmentUrl) else { return }
+                guard let url = URL(string: attachmentUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) else { return }
                 UIApplication.shared.open(url)
             }) {
                 Image(systemName: "envelope.open")

@@ -50,7 +50,7 @@ struct CircularView: View {
             if showDetail {
                 HStack {
                     Button(action: {
-                        guard let url = URL(string: circular.url) else { return }
+                        guard let url = URL(string: circular.url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) else { return }
                         UIApplication.shared.open(url)
                     }) {
                         Image(systemName: "envelope.open")
