@@ -25,6 +25,7 @@ class CircularViewModel: ObservableObject {
     private var circularWatcher: Ktor_ioCloseable? = nil
     private var userDefaultsObserver: NSKeyValueObservation? = nil
     private var schoolID = 0
+    private var category: Category = .all
     
     private let repository: CircularRepository
     private let key = "school"
@@ -58,6 +59,7 @@ class CircularViewModel: ObservableObject {
     }
     
     func startObservingCirculars() {
+        category = .all
         stopObserving()
         circularWatcher = repository.circularDao.getCFlowCirculars(school: Int32(schoolID)).watch { circulars in
             self.circulars = circulars as! Array<Circular>;
@@ -65,13 +67,15 @@ class CircularViewModel: ObservableObject {
     }
     
     func startObservingFavourites() {
+        category = .favourites
         stopObserving()
         circularWatcher = repository.circularDao.getFavouritesC(school: Int32(schoolID)).watch { circulars in
             self.circulars = circulars as! Array<Circular>;
         }
     }
     
-    func startObservingAlarms() {
+    func startObservingReminders() {
+        category = .reminders
         stopObserving()
         circularWatcher = repository.circularDao.getCFlowReminders(school: Int32(schoolID)).watch { circulars in
             self.circulars = circulars as! Array<Circular>;
@@ -81,4 +85,28 @@ class CircularViewModel: ObservableObject {
     func stopObserving() {
         circularWatcher?.close()
     }
+    
+    func search(query: String) {
+        let wrappedQuery = "%" + query + "%"
+        
+        stopObserving()
+        switch category {
+        case .all:
+            circularWatcher = repository.circularDao.searchCircularsC(query: wrappedQuery, school: Int32(schoolID)).watch { circulars in
+                self.circulars = circulars as! Array<Circular>;
+            }
+        case .favourites:
+            circularWatcher = repository.circularDao.searchFavouritesC(query: wrappedQuery, school: Int32(schoolID)).watch { circulars in
+                self.circulars = circulars as! Array<Circular>;
+            }
+        case .reminders:
+            circularWatcher = repository.circularDao.searchRemindersC(query: wrappedQuery, school: Int32(schoolID)).watch { circulars in
+                self.circulars = circulars as! Array<Circular>;
+            }
+        }
+    }
+}
+
+enum Category {
+    case all, favourites, reminders
 }

@@ -22,6 +22,7 @@ import Shared
 
 struct ContentView: View {
     @ObservedObject var circularViewModel = CircularViewModel(repository: iOSRepository.getCircularRepository())
+    @ObservedObject var searchBar: SearchBar = SearchBar(placeholder: "Search circulars")
     
     var body: some View {
         NavigationView {
@@ -29,6 +30,10 @@ struct ContentView: View {
                 CircularView(circular: circular)
             }
             .navigationBarTitle(Text("Circulars"), displayMode: .large)
+            .addSearchBar(self.searchBar)
+            .onReceive(searchBar.$text) {query in
+                self.circularViewModel.search(query: query)
+            }
             .onAppear {
                 self.circularViewModel.startObservingCirculars()
             }
@@ -52,7 +57,7 @@ struct ContentView: View {
             }
             
             Button(action: {
-                self.circularViewModel.startObservingAlarms()
+                self.circularViewModel.startObservingReminders()
             }) {
                 Image(systemName: "alarm")
             }

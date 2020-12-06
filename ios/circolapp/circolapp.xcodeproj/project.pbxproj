@@ -13,6 +13,8 @@
 		954E68352574E3890034EBA8 /* iOSServerApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E68342574E3890034EBA8 /* iOSServerApi.swift */; };
 		954E683D2574ED9E0034EBA8 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */; };
 		9553DB09257173ED006AE167 /* iOSRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9553DB08257173ED006AE167 /* iOSRepository.swift */; };
+		955B7A0E257D098C0091B1F9 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955B7A0D257D098C0091B1F9 /* SearchBar.swift */; };
+		955B7A10257D10A70091B1F9 /* ViewControllerResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955B7A0F257D10A70091B1F9 /* ViewControllerResolver.swift */; };
 		95906F48257508660060F5D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95906F47257506360060F5D0 /* Assets.xcassets */; };
 		95906F4D257510370060F5D0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95906F4C257510370060F5D0 /* GoogleService-Info.plist */; };
 		95BC3BF82572BCF900F24400 /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BC3BF72572BCF900F24400 /* AttachmentView.swift */; };
@@ -49,6 +51,8 @@
 		954E68342574E3890034EBA8 /* iOSServerApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSServerApi.swift; sourceTree = "<group>"; };
 		954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
 		9553DB08257173ED006AE167 /* iOSRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSRepository.swift; sourceTree = "<group>"; };
+		955B7A0D257D098C0091B1F9 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		955B7A0F257D10A70091B1F9 /* ViewControllerResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerResolver.swift; sourceTree = "<group>"; };
 		95906F47257506360060F5D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95906F4C257510370060F5D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		959B531E25764726009AD895 /* circolapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = circolapp.entitlements; sourceTree = "<group>"; };
@@ -100,6 +104,8 @@
 				95CA31BF255C28C300AC095B /* CircularView.swift */,
 				95BC3BF72572BCF900F24400 /* AttachmentView.swift */,
 				9512D3C0257AB4F60023C3A1 /* NewReminderView.swift */,
+				955B7A0D257D098C0091B1F9 /* SearchBar.swift */,
+				955B7A0F257D10A70091B1F9 /* ViewControllerResolver.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -278,11 +284,13 @@
 				95CA31C0255C28C300AC095B /* CircularView.swift in Sources */,
 				952DEDDF2576F8DC001DF85D /* SceneDelegate.swift in Sources */,
 				95CA31B2255C1EDE00AC095B /* ContentView.swift in Sources */,
+				955B7A10257D10A70091B1F9 /* ViewControllerResolver.swift in Sources */,
 				954E68352574E3890034EBA8 /* iOSServerApi.swift in Sources */,
 				95CA31B0255C1EDE00AC095B /* AppDelegate.swift in Sources */,
 				95BC3BF82572BCF900F24400 /* AttachmentView.swift in Sources */,
 				9512D3C1257AB4F60023C3A1 /* NewReminderView.swift in Sources */,
 				954E683D2574ED9E0034EBA8 /* UserDefaultsExtensions.swift in Sources */,
+				955B7A0E257D098C0091B1F9 /* SearchBar.swift in Sources */,
 				95C46A51255D3A34007A75E5 /* CircularViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
