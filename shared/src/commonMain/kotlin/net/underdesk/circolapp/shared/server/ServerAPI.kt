@@ -60,6 +60,8 @@ class ServerAPI(serverName: Servers) {
             SUCCESS, ERROR
         }
 
+        val numberOfServers = Servers.values().size
+
         fun getServer(serverID: Int): Servers {
             return Servers.values()[serverID]
         }

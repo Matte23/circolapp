@@ -23,6 +23,7 @@ import Shared
 struct ContentView: View {
     @ObservedObject var circularViewModel = CircularViewModel(repository: iOSRepository.getCircularRepository())
     @ObservedObject var searchBar: SearchBar = SearchBar(placeholder: "Search circulars")
+    @State var showOnboarding = !UserDefaults.standard.bool(forKey: "skipOnboarding")
     
     var body: some View {
         NavigationView {
@@ -40,6 +41,10 @@ struct ContentView: View {
             .onDisappear(perform: {
                 self.circularViewModel.stopObserving()
             })
+        }.sheet(isPresented: self.$showOnboarding, onDismiss: {
+            UserDefaults.standard.set(true, forKey: "skipOnboarding")
+        }) {
+            OnboardingView()
         }
         
         Divider()

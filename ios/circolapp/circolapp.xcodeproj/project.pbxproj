@@ -13,6 +13,7 @@
 		954E68352574E3890034EBA8 /* iOSServerApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E68342574E3890034EBA8 /* iOSServerApi.swift */; };
 		954E683D2574ED9E0034EBA8 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */; };
 		9553DB09257173ED006AE167 /* iOSRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9553DB08257173ED006AE167 /* iOSRepository.swift */; };
+		9554BDB8257E498F00D8925B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9554BDB7257E498F00D8925B /* OnboardingView.swift */; };
 		955B7A0E257D098C0091B1F9 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955B7A0D257D098C0091B1F9 /* SearchBar.swift */; };
 		955B7A10257D10A70091B1F9 /* ViewControllerResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955B7A0F257D10A70091B1F9 /* ViewControllerResolver.swift */; };
 		95906F48257508660060F5D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95906F47257506360060F5D0 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 		954E68342574E3890034EBA8 /* iOSServerApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSServerApi.swift; sourceTree = "<group>"; };
 		954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
 		9553DB08257173ED006AE167 /* iOSRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSRepository.swift; sourceTree = "<group>"; };
+		9554BDB7257E498F00D8925B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		955B7A0D257D098C0091B1F9 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		955B7A0F257D10A70091B1F9 /* ViewControllerResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerResolver.swift; sourceTree = "<group>"; };
 		95906F47257506360060F5D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				9512D3C0257AB4F60023C3A1 /* NewReminderView.swift */,
 				955B7A0D257D098C0091B1F9 /* SearchBar.swift */,
 				955B7A0F257D10A70091B1F9 /* ViewControllerResolver.swift */,
+				9554BDB7257E498F00D8925B /* OnboardingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				9512D3C1257AB4F60023C3A1 /* NewReminderView.swift in Sources */,
 				954E683D2574ED9E0034EBA8 /* UserDefaultsExtensions.swift in Sources */,
 				955B7A0E257D098C0091B1F9 /* SearchBar.swift in Sources */,
+				9554BDB8257E498F00D8925B /* OnboardingView.swift in Sources */,
 				95C46A51255D3A34007A75E5 /* CircularViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
