@@ -21,52 +21,32 @@ import UIKit
 import Shared
 
 struct ContentView: View {
-    @ObservedObject var circularViewModel = CircularViewModel(repository: iOSRepository.getCircularRepository())
-    @ObservedObject var searchBar: SearchBar = SearchBar(placeholder: "Search circulars")
     @State var showOnboarding = !UserDefaults.standard.bool(forKey: "skipOnboarding")
     
     var body: some View {
-        NavigationView {
-            List(circularViewModel.circulars, id: \.id) { circular in
-                CircularView(circular: circular)
-            }
-            .navigationBarTitle(Text("Circulars"), displayMode: .large)
-            .addSearchBar(self.searchBar)
-            .onReceive(searchBar.$text) {query in
-                self.circularViewModel.search(query: query)
-            }
-            .onAppear {
-                self.circularViewModel.startObservingCirculars()
-            }
-            .onDisappear(perform: {
-                self.circularViewModel.stopObserving()
-            })
+        TabView {
+           CircularList()
+             .tabItem {
+                Image(systemName: "folder.fill")
+                Text("Circulars")
+              }
+            
+            FavouritesList()
+              .tabItem {
+                 Image(systemName: "book.fill")
+                 Text("Favourites")
+               }
+            
+            RemindersList()
+              .tabItem {
+                 Image(systemName: "alarm.fill")
+                 Text("Reminders")
+               }
         }.sheet(isPresented: self.$showOnboarding, onDismiss: {
             UserDefaults.standard.set(true, forKey: "skipOnboarding")
         }) {
             OnboardingView()
         }
-        
-        Divider()
-        HStack(spacing: 50) {
-            Button(action: {
-                self.circularViewModel.startObservingCirculars()
-            }) {
-                Image(systemName: "folder")
-            }
-            
-            Button(action: {
-                self.circularViewModel.startObservingFavourites()
-            }) {
-                Image(systemName: "book")
-            }
-            
-            Button(action: {
-                self.circularViewModel.startObservingReminders()
-            }) {
-                Image(systemName: "alarm")
-            }
-        }.frame(height: 50.0)
     }
 }
 

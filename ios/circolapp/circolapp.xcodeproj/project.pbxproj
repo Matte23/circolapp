@@ -10,6 +10,11 @@
 		9512D3C1257AB4F60023C3A1 /* NewReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9512D3C0257AB4F60023C3A1 /* NewReminderView.swift */; };
 		952DEDDF2576F8DC001DF85D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */; };
 		9547205B2573B688005AA401 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9547205A2573B688005AA401 /* Settings.bundle */; };
+		954AF8F62588A5C300666D0C /* CircularList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954AF8F52588A5C300666D0C /* CircularList.swift */; };
+		954AF8F82588A5CF00666D0C /* FavouritesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954AF8F72588A5CF00666D0C /* FavouritesList.swift */; };
+		954AF8FA2588A5DD00666D0C /* RemindersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954AF8F92588A5DD00666D0C /* RemindersList.swift */; };
+		954AF8FD2588A61000666D0C /* FavouritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954AF8FC2588A61000666D0C /* FavouritesViewModel.swift */; };
+		954AF8FF2588A61B00666D0C /* RemindersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954AF8FE2588A61B00666D0C /* RemindersViewModel.swift */; };
 		954E68352574E3890034EBA8 /* iOSServerApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E68342574E3890034EBA8 /* iOSServerApi.swift */; };
 		954E683D2574ED9E0034EBA8 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */; };
 		9553DB09257173ED006AE167 /* iOSRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9553DB08257173ED006AE167 /* iOSRepository.swift */; };
@@ -49,6 +54,11 @@
 		952C5954255C57650018C010 /* shared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = shared.framework; path = "../../shared/build/xcode-frameworks/shared.framework"; sourceTree = "<group>"; };
 		952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9547205A2573B688005AA401 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		954AF8F52588A5C300666D0C /* CircularList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularList.swift; sourceTree = "<group>"; };
+		954AF8F72588A5CF00666D0C /* FavouritesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesList.swift; sourceTree = "<group>"; };
+		954AF8F92588A5DD00666D0C /* RemindersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersList.swift; sourceTree = "<group>"; };
+		954AF8FC2588A61000666D0C /* FavouritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewModel.swift; sourceTree = "<group>"; };
+		954AF8FE2588A61B00666D0C /* RemindersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersViewModel.swift; sourceTree = "<group>"; };
 		954E68342574E3890034EBA8 /* iOSServerApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSServerApi.swift; sourceTree = "<group>"; };
 		954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
 		9553DB08257173ED006AE167 /* iOSRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSRepository.swift; sourceTree = "<group>"; };
@@ -99,6 +109,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		954AF8FB2588A5F100666D0C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				95C46A50255D3A34007A75E5 /* CircularViewModel.swift */,
+				954AF8FC2588A61000666D0C /* FavouritesViewModel.swift */,
+				954AF8FE2588A61B00666D0C /* RemindersViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		95906F45257505770060F5D0 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +129,9 @@
 				955B7A0D257D098C0091B1F9 /* SearchBar.swift */,
 				955B7A0F257D10A70091B1F9 /* ViewControllerResolver.swift */,
 				9554BDB7257E498F00D8925B /* OnboardingView.swift */,
+				954AF8F52588A5C300666D0C /* CircularList.swift */,
+				954AF8F72588A5CF00666D0C /* FavouritesList.swift */,
+				954AF8F92588A5DD00666D0C /* RemindersList.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -146,9 +169,9 @@
 				959B531E25764726009AD895 /* circolapp.entitlements */,
 				95906F46257506050060F5D0 /* Model */,
 				95906F45257505770060F5D0 /* View */,
+				954AF8FB2588A5F100666D0C /* ViewModel */,
 				95CA31AF255C1EDE00AC095B /* AppDelegate.swift */,
 				952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */,
-				95C46A50255D3A34007A75E5 /* CircularViewModel.swift */,
 				954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */,
 				95CA31B8255C1EE000AC095B /* Info.plist */,
 				95906F4C257510370060F5D0 /* GoogleService-Info.plist */,
@@ -285,10 +308,15 @@
 			files = (
 				9553DB09257173ED006AE167 /* iOSRepository.swift in Sources */,
 				95CA31C0255C28C300AC095B /* CircularView.swift in Sources */,
+				954AF8FF2588A61B00666D0C /* RemindersViewModel.swift in Sources */,
 				952DEDDF2576F8DC001DF85D /* SceneDelegate.swift in Sources */,
+				954AF8FA2588A5DD00666D0C /* RemindersList.swift in Sources */,
 				95CA31B2255C1EDE00AC095B /* ContentView.swift in Sources */,
 				955B7A10257D10A70091B1F9 /* ViewControllerResolver.swift in Sources */,
 				954E68352574E3890034EBA8 /* iOSServerApi.swift in Sources */,
+				954AF8F82588A5CF00666D0C /* FavouritesList.swift in Sources */,
+				954AF8F62588A5C300666D0C /* CircularList.swift in Sources */,
+				954AF8FD2588A61000666D0C /* FavouritesViewModel.swift in Sources */,
 				95CA31B0255C1EDE00AC095B /* AppDelegate.swift in Sources */,
 				95BC3BF82572BCF900F24400 /* AttachmentView.swift in Sources */,
 				9512D3C1257AB4F60023C3A1 /* NewReminderView.swift in Sources */,
