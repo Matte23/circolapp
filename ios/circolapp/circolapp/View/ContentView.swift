@@ -42,6 +42,12 @@ struct ContentView: View {
                  Image(systemName: "alarm.fill")
                  Text("Reminders")
                }
+            
+            SettingsView()
+                .tabItem {
+                    Image(systemName: "gear")
+                    Text("Settings")
+                }
         }.sheet(isPresented: self.$showOnboarding, onDismiss: {
             UserDefaults.standard.set(true, forKey: "skipOnboarding")
         }) {

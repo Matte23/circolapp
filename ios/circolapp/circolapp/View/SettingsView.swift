@@ -20,38 +20,31 @@ import SwiftUI
 import AppStorage
 import Shared
 
-struct OnboardingView: View {
+struct SettingsView: View {
     @AppStorageCompat("school") var school = 0
-    @Environment(\.presentationMode) var presentationMode
+    
     private let serverCompanion = ServerAPI.Companion()
     
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Choose your school")
-                    .font(.headline)
-                    .padding()
-                Form {
-                    Picker("School", selection: $school) {
-                        ForEach(0..<Int(serverCompanion.numberOfServers)) { serverID in
-                            let server = serverCompanion.getServer(serverID: Int32(serverID))
-                            Text(serverCompanion.getServerName(server: server))
-                        }
+            Form {
+                Picker("School", selection: $school) {
+                    ForEach(0..<Int(serverCompanion.numberOfServers)) { serverID in
+                        let server = serverCompanion.getServer(serverID: Int32(serverID))
+                        Text(serverCompanion.getServerName(server: server))
                     }
                 }
-                .navigationBarTitle("Welcome to CircolApp")
-                .navigationBarItems(trailing: Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    Text("Done")
-                })
+                .onReceive([self.school].publisher.first()) { value in
+                    UserDefaults.standard.set(value, forKey: "school")
+                }
             }
+            .navigationBarTitle("Settings", displayMode: .inline)
         }
     }
 }
 
-struct OnboardingView_Previews: PreviewProvider {
+struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView()
+        SettingsView()
     }
 }

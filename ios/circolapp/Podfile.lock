@@ -1,4 +1,5 @@
 PODS:
+  - AppStorage (1.0.3)
   - Firebase/AppDistribution (7.1.0):
     - Firebase/CoreOnly
     - FirebaseAppDistribution (~> 7.1.0-beta)
@@ -69,12 +70,14 @@ PODS:
     - HTMLKit (~> 3.1.0)
 
 DEPENDENCIES:
+  - AppStorage (~> 1.0.3)
   - Firebase/AppDistribution
   - Firebase/Messaging
   - shared (from `../../shared`)
 
 SPEC REPOS:
   trunk:
+    - AppStorage
     - Firebase
     - FirebaseAppDistribution
     - FirebaseCore
@@ -93,6 +96,7 @@ EXTERNAL SOURCES:
     :path: "../../shared"
 
 SPEC CHECKSUMS:
+  AppStorage: dc9e2c18b5ebb7fed666af00c103b1c1432d459b
   Firebase: 78e8dd2e39d653de6270432ad84fe8b59f7bf4e8
   FirebaseAppDistribution: 055561ff2d0682e92492c00f4bd2acf562f9eb6f
   FirebaseCore: 20046127eef0fcb8fa25df7fc12f7b97d4e48611
@@ -107,6 +111,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   shared: fb3154b4def038b2b13aa88e01dd9f91bb2de9b5
 
-PODFILE CHECKSUM: a487659931a7673e546d39f1a5fb311269291d94
+PODFILE CHECKSUM: 072fc8452438117fc96c91f862d3a31d3cf40f14
 
 COCOAPODS: 1.10.0

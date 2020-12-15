@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9512D3C1257AB4F60023C3A1 /* NewReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9512D3C0257AB4F60023C3A1 /* NewReminderView.swift */; };
 		952DEDDF2576F8DC001DF85D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */; };
-		9547205B2573B688005AA401 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9547205A2573B688005AA401 /* Settings.bundle */; };
+		953DDE7E2580312500C457CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 953DDE7D2580312500C457CE /* LaunchScreen.storyboard */; };
 		954AF8F62588A5C300666D0C /* CircularList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954AF8F52588A5C300666D0C /* CircularList.swift */; };
 		954AF8F82588A5CF00666D0C /* FavouritesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954AF8F72588A5CF00666D0C /* FavouritesList.swift */; };
 		954AF8FA2588A5DD00666D0C /* RemindersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954AF8F92588A5DD00666D0C /* RemindersList.swift */; };
@@ -23,6 +23,7 @@
 		955B7A10257D10A70091B1F9 /* ViewControllerResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955B7A0F257D10A70091B1F9 /* ViewControllerResolver.swift */; };
 		95906F48257508660060F5D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95906F47257506360060F5D0 /* Assets.xcassets */; };
 		95906F4D257510370060F5D0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95906F4C257510370060F5D0 /* GoogleService-Info.plist */; };
+		95B4CE142588BC890090D5E8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4CE132588BC890090D5E8 /* SettingsView.swift */; };
 		95BC3BF82572BCF900F24400 /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BC3BF72572BCF900F24400 /* AttachmentView.swift */; };
 		95C46A51255D3A34007A75E5 /* CircularViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C46A50255D3A34007A75E5 /* CircularViewModel.swift */; };
 		95C9CBA32570EDEE005F879D /* Pods_circolapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BEA78E7C5BBEF0119834B33 /* Pods_circolapp.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -53,7 +54,7 @@
 		9512D3C0257AB4F60023C3A1 /* NewReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReminderView.swift; sourceTree = "<group>"; };
 		952C5954255C57650018C010 /* shared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = shared.framework; path = "../../shared/build/xcode-frameworks/shared.framework"; sourceTree = "<group>"; };
 		952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9547205A2573B688005AA401 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		953DDE7D2580312500C457CE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		954AF8F52588A5C300666D0C /* CircularList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularList.swift; sourceTree = "<group>"; };
 		954AF8F72588A5CF00666D0C /* FavouritesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesList.swift; sourceTree = "<group>"; };
 		954AF8F92588A5DD00666D0C /* RemindersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersList.swift; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 		95906F47257506360060F5D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95906F4C257510370060F5D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		959B531E25764726009AD895 /* circolapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = circolapp.entitlements; sourceTree = "<group>"; };
+		95B4CE132588BC890090D5E8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		95BC3BF72572BCF900F24400 /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		95C46A50255D3A34007A75E5 /* CircularViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularViewModel.swift; sourceTree = "<group>"; };
 		95CA31AC255C1EDE00AC095B /* circolapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = circolapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +134,7 @@
 				954AF8F52588A5C300666D0C /* CircularList.swift */,
 				954AF8F72588A5CF00666D0C /* FavouritesList.swift */,
 				954AF8F92588A5DD00666D0C /* RemindersList.swift */,
+				95B4CE132588BC890090D5E8 /* SettingsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -173,10 +176,10 @@
 				95CA31AF255C1EDE00AC095B /* AppDelegate.swift */,
 				952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */,
 				954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */,
+				953DDE7D2580312500C457CE /* LaunchScreen.storyboard */,
 				95CA31B8255C1EE000AC095B /* Info.plist */,
 				95906F4C257510370060F5D0 /* GoogleService-Info.plist */,
 				95906F47257506360060F5D0 /* Assets.xcassets */,
-				9547205A2573B688005AA401 /* Settings.bundle */,
 				95CA31B5255C1EE000AC095B /* Preview Content */,
 			);
 			path = circolapp;
@@ -253,7 +256,7 @@
 				95CA31B7255C1EE000AC095B /* Preview Assets.xcassets in Resources */,
 				95906F4D257510370060F5D0 /* GoogleService-Info.plist in Resources */,
 				95906F48257508660060F5D0 /* Assets.xcassets in Resources */,
-				9547205B2573B688005AA401 /* Settings.bundle in Resources */,
+				953DDE7E2580312500C457CE /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +327,7 @@
 				955B7A0E257D098C0091B1F9 /* SearchBar.swift in Sources */,
 				9554BDB8257E498F00D8925B /* OnboardingView.swift in Sources */,
 				95C46A51255D3A34007A75E5 /* CircularViewModel.swift in Sources */,
+				95B4CE142588BC890090D5E8 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
