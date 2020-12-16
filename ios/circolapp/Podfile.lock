@@ -1,5 +1,6 @@
 PODS:
   - AppStorage (1.0.3)
+  - Carte (2.2.1)
   - Firebase/AppDistribution (7.1.0):
     - Firebase/CoreOnly
     - FirebaseAppDistribution (~> 7.1.0-beta)
@@ -71,6 +72,7 @@ PODS:
 
 DEPENDENCIES:
   - AppStorage (~> 1.0.3)
+  - Carte
   - Firebase/AppDistribution
   - Firebase/Messaging
   - shared (from `../../shared`)
@@ -78,6 +80,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppStorage
+    - Carte
     - Firebase
     - FirebaseAppDistribution
     - FirebaseCore
@@ -97,6 +100,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppStorage: dc9e2c18b5ebb7fed666af00c103b1c1432d459b
+  Carte: 6bcff4eaa894ff5b979d646de833fec96e04a38c
   Firebase: 78e8dd2e39d653de6270432ad84fe8b59f7bf4e8
   FirebaseAppDistribution: 055561ff2d0682e92492c00f4bd2acf562f9eb6f
   FirebaseCore: 20046127eef0fcb8fa25df7fc12f7b97d4e48611
@@ -111,6 +115,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   shared: fb3154b4def038b2b13aa88e01dd9f91bb2de9b5
 
-PODFILE CHECKSUM: 072fc8452438117fc96c91f862d3a31d3cf40f14
+PODFILE CHECKSUM: 4d3dc73b66e10d6081d188d21431ccdd25a3cb9f
 
 COCOAPODS: 1.10.0

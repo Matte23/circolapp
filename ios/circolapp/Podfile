@@ -9,4 +9,10 @@ target 'circolapp' do
   pod 'Firebase/Messaging'
   pod 'Firebase/AppDistribution'
   pod 'AppStorage', '~> 1.0.3'
+  pod 'Carte'
+
+  post_install do |installer|
+    pods_dir = File.dirname(installer.pods_project.path)
+    at_exit { `ruby #{pods_dir}/Carte/Sources/Carte/carte.rb configure` }
+  end
 end

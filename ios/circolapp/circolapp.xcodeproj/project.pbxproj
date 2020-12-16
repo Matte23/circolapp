@@ -32,6 +32,7 @@
 		95CA31B2255C1EDE00AC095B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA31B1255C1EDE00AC095B /* ContentView.swift */; };
 		95CA31B7255C1EE000AC095B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95CA31B6255C1EE000AC095B /* Preview Assets.xcassets */; };
 		95CA31C0255C28C300AC095B /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA31BF255C28C300AC095B /* CircularView.swift */; };
+		95DB71AB258A1C1500A78033 /* CarteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DB71AA258A1C1500A78033 /* CarteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -78,6 +79,7 @@
 		95CA31B6255C1EE000AC095B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		95CA31B8255C1EE000AC095B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95CA31BF255C28C300AC095B /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
+		95DB71AA258A1C1500A78033 /* CarteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarteView.swift; sourceTree = "<group>"; };
 		976621FBDDCA894FD23FBA8B /* Pods-circolapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-circolapp.release.xcconfig"; path = "Target Support Files/Pods-circolapp/Pods-circolapp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +137,7 @@
 				954AF8F72588A5CF00666D0C /* FavouritesList.swift */,
 				954AF8F92588A5DD00666D0C /* RemindersList.swift */,
 				95B4CE132588BC890090D5E8 /* SettingsView.swift */,
+				95DB71AA258A1C1500A78033 /* CarteView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -203,7 +206,9 @@
 				4D03CF28648F46ED1A6C689C /* [CP] Check Pods Manifest.lock */,
 				95CA31A8255C1EDD00AC095B /* Sources */,
 				95CA31A9255C1EDD00AC095B /* Frameworks */,
+				E62EED9B3D667B480F11A2F0 /* [Carte] Pre Script */,
 				95CA31AA255C1EDD00AC095B /* Resources */,
+				6F09AC68488332B30709BADD /* [Carte] Post Script */,
 				AEB9DCF28686980DFDC48E24 /* [CP] Embed Pods Frameworks */,
 				95C9CBA52570EDEE005F879D /* Embed Frameworks */,
 			);
@@ -285,6 +290,25 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6F09AC68488332B30709BADD /* [Carte] Post Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Carte] Post Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby ${PODS_ROOT}/Carte/Sources/Carte/carte.rb post";
+			showEnvVarsInLog = 0;
+		};
 		AEB9DCF28686980DFDC48E24 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -302,6 +326,25 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-circolapp/Pods-circolapp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E62EED9B3D667B480F11A2F0 /* [Carte] Pre Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Carte] Pre Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby ${PODS_ROOT}/Carte/Sources/Carte/carte.rb pre";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -317,6 +360,7 @@
 				95CA31B2255C1EDE00AC095B /* ContentView.swift in Sources */,
 				955B7A10257D10A70091B1F9 /* ViewControllerResolver.swift in Sources */,
 				954E68352574E3890034EBA8 /* iOSServerApi.swift in Sources */,
+				95DB71AB258A1C1500A78033 /* CarteView.swift in Sources */,
 				954AF8F82588A5CF00666D0C /* FavouritesList.swift in Sources */,
 				954AF8F62588A5C300666D0C /* CircularList.swift in Sources */,
 				954AF8FD2588A61000666D0C /* FavouritesViewModel.swift in Sources */,

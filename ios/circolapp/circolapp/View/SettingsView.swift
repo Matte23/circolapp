@@ -28,14 +28,36 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                Picker("School", selection: $school) {
-                    ForEach(0..<Int(serverCompanion.numberOfServers)) { serverID in
-                        let server = serverCompanion.getServer(serverID: Int32(serverID))
-                        Text(serverCompanion.getServerName(server: server))
+                Section(header: Text("GENERAL")) {
+                    Picker("School", selection: $school) {
+                        ForEach(0..<Int(serverCompanion.numberOfServers)) { serverID in
+                            let server = serverCompanion.getServer(serverID: Int32(serverID))
+                            Text(serverCompanion.getServerName(server: server))
+                        }
                     }
                 }
-                .onReceive([self.school].publisher.first()) { value in
-                    UserDefaults.standard.set(value, forKey: "school")
+                
+                Section(header: Text("ABOUT")) {
+                    HStack {
+                        Text("Version name")
+                        Spacer()
+                        Text(
+                            Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Error"
+                        )
+                    }
+                    HStack {
+                        Text("Version code")
+                        Spacer()
+                        Text(
+                            Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Error"
+                        )
+                    }
+                    NavigationLink(destination:
+                                    CarteView()
+                                    .navigationBarTitle("Open source licenses", displayMode: .inline)
+                    ) {
+                        Text("Open source licenses")
+                    }
                 }
             }
             .navigationBarTitle("Settings", displayMode: .inline)
