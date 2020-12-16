@@ -26,15 +26,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_circular_letters.view.*
 import net.underdesk.circolapp.MainActivity
-import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
 import net.underdesk.circolapp.data.AndroidCircularRepository
+import net.underdesk.circolapp.databinding.FragmentCircularLettersBinding
 import net.underdesk.circolapp.viewmodels.RemindersViewModel
 import net.underdesk.circolapp.viewmodels.RemindersViewModelFactory
 
 class RemindersFragment : Fragment(), MainActivity.SearchCallback {
+
+    private var _binding: FragmentCircularLettersBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    private val binding get() = _binding!!
 
     private val remindersViewModel: RemindersViewModel by viewModels {
         RemindersViewModelFactory(
@@ -47,27 +50,32 @@ class RemindersFragment : Fragment(), MainActivity.SearchCallback {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_circular_letters, container, false)
+    ): View {
+        _binding = FragmentCircularLettersBinding.inflate(inflater, container, false)
 
-        root.circulars_list.layoutManager = LinearLayoutManager(context)
-        root.circulars_refresh.isEnabled = false
+        binding.circularsList.layoutManager = LinearLayoutManager(context)
+        binding.circularsRefresh.isEnabled = false
 
         remindersViewModel.circulars.observe(
             viewLifecycleOwner,
             {
-                if (root.circulars_list.adapter == null) {
-                    root.circulars_list.adapter =
+                if (binding.circularsList.adapter == null) {
+                    binding.circularsList.adapter =
                         CircularLetterAdapter(it, activity as MainActivity, lifecycleScope)
                 } else {
-                    (root.circulars_list.adapter as CircularLetterAdapter).changeDataSet(it)
+                    (binding.circularsList.adapter as CircularLetterAdapter).changeDataSet(it)
                 }
             }
         )
 
         (activity as MainActivity).searchCallback = this
         (activity as MainActivity).refreshCallback = null
-        return root
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun search(query: String) {

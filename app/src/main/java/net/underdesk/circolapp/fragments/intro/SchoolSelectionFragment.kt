@@ -10,12 +10,17 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.github.appintro.SlidePolicy
 import com.tiper.MaterialSpinner
-import kotlinx.android.synthetic.main.fragment_school_selection.view.*
 import net.underdesk.circolapp.R
+import net.underdesk.circolapp.databinding.FragmentSchoolSelectionBinding
 import net.underdesk.circolapp.server.AndroidServerApi
 import net.underdesk.circolapp.shared.server.ServerAPI
 
 class SchoolSelectionFragment : Fragment(), SlidePolicy, MaterialSpinner.OnItemSelectedListener {
+
+    private var _binding: FragmentSchoolSelectionBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    private val binding get() = _binding!!
+
     private lateinit var preferenceManager: SharedPreferences
     private var schoolSelected = false
 
@@ -23,7 +28,11 @@ class SchoolSelectionFragment : Fragment(), SlidePolicy, MaterialSpinner.OnItemS
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_school_selection, container, false)
+    ): View {
+        _binding = FragmentSchoolSelectionBinding.inflate(inflater, container, false)
+
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,8 +43,8 @@ class SchoolSelectionFragment : Fragment(), SlidePolicy, MaterialSpinner.OnItemS
         val adapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, items)
 
-        view.school_selection_spinner.adapter = adapter
-        view.school_selection_spinner.onItemSelectedListener = this
+        binding.schoolSelectionSpinner.adapter = adapter
+        binding.schoolSelectionSpinner.onItemSelectedListener = this
     }
 
     private fun getSchoolListArray(): ArrayList<String> {
@@ -68,7 +77,7 @@ class SchoolSelectionFragment : Fragment(), SlidePolicy, MaterialSpinner.OnItemS
         get() = schoolSelected
 
     override fun onUserIllegallyRequestedNextPage() {
-        view?.school_selection_spinner?.error =
+        binding.schoolSelectionSpinner.error =
             getString(R.string.activity_intro_school_selection_error)
     }
 

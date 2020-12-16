@@ -38,8 +38,8 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.aboutlibraries.LibsBuilder
-import kotlinx.android.synthetic.main.activity_main.*
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
+import net.underdesk.circolapp.databinding.ActivityMainBinding
 import net.underdesk.circolapp.utils.DownloadableFile
 import net.underdesk.circolapp.works.PollWork
 
@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         internal const val PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 10
     }
 
+    private lateinit var binding: ActivityMainBinding
+
     var searchCallback: SearchCallback? = null
     var refreshCallback: RefreshCallback? = null
     override var fileToDownload: DownloadableFile? = null
@@ -56,8 +58,9 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
     override fun onCreate(savedInstanceState: Bundle?) {
         loadDarkTheme()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(main_toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.mainToolbar)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -134,7 +137,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
                     downloadFile()
                 } else {
                     Snackbar.make(
-                        container,
+                        binding.container,
                         resources.getString(R.string.snackbar_write_permission_not_granted),
                         Snackbar.LENGTH_LONG
                     ).show()
@@ -161,7 +164,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         (getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
 
         Snackbar.make(
-            container,
+            binding.container,
             resources.getString(R.string.snackbar_circular_downloaded),
             Snackbar.LENGTH_LONG
         ).show()

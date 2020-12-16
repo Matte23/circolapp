@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-android-extensions")
     id("kotlin-kapt")
     id("com.google.gms.google-services")
     id("com.mikepenz.aboutlibraries.plugin")
@@ -38,8 +37,8 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    androidExtensions {
-        isExperimental = true
+    buildFeatures {
+        viewBinding = true
     }
 }
 

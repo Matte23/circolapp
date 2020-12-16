@@ -24,7 +24,7 @@ import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.*
-import kotlinx.android.synthetic.main.settings_activity.*
+import net.underdesk.circolapp.databinding.SettingsActivityBinding
 import net.underdesk.circolapp.push.FirebaseTopicUtils
 import net.underdesk.circolapp.server.AndroidServerApi
 import net.underdesk.circolapp.shared.server.ServerAPI
@@ -32,10 +32,14 @@ import net.underdesk.circolapp.works.PollWork
 
 class SettingsActivity : AppCompatActivity() {
 
+    private lateinit var binding: SettingsActivityBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
-        setSupportActionBar(settings_toolbar)
+        binding = SettingsActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.settingsToolbar)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.settings, SettingsFragment())

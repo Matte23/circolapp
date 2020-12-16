@@ -30,11 +30,11 @@ import android.view.ViewGroup
 import androidx.core.app.AlarmManagerCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
-import kotlinx.android.synthetic.main.dialog_reminder.*
 import kotlinx.coroutines.launch
 import net.underdesk.circolapp.AlarmBroadcastReceiver
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.data.AndroidDatabase
+import net.underdesk.circolapp.databinding.DialogReminderBinding
 import net.underdesk.circolapp.shared.data.Circular
 import java.util.*
 
@@ -48,6 +48,10 @@ class NewReminderFragment : DialogFragment() {
         }
     }
 
+    private var _binding: DialogReminderBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    private val binding get() = _binding!!
+
     private var dateNotChosen = true
     lateinit var circular: Circular
 
@@ -56,44 +60,50 @@ class NewReminderFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.dialog_reminder, container)
+        _binding = DialogReminderBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dialog_time_picker.setIs24HourView(true)
+        binding.dialogTimePicker.setIs24HourView(true)
 
-        dialog_ok_button.setOnClickListener { next() }
-        dialog_back_button.setOnClickListener { back() }
-        dialog_cancel_button.setOnClickListener { dismiss() }
+        binding.dialogOkButton.setOnClickListener { next() }
+        binding.dialogBackButton.setOnClickListener { back() }
+        binding.dialogCancelButton.setOnClickListener { dismiss() }
     }
 
     fun next() {
         if (dateNotChosen) {
-            dialog_date_picker.visibility = View.GONE
-            dialog_time_picker.visibility = View.VISIBLE
-            dialog_back_button.visibility = View.VISIBLE
-            dialog_ok_button.text = getString(R.string.dialog_ok)
+            binding.dialogDatePicker.visibility = View.GONE
+            binding.dialogTimePicker.visibility = View.VISIBLE
+            binding.dialogBackButton.visibility = View.VISIBLE
+            binding.dialogOkButton.text = getString(R.string.dialog_ok)
             dateNotChosen = false
         } else {
             val calendar = Calendar.getInstance()
             val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                dialog_time_picker.hour
+                binding.dialogTimePicker.hour
             } else {
-                dialog_time_picker.currentHour
+                binding.dialogTimePicker.currentHour
             }
 
             val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                dialog_time_picker.minute
+                binding.dialogTimePicker.minute
             } else {
-                dialog_time_picker.currentMinute
+                binding.dialogTimePicker.currentMinute
             }
 
             calendar.set(
-                dialog_date_picker.year,
-                dialog_date_picker.month,
-                dialog_date_picker.dayOfMonth,
+                binding.dialogDatePicker.year,
+                binding.dialogDatePicker.month,
+                binding.dialogDatePicker.dayOfMonth,
                 hour,
                 minute
             )
@@ -127,10 +137,10 @@ class NewReminderFragment : DialogFragment() {
     }
 
     private fun back() {
-        dialog_date_picker.visibility = View.VISIBLE
-        dialog_time_picker.visibility = View.GONE
-        dialog_back_button.visibility = View.GONE
-        dialog_ok_button.text = getString(R.string.dialog_next)
+        binding.dialogDatePicker.visibility = View.VISIBLE
+        binding.dialogTimePicker.visibility = View.GONE
+        binding.dialogBackButton.visibility = View.GONE
+        binding.dialogOkButton.text = getString(R.string.dialog_next)
         dateNotChosen = true
     }
 }

@@ -31,12 +31,12 @@ import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_circular.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import net.underdesk.circolapp.AlarmBroadcastReceiver
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.data.AndroidDatabase
+import net.underdesk.circolapp.databinding.ItemCircularBinding
 import net.underdesk.circolapp.fragments.NewReminderFragment
 import net.underdesk.circolapp.shared.data.Circular
 import net.underdesk.circolapp.utils.DownloadableFile
@@ -55,17 +55,17 @@ class CircularLetterAdapter(
         setHasStableIds(true)
     }
 
-    inner class CircularLetterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var card: CardView = view.circular_card
-        var title: TextView = view.circular_title_textview
-        var number: TextView = view.circular_number_textview
-        var date: TextView = view.circular_date_textview
-        var collapseButton: ImageButton = view.circular_collapse_button
-        var viewButton: ImageButton = view.circular_view_button
-        var downloadButton: ImageButton = view.circular_download_button
-        var favouriteButton: ImageButton = view.circular_favourite_button
-        var reminderButton: ImageButton = view.circular_reminder_button
-        var attachmentsList: RecyclerView = view.circulars_attachments_list
+    inner class CircularLetterViewHolder(binding: ItemCircularBinding) : RecyclerView.ViewHolder(binding.root) {
+        var card: CardView = binding.circularCard
+        var title: TextView = binding.circularTitleTextview
+        var number: TextView = binding.circularNumberTextview
+        var date: TextView = binding.circularDateTextview
+        var collapseButton: ImageButton = binding.circularCollapseButton
+        var viewButton: ImageButton = binding.circularViewButton
+        var downloadButton: ImageButton = binding.circularDownloadButton
+        var favouriteButton: ImageButton = binding.circularFavouriteButton
+        var reminderButton: ImageButton = binding.circularReminderButton
+        var attachmentsList: RecyclerView = binding.circularsAttachmentsList
 
         init {
             attachmentsList.layoutManager = LinearLayoutManager(context)
@@ -73,11 +73,10 @@ class CircularLetterAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CircularLetterViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_circular, parent, false)
+        val binding = ItemCircularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         context = parent.context
 
-        return CircularLetterViewHolder(itemView)
+        return CircularLetterViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CircularLetterViewHolder, position: Int) {

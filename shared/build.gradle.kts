@@ -5,7 +5,6 @@ plugins {
     kotlin("native.cocoapods")
     kotlin("plugin.serialization")
     id("com.android.library")
-    id("kotlin-android-extensions")
     id("com.squareup.sqldelight")
 }
 

@@ -20,13 +20,11 @@ package net.underdesk.circolapp.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_attachment.view.*
-import net.underdesk.circolapp.R
+import net.underdesk.circolapp.databinding.ItemAttachmentBinding
 import net.underdesk.circolapp.utils.DownloadableFile
 import net.underdesk.circolapp.utils.FileUtils
 
@@ -38,18 +36,17 @@ class AttachmentAdapter(
     RecyclerView.Adapter<AttachmentAdapter.AttachmentViewHolder>() {
     private lateinit var context: Context
 
-    inner class AttachmentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var title: TextView = view.attachment_title_textview
-        var viewButton: ImageButton = view.attachment_view_button
-        var downloadButton: ImageButton = view.attachment_download_button
+    inner class AttachmentViewHolder(binding: ItemAttachmentBinding) : RecyclerView.ViewHolder(binding.root) {
+        var title: TextView = binding.attachmentTitleTextview
+        var viewButton: ImageButton = binding.attachmentViewButton
+        var downloadButton: ImageButton = binding.attachmentDownloadButton
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttachmentViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_attachment, parent, false)
+        val binding = ItemAttachmentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         context = parent.context
 
-        return AttachmentViewHolder(itemView)
+        return AttachmentViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: AttachmentViewHolder, position: Int) {
