@@ -45,7 +45,7 @@ kotlin {
             dependencies {
                 implementation(Dependencies.Kotlin.coroutinesCore) {
                     version {
-                        strictly("1.3.9-native-mt")
+                        strictly("1.4.2-native-mt")
                     }
                 }
 
