@@ -34,9 +34,7 @@ struct CircularView: View {
                     .font(.subheadline)
                 Spacer()
                 Button(action: {
-                    withAnimation() {
-                        self.showDetail.toggle()
-                    }
+                    self.showDetail.toggle()
                 }) {
                     Image(systemName: "chevron.right.circle")
                         .imageScale(.large)
