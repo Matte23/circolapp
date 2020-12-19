@@ -7,7 +7,6 @@ target 'circolapp' do
   # Pods for iosApp
   pod 'shared', :path => '../../shared'
   pod 'Firebase/Messaging'
-  pod 'Firebase/AppDistribution'
   pod 'AppStorage', '~> 1.0.3'
   pod 'Carte'
 

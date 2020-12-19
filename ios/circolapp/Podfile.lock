@@ -1,47 +1,38 @@
 PODS:
   - AppStorage (1.0.3)
   - Carte (2.2.1)
-  - Firebase/AppDistribution (7.1.0):
+  - Firebase/CoreOnly (7.3.0):
+    - FirebaseCore (= 7.3.0)
+  - Firebase/Messaging (7.3.0):
     - Firebase/CoreOnly
-    - FirebaseAppDistribution (~> 7.1.0-beta)
-  - Firebase/CoreOnly (7.1.0):
-    - FirebaseCore (= 7.1.0)
-  - Firebase/Messaging (7.1.0):
-    - Firebase/CoreOnly
-    - FirebaseMessaging (~> 7.1.0)
-  - FirebaseAppDistribution (7.1.0-beta):
-    - FirebaseCore (~> 7.0)
-    - FirebaseInstallations (~> 7.0)
-    - GoogleDataTransport (~> 8.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
-    - GoogleUtilities/UserDefaults (~> 7.0)
-  - FirebaseCore (7.1.0):
+    - FirebaseMessaging (~> 7.3.0)
+  - FirebaseCore (7.3.0):
     - FirebaseCoreDiagnostics (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
-  - FirebaseCoreDiagnostics (7.1.0):
+  - FirebaseCoreDiagnostics (7.3.0):
     - GoogleDataTransport (~> 8.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
     - nanopb (~> 2.30906.0)
-  - FirebaseInstallations (7.1.0):
+  - FirebaseInstallations (7.3.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
     - PromisesObjC (~> 1.2)
-  - FirebaseInstanceID (7.1.0):
+  - FirebaseInstanceID (7.3.0):
     - FirebaseCore (~> 7.0)
     - FirebaseInstallations (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
-  - FirebaseMessaging (7.1.0):
+  - FirebaseMessaging (7.3.0):
     - FirebaseCore (~> 7.0)
     - FirebaseInstanceID (~> 7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Reachability (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
-  - GoogleDataTransport (8.0.1):
+  - GoogleDataTransport (8.1.0):
     - nanopb (~> 2.30906.0)
   - GoogleUtilities/AppDelegateSwizzler (7.1.1):
     - GoogleUtilities/Environment
@@ -73,7 +64,6 @@ PODS:
 DEPENDENCIES:
   - AppStorage (~> 1.0.3)
   - Carte
-  - Firebase/AppDistribution
   - Firebase/Messaging
   - shared (from `../../shared`)
 
@@ -82,7 +72,6 @@ SPEC REPOS:
     - AppStorage
     - Carte
     - Firebase
-    - FirebaseAppDistribution
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseInstallations
@@ -101,20 +90,19 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppStorage: dc9e2c18b5ebb7fed666af00c103b1c1432d459b
   Carte: 6bcff4eaa894ff5b979d646de833fec96e04a38c
-  Firebase: 78e8dd2e39d653de6270432ad84fe8b59f7bf4e8
-  FirebaseAppDistribution: 055561ff2d0682e92492c00f4bd2acf562f9eb6f
-  FirebaseCore: 20046127eef0fcb8fa25df7fc12f7b97d4e48611
-  FirebaseCoreDiagnostics: 872cdb9b749b23346dddd5c1014d1babd2257de3
-  FirebaseInstallations: 3de38553e86171b5f81d83cdeef63473d37bfdb0
-  FirebaseInstanceID: 61e8d10a4192a582c6239378169d10e504ca8d91
-  FirebaseMessaging: 076054895c9260f82c7304cc7709dbf19b8f3e4a
-  GoogleDataTransport: e4085e6762f36a6141738f46b0153473ce57fb18
+  Firebase: 26223c695fe322633274198cb19dca8cb7e54416
+  FirebaseCore: 4d3c72622ce0e2106aaa07bb4b2935ba2c370972
+  FirebaseCoreDiagnostics: d50e11039e5984d92c8a512be2395f13df747350
+  FirebaseInstallations: 971df89b48ae5ee4cc2bf6935f3857a525d28550
+  FirebaseInstanceID: 5ccdee6a84e6b4bb5316de0a8cd88bc749ba490d
+  FirebaseMessaging: 68d1bcb14880189558a8ae57167abe0b7e417232
+  GoogleDataTransport: 116c84c4bdeb76be2a7a46de51244368f9794eab
   GoogleUtilities: 3dc4ff0d5e4840e2fa8eef0889620e8c33d4218c
   HTMLKit: 4ed10a911462cbf972329ec6aaaa827208dfd70c
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   shared: fb3154b4def038b2b13aa88e01dd9f91bb2de9b5
 
-PODFILE CHECKSUM: 4d3dc73b66e10d6081d188d21431ccdd25a3cb9f
+PODFILE CHECKSUM: 7decc03927fcaa3f2209e5b0ce4ee4c86d714007
 
 COCOAPODS: 1.10.0
