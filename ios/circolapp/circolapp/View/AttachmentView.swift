@@ -36,12 +36,13 @@ struct AttachmentView: View {
                 guard let url = URL(string: attachmentUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) else { return }
                 UIApplication.shared.open(url)
             }) {
-                Image(systemName: "envelope.open")
-                    .foregroundColor(.blue)
-                    .font(.body)
-                    .padding()
+                Image(systemName: "envelope.open.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20.0, height: 20.0)
+                    .padding(8.0)
             }
-            .buttonStyle(PlainButtonStyle())
+            .buttonStyle(BorderlessButtonStyle())
             
             Button(action: {
                 guard let url = URL(string: attachmentUrl) else { return }
@@ -65,12 +66,13 @@ struct AttachmentView: View {
                 
                 downloadTask.resume()
             }) {
-                Image(systemName: "square.and.arrow.down")
-                    .foregroundColor(.blue)
-                    .font(.body)
-                    .padding()
+                Image(systemName: "square.and.arrow.down.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20.0, height: 20.0)
+                    .padding(8.0)
             }
-            .buttonStyle(PlainButtonStyle())
+            .buttonStyle(BorderlessButtonStyle())
         }
     }
 }

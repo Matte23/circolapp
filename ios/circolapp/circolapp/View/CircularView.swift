@@ -37,6 +37,7 @@ struct CircularView: View {
                     self.showDetail.toggle()
                 }) {
                     Image(systemName: "chevron.right.circle")
+                        .foregroundColor(Color("AccentColor"))
                         .imageScale(.large)
                         .rotationEffect(.degrees(showDetail ? 90 : 0))
                 }
@@ -51,12 +52,15 @@ struct CircularView: View {
                         guard let url = URL(string: circular.url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) else { return }
                         UIApplication.shared.open(url)
                     }) {
-                        Image(systemName: "envelope.open")
-                            .foregroundColor(.blue)
-                            .font(.body)
-                            .padding()
+                        Image(systemName: "envelope.open.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20.0, height: 20.0)
+                            .padding(.leading, 32.0)
                     }
-                    .buttonStyle(PlainButtonStyle())
+                    .buttonStyle(BorderlessButtonStyle())
+                    
+                    Spacer()
                     
                     Button(action: {
                         guard let url = URL(string: circular.url) else { return }
@@ -80,22 +84,26 @@ struct CircularView: View {
                         
                         downloadTask.resume()
                     }) {
-                        Image(systemName: "square.and.arrow.down")
-                            .foregroundColor(.blue)
-                            .font(.body)
-                            .padding()
+                        Image(systemName: "square.and.arrow.down.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20.0, height: 20.0)
                     }
-                    .buttonStyle(PlainButtonStyle())
+                    .buttonStyle(BorderlessButtonStyle())
+                    
+                    Spacer()
                     
                     Button(action: {
                         iOSRepository.getCircularDao().update(id: circular.id, school: circular.school, favourite: !circular.favourite, reminder: circular.reminder, completionHandler: {_,_ in })
                     }) {
                         Image(systemName: circular.favourite ? "bookmark.fill" : "bookmark")
-                            .foregroundColor(.blue)
-                            .font(.body)
-                            .padding()
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20.0, height: 20.0)
                     }
-                    .buttonStyle(PlainButtonStyle())
+                    .buttonStyle(BorderlessButtonStyle())
+                    
+                    Spacer()
                     
                     Button(action: {
                         if circular.reminder {
@@ -110,15 +118,18 @@ struct CircularView: View {
                         self.creatingReminder = true
                     }) {
                         Image(systemName: circular.reminder ? "alarm.fill" : "alarm")
-                            .foregroundColor(.blue)
-                            .font(.body)
-                            .padding()
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20.0, height: 20.0)
+                            .padding(.trailing, 32.0)
                     }
-                    .buttonStyle(PlainButtonStyle())
+                    .buttonStyle(BorderlessButtonStyle())
                     .sheet(isPresented: self.$creatingReminder) {
                         NewReminderView(circular: circular)
                     }
                 }
+                .padding(.vertical, 8.0)
+                
                 
                 ForEach(0..<circular.attachmentsNames.count, id: \.self) { index in
                     AttachmentView(attachmentName: circular.attachmentsNames[index] as! String, attachmentUrl: circular.attachmentsUrls[index] as! String)
