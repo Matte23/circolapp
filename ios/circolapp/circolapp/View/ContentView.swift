@@ -20,38 +20,12 @@ import SwiftUI
 import UIKit
 import Shared
 
-struct ContentView: View {
-    @State var showOnboarding = !UserDefaults.standard.bool(forKey: "skipOnboarding")
-    
+struct ContentView: View {    
     var body: some View {
-        TabView {
-           CircularList()
-             .tabItem {
-                Image(systemName: "folder.fill")
-                Text("Circulars")
-              }
-            
-            FavouritesList()
-              .tabItem {
-                 Image(systemName: "book.fill")
-                 Text("Favourites")
-               }
-            
-            RemindersList()
-              .tabItem {
-                 Image(systemName: "alarm.fill")
-                 Text("Reminders")
-               }
-            
-            SettingsView()
-                .tabItem {
-                    Image(systemName: "gear")
-                    Text("Settings")
-                }
-        }.sheet(isPresented: self.$showOnboarding, onDismiss: {
-            UserDefaults.standard.set(true, forKey: "skipOnboarding")
-        }) {
-            OnboardingView()
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            PhoneView()
+        } else {
+            PadView()
         }
     }
 }

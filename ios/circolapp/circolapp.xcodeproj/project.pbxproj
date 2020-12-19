@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		950C1784258E582E00B2DBFE /* PadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950C1783258E582E00B2DBFE /* PadView.swift */; };
+		950C1786258E58AD00B2DBFE /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950C1785258E58AD00B2DBFE /* SidebarView.swift */; };
+		950C1788258E5BD300B2DBFE /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950C1787258E5BD300B2DBFE /* PhoneView.swift */; };
 		9512D3C1257AB4F60023C3A1 /* NewReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9512D3C0257AB4F60023C3A1 /* NewReminderView.swift */; };
 		952DEDDF2576F8DC001DF85D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */; };
 		953DDE7E2580312500C457CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 953DDE7D2580312500C457CE /* LaunchScreen.storyboard */; };
@@ -52,6 +55,9 @@
 /* Begin PBXFileReference section */
 		892B265487980F6A344AC2A7 /* Pods-circolapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-circolapp.debug.xcconfig"; path = "Target Support Files/Pods-circolapp/Pods-circolapp.debug.xcconfig"; sourceTree = "<group>"; };
 		8BEA78E7C5BBEF0119834B33 /* Pods_circolapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_circolapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		950C1783258E582E00B2DBFE /* PadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadView.swift; sourceTree = "<group>"; };
+		950C1785258E58AD00B2DBFE /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		950C1787258E5BD300B2DBFE /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		9512D3C0257AB4F60023C3A1 /* NewReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReminderView.swift; sourceTree = "<group>"; };
 		952C5954255C57650018C010 /* shared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = shared.framework; path = "../../shared/build/xcode-frameworks/shared.framework"; sourceTree = "<group>"; };
 		952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -138,6 +144,9 @@
 				954AF8F92588A5DD00666D0C /* RemindersList.swift */,
 				95B4CE132588BC890090D5E8 /* SettingsView.swift */,
 				95DB71AA258A1C1500A78033 /* CarteView.swift */,
+				950C1783258E582E00B2DBFE /* PadView.swift */,
+				950C1785258E58AD00B2DBFE /* SidebarView.swift */,
+				950C1787258E5BD300B2DBFE /* PhoneView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -359,8 +368,10 @@
 				954AF8FA2588A5DD00666D0C /* RemindersList.swift in Sources */,
 				95CA31B2255C1EDE00AC095B /* ContentView.swift in Sources */,
 				955B7A10257D10A70091B1F9 /* ViewControllerResolver.swift in Sources */,
+				950C1786258E58AD00B2DBFE /* SidebarView.swift in Sources */,
 				954E68352574E3890034EBA8 /* iOSServerApi.swift in Sources */,
 				95DB71AB258A1C1500A78033 /* CarteView.swift in Sources */,
+				950C1784258E582E00B2DBFE /* PadView.swift in Sources */,
 				954AF8F82588A5CF00666D0C /* FavouritesList.swift in Sources */,
 				954AF8F62588A5C300666D0C /* CircularList.swift in Sources */,
 				954AF8FD2588A61000666D0C /* FavouritesViewModel.swift in Sources */,
@@ -370,6 +381,7 @@
 				954E683D2574ED9E0034EBA8 /* UserDefaultsExtensions.swift in Sources */,
 				955B7A0E257D098C0091B1F9 /* SearchBar.swift in Sources */,
 				9554BDB8257E498F00D8925B /* OnboardingView.swift in Sources */,
+				950C1788258E5BD300B2DBFE /* PhoneView.swift in Sources */,
 				95C46A51255D3A34007A75E5 /* CircularViewModel.swift in Sources */,
 				95B4CE142588BC890090D5E8 /* SettingsView.swift in Sources */,
 			);

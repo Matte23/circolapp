@@ -23,22 +23,20 @@ struct FavouritesList: View {
     @ObservedObject var searchBar: SearchBar = SearchBar(placeholder: "Search circulars")
     
     var body: some View {
-        NavigationView {
-            List(favouritesViewModel.circulars, id: \.id) { circular in
-                CircularView(circular: circular)
-            }
-            .navigationBarTitle(Text("Favourites"), displayMode: .large)
-            .addSearchBar(self.searchBar)
-            .onReceive(searchBar.$text) {query in
-                self.favouritesViewModel.search(query: query)
-            }
-            .onAppear {
-                self.favouritesViewModel.startObservingFavourites()
-            }
-            .onDisappear(perform: {
-                self.favouritesViewModel.stopObserving()
-            })
+        List(favouritesViewModel.circulars, id: \.id) { circular in
+            CircularView(circular: circular)
         }
+        .navigationBarTitle(Text("Favourites"), displayMode: .large)
+        .addSearchBar(self.searchBar)
+        .onReceive(searchBar.$text) {query in
+            self.favouritesViewModel.search(query: query)
+        }
+        .onAppear {
+            self.favouritesViewModel.startObservingFavourites()
+        }
+        .onDisappear(perform: {
+            self.favouritesViewModel.stopObserving()
+        })
     }
 }
 

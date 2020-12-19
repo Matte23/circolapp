@@ -18,30 +18,24 @@
 
 import SwiftUI
 
-struct CircularList: View {
-    @ObservedObject var circularViewModel = CircularViewModel(repository: iOSRepository.getCircularRepository())
-    @ObservedObject var searchBar: SearchBar = SearchBar(placeholder: "Search circulars")
+struct PadView: View {
+    @State var screen: Screen? = .all
     
     var body: some View {
-        List(circularViewModel.circulars, id: \.id) { circular in
-            CircularView(circular: circular)
+        NavigationView {
+            SidebarView(state: $screen)
         }
-        .navigationBarTitle(Text("Circulars"), displayMode: .large)
-        .addSearchBar(self.searchBar)
-        .onReceive(searchBar.$text) {query in
-            self.circularViewModel.search(query: query)
-        }
-        .onAppear {
-            self.circularViewModel.startObservingCirculars()
-        }
-        .onDisappear(perform: {
-            self.circularViewModel.stopObserving()
-        })
+        .navigationViewStyle(DoubleColumnNavigationViewStyle())
+        
     }
 }
 
-struct CircularList_Previews: PreviewProvider {
+struct PadView_Previews: PreviewProvider {
     static var previews: some View {
-        CircularList()
+        PadView()
     }
+}
+
+enum Screen: Hashable {
+    case all, favourites, reminders, settings
 }

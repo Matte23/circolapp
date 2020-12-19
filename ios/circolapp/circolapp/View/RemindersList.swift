@@ -23,22 +23,20 @@ struct RemindersList: View {
     @ObservedObject var searchBar: SearchBar = SearchBar(placeholder: "Search circulars")
     
     var body: some View {
-        NavigationView {
-            List(remindersViewModel.circulars, id: \.id) { circular in
-                CircularView(circular: circular)
-            }
-            .navigationBarTitle(Text("Reminders"), displayMode: .large)
-            .addSearchBar(self.searchBar)
-            .onReceive(searchBar.$text) {query in
-                self.remindersViewModel.search(query: query)
-            }
-            .onAppear {
-                self.remindersViewModel.startObservingReminders()
-            }
-            .onDisappear(perform: {
-                self.remindersViewModel.stopObserving()
-            })
+        List(remindersViewModel.circulars, id: \.id) { circular in
+            CircularView(circular: circular)
         }
+        .navigationBarTitle(Text("Reminders"), displayMode: .large)
+        .addSearchBar(self.searchBar)
+        .onReceive(searchBar.$text) {query in
+            self.remindersViewModel.search(query: query)
+        }
+        .onAppear {
+            self.remindersViewModel.startObservingReminders()
+        }
+        .onDisappear(perform: {
+            self.remindersViewModel.stopObserving()
+        })
     }
 }
 
