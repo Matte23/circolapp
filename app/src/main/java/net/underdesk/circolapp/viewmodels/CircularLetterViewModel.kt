@@ -65,7 +65,7 @@ class CircularLetterViewModel internal constructor(
             viewModelScope.launch {
                 isNotUpdating = false
 
-                if (!circularRepository.updateCirculars(false).second) {
+                if (circularRepository.updateCirculars(false).second == -1) {
                     showMessage.postValue(true)
                 }
 

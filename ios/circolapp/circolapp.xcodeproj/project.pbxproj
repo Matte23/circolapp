@@ -36,6 +36,7 @@
 		95CA31B7255C1EE000AC095B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95CA31B6255C1EE000AC095B /* Preview Assets.xcassets */; };
 		95CA31C0255C28C300AC095B /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA31BF255C28C300AC095B /* CircularView.swift */; };
 		95DB71AB258A1C1500A78033 /* CarteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DB71AA258A1C1500A78033 /* CarteView.swift */; };
+		95F6666E2590D712006DE74F /* URLUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F6666D2590D712006DE74F /* URLUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -86,6 +87,7 @@
 		95CA31B8255C1EE000AC095B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95CA31BF255C28C300AC095B /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		95DB71AA258A1C1500A78033 /* CarteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarteView.swift; sourceTree = "<group>"; };
+		95F6666D2590D712006DE74F /* URLUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLUtils.swift; sourceTree = "<group>"; };
 		976621FBDDCA894FD23FBA8B /* Pods-circolapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-circolapp.release.xcconfig"; path = "Target Support Files/Pods-circolapp/Pods-circolapp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,6 +195,7 @@
 				95906F4C257510370060F5D0 /* GoogleService-Info.plist */,
 				95906F47257506360060F5D0 /* Assets.xcassets */,
 				95CA31B5255C1EE000AC095B /* Preview Content */,
+				95F6666D2590D712006DE74F /* URLUtils.swift */,
 			);
 			path = circolapp;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				955B7A0E257D098C0091B1F9 /* SearchBar.swift in Sources */,
 				9554BDB8257E498F00D8925B /* OnboardingView.swift in Sources */,
 				950C1788258E5BD300B2DBFE /* PhoneView.swift in Sources */,
+				95F6666E2590D712006DE74F /* URLUtils.swift in Sources */,
 				95C46A51255D3A34007A75E5 /* CircularViewModel.swift in Sources */,
 				95B4CE142588BC890090D5E8 /* SettingsView.swift in Sources */,
 			);

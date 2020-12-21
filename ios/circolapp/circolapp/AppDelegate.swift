@@ -71,14 +71,8 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         }
         
         // Handle new circular notification
-        iOSRepository.getCircularRepository().updateCirculars(returnNewCirculars: false, completionHandler:
-                                                                { result, error in
-                                                                    if let errorReal = error {
-                                                                        print(errorReal.localizedDescription)
-                                                                    }
-                                                                })
-        
-        
+        let repository = iOSRepository.getCircularRepository()
+        iOSRepository.updateCirculars(circularRepository: repository)
         
         // UI is updated automatically
         completionHandler([])
@@ -96,12 +90,8 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
             return
         }
         
-        iOSRepository.getCircularRepository().updateCirculars(returnNewCirculars: false, completionHandler:
-                                                                { result, error in
-                                                                    if let errorReal = error {
-                                                                        print(errorReal.localizedDescription)
-                                                                    }
-                                                                })
+        let repository = iOSRepository.getCircularRepository()
+        iOSRepository.updateCirculars(circularRepository: repository)
         
         completionHandler()
     }

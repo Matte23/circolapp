@@ -94,7 +94,7 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
         val circularRepository = AndroidCircularRepository.getInstance(applicationContext)
 
         val result = circularRepository.updateCirculars()
-        if (!result.second)
+        if (result.second == -1)
             return@coroutineScope Result.retry()
 
         val newCirculars = result.first

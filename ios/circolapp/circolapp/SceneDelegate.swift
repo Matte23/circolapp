@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreSpotlight
 import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -27,6 +28,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
+        
+        if let userActivity = connectionOptions.userActivities.first {
+            handleUserActivity(userActivity: userActivity)
+        }
+    }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        // Called when the user open an entry from Spotlight
+        handleUserActivity(userActivity: userActivity)
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -52,7 +62,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let schoolID = UserDefaults.standard.integer(forKey: "school")
         let reminders = iOSRepository.getCircularDao().getReminders(school: Int32(schoolID))
-
+        
         // Remove reminder flag if notification was delivered
         UNUserNotificationCenter.current().getPendingNotificationRequests { notifications in
             // This function has to be called from the main thread because it is where database is accessible
@@ -75,5 +85,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+    }
+    
+    func handleUserActivity(userActivity: NSUserActivity) {
+        if userActivity.activityType == CSSearchableItemActionType {
+            if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                guard let circularID = Int64(uniqueIdentifier) else { return }
+                let schoolID = UserDefaults.standard.integer(forKey: "school")
+                
+                let circularDao = iOSRepository.getCircularDao()
+                let circular = circularDao.getCircular(id: circularID, school: Int32(schoolID))
+                
+                URLUtils.openUrl(url: circular.url)
+            }
+        }
     }
 }

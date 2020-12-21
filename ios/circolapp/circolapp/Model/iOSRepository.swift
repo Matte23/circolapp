@@ -17,6 +17,8 @@
  */
 
 import Foundation
+import CoreSpotlight
+import MobileCoreServices
 import Shared
 
 class iOSRepository {
@@ -29,5 +31,65 @@ class iOSRepository {
     public static func getCircularRepository() -> CircularRepository {
         let serverAPI = iOSServerApi.instance.serverAPI
         return CircularRepository(circularDao: getCircularDao(), serverAPI: serverAPI)
+    }
+    
+    public static func updateCirculars(circularRepository: CircularRepository) {
+        circularRepository.updateCirculars(returnNewCirculars: true, completionHandler:
+                                            { result, error in
+                                                if let errorReal = error {
+                                                    print(errorReal.localizedDescription)
+                                                    return
+                                                }
+                                                
+                                                // Database was resetted, remove all circulars from spotlight
+                                                if result?.second == 1 {
+                                                    deleteAllFromSpotlight(reindex: false, serverID: -1)
+                                                }
+                                                
+                                                // Index circulars
+                                                for circular in result!.first as! Array<Circular> {
+                                                    indexToSpotlight(circular: circular)
+                                                }
+                                            })
+    }
+    
+    public static func indexAllToSpotlight(serverID: Int) {
+        let circulars = getCircularDao().getCirculars(school: Int32(serverID))
+        
+        for circular in circulars {
+            indexToSpotlight(circular: circular)
+        }
+    }
+    
+    public static func indexToSpotlight(circular: Circular) {
+        let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
+        attributeSet.title = "Circular number \(circular.id)"
+        attributeSet.contentDescription = circular.name
+        attributeSet.identifier = "\(circular.id)"
+        
+        let item = CSSearchableItem(uniqueIdentifier: "\(circular.id)", domainIdentifier: "net.underdesk.circolapp", attributeSet: attributeSet)
+        item.expirationDate = Date.distantFuture
+        
+        CSSearchableIndex.default().indexSearchableItems([item]) { error in
+            if let error = error {
+                print("Indexing error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    public static func deleteAllFromSpotlight(reindex: Bool, serverID: Int) {
+        CSSearchableIndex.default().deleteAllSearchableItems(completionHandler: {
+            error in
+            if let errorReal = error {
+                print(errorReal.localizedDescription)
+                return
+            }
+            
+            if reindex {
+                DispatchQueue.main.async {
+                    indexAllToSpotlight(serverID: serverID)
+                }
+            }
+        })
     }
 }

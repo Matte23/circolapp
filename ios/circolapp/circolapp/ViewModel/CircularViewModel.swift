@@ -33,8 +33,8 @@ class CircularViewModel: ObservableObject {
         self.repository = repository
         
         schoolID = UserDefaults.standard.integer(forKey: key)
-        updateCirculars()
-        
+        iOSRepository.updateCirculars(circularRepository: repository)
+
         userDefaultsObserver = UserDefaults.standard.observe(\.school, options: [.initial, .new], changeHandler: { (defaults, change) in
             self.schoolID = change.newValue ?? 0
             
@@ -46,15 +46,6 @@ class CircularViewModel: ObservableObject {
     
     deinit {
         userDefaultsObserver?.invalidate()
-    }
-    
-    func updateCirculars() {
-        self.repository.updateCirculars(returnNewCirculars: false, completionHandler:
-                                            { result, error in
-                                                if let errorReal = error {
-                                                    print(errorReal.localizedDescription)
-                                                }
-                                            })
     }
     
     func startObservingCirculars() {

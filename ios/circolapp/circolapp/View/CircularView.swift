@@ -17,7 +17,6 @@
  */
 
 import SwiftUI
-import UIKit
 import Shared
 
 struct CircularView: View {
@@ -49,8 +48,7 @@ struct CircularView: View {
             if showDetail {
                 HStack {
                     Button(action: {
-                        guard let url = URL(string: circular.url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) else { return }
-                        UIApplication.shared.open(url)
+                        URLUtils.openUrl(url: circular.url)
                     }) {
                         Image(systemName: "envelope.open.fill")
                             .resizable()

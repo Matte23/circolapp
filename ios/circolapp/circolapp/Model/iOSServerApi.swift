@@ -45,10 +45,15 @@ class iOSServerApi {
     }
     
     func changeServer(serverID: Int) {
+        // Change server provider
         let serverID = UserDefaults.standard.integer(forKey: schoolKey)
         let server = serverCompanion.getServer(serverID: Int32(serverID))
         serverAPI = ServerAPI(serverName: server)
         
+        // Reset spotlight indexed items
+        iOSRepository.deleteAllFromSpotlight(reindex: true, serverID: serverID)
+        
+        // Change FCM topic
         let nullableOldTopic = UserDefaults.standard.string(forKey: topicKey)
         let newTopic = serverCompanion.getServerTopic(serverID: Int32(serverID))
         if (nullableOldTopic == nil || nullableOldTopic != newTopic) {
@@ -63,11 +68,6 @@ class iOSServerApi {
             UserDefaults.standard.set(newTopic, forKey: topicKey)
         }
         
-        CircularRepository(circularDao: iOSRepository.getCircularDao(), serverAPI: serverAPI).updateCirculars(returnNewCirculars: false, completionHandler:
-                                                                                                                { result, error in
-                                                                                                                    if let errorReal = error {
-                                                                                                                        print(errorReal.localizedDescription)
-                                                                                                                    }
-                                                                                                                })
+        iOSRepository.updateCirculars(circularRepository: CircularRepository(circularDao: iOSRepository.getCircularDao(), serverAPI: serverAPI))
     }
 }

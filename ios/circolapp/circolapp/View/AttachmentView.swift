@@ -17,7 +17,6 @@
  */
 
 import SwiftUI
-import UIKit
 import Shared
 
 struct AttachmentView: View {
@@ -33,8 +32,7 @@ struct AttachmentView: View {
             Spacer()
             
             Button(action: {
-                guard let url = URL(string: attachmentUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) else { return }
-                UIApplication.shared.open(url)
+                URLUtils.openUrl(url: attachmentUrl)
             }) {
                 Image(systemName: "envelope.open.fill")
                     .resizable()
