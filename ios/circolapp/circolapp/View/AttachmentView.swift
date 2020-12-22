@@ -20,6 +20,9 @@ import SwiftUI
 import Shared
 
 struct AttachmentView: View {
+    @State private var sharingPhone: Bool = false
+    @State private var sharingPad: Bool = false
+    
     var attachmentName: String
     var attachmentUrl: String
     
@@ -43,34 +46,26 @@ struct AttachmentView: View {
             .buttonStyle(BorderlessButtonStyle())
             
             Button(action: {
-                guard let url = URL(string: attachmentUrl) else { return }
-                
-                let downloadTask = URLSession.shared.downloadTask(with: url) {
-                    urlOrNil, responseOrNil, errorOrNil in
-                    
-                    guard let fileURL = urlOrNil else { return }
-                    do {
-                        let documentsURL = try
-                            FileManager.default.url(for: .documentDirectory,
-                                                    in: .userDomainMask,
-                                                    appropriateFor: nil,
-                                                    create: false)
-                        let savedURL = documentsURL.appendingPathComponent(fileURL.lastPathComponent)
-                        try FileManager.default.moveItem(at: fileURL, to: savedURL)
-                    } catch {
-                        print ("file error: \(error)")
-                    }
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    sharingPhone = true
+                } else {
+                    sharingPad = true
                 }
                 
-                downloadTask.resume()
             }) {
-                Image(systemName: "square.and.arrow.down.fill")
+                Image(systemName: "square.and.arrow.up.fill")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 20.0, height: 20.0)
                     .padding(8.0)
             }
             .buttonStyle(BorderlessButtonStyle())
+            .sheet(isPresented: $sharingPhone) {
+                URLUtils.shareSheetView(url: attachmentUrl)
+            }
+            .popover(isPresented: $sharingPad) {
+                URLUtils.shareSheetView(url: attachmentUrl)
+            }
         }
     }
 }

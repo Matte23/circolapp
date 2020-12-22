@@ -36,6 +36,7 @@
 		95CA31B7255C1EE000AC095B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95CA31B6255C1EE000AC095B /* Preview Assets.xcassets */; };
 		95CA31C0255C28C300AC095B /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA31BF255C28C300AC095B /* CircularView.swift */; };
 		95DB71AB258A1C1500A78033 /* CarteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DB71AA258A1C1500A78033 /* CarteView.swift */; };
+		95E58FBB2592195B00689C37 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E58FBA2592195B00689C37 /* ShareSheet.swift */; };
 		95F6666E2590D712006DE74F /* URLUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F6666D2590D712006DE74F /* URLUtils.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		95CA31B8255C1EE000AC095B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95CA31BF255C28C300AC095B /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		95DB71AA258A1C1500A78033 /* CarteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarteView.swift; sourceTree = "<group>"; };
+		95E58FBA2592195B00689C37 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		95F6666D2590D712006DE74F /* URLUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLUtils.swift; sourceTree = "<group>"; };
 		976621FBDDCA894FD23FBA8B /* Pods-circolapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-circolapp.release.xcconfig"; path = "Target Support Files/Pods-circolapp/Pods-circolapp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,8 +139,9 @@
 				95CA31B1255C1EDE00AC095B /* ContentView.swift */,
 				95CA31BF255C28C300AC095B /* CircularView.swift */,
 				95BC3BF72572BCF900F24400 /* AttachmentView.swift */,
-				9512D3C0257AB4F60023C3A1 /* NewReminderView.swift */,
+				95E58FBA2592195B00689C37 /* ShareSheet.swift */,
 				955B7A0D257D098C0091B1F9 /* SearchBar.swift */,
+				9512D3C0257AB4F60023C3A1 /* NewReminderView.swift */,
 				955B7A0F257D10A70091B1F9 /* ViewControllerResolver.swift */,
 				9554BDB7257E498F00D8925B /* OnboardingView.swift */,
 				954AF8F52588A5C300666D0C /* CircularList.swift */,
@@ -190,12 +193,12 @@
 				95CA31AF255C1EDE00AC095B /* AppDelegate.swift */,
 				952DEDDE2576F8DC001DF85D /* SceneDelegate.swift */,
 				954E683C2574ED9E0034EBA8 /* UserDefaultsExtensions.swift */,
+				95F6666D2590D712006DE74F /* URLUtils.swift */,
 				953DDE7D2580312500C457CE /* LaunchScreen.storyboard */,
 				95CA31B8255C1EE000AC095B /* Info.plist */,
 				95906F4C257510370060F5D0 /* GoogleService-Info.plist */,
 				95906F47257506360060F5D0 /* Assets.xcassets */,
 				95CA31B5255C1EE000AC095B /* Preview Content */,
-				95F6666D2590D712006DE74F /* URLUtils.swift */,
 			);
 			path = circolapp;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				954E68352574E3890034EBA8 /* iOSServerApi.swift in Sources */,
 				95DB71AB258A1C1500A78033 /* CarteView.swift in Sources */,
 				950C1784258E582E00B2DBFE /* PadView.swift in Sources */,
+				95E58FBB2592195B00689C37 /* ShareSheet.swift in Sources */,
 				954AF8F82588A5CF00666D0C /* FavouritesList.swift in Sources */,
 				954AF8F62588A5C300666D0C /* CircularList.swift in Sources */,
 				954AF8FD2588A61000666D0C /* FavouritesViewModel.swift in Sources */,

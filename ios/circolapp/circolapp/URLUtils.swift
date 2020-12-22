@@ -18,10 +18,19 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 class URLUtils {
     static func openUrl(url: String) {
         guard let safeUrl = URL(string: url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) else { return }
         UIApplication.shared.open(safeUrl)
+    }
+    
+    static func shareSheetView(url: String) -> some View {
+        if let safeUrl = URL(string: url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) {
+            return ShareSheet(activityItems: [safeUrl])
+        } else {
+            return ShareSheet(activityItems: [url])
+        }
     }
 }
