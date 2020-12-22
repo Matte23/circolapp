@@ -51,7 +51,7 @@ struct PhoneView: View {
                 SettingsView()
             }
             .tabItem {
-                Image(systemName: "gearshape.fill")
+                Image(systemName: "gear")
                 Text("Settings")
             }
         }.sheet(isPresented: self.$showOnboarding, onDismiss: {

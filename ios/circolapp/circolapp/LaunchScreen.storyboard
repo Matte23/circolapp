@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -12,15 +13,15 @@
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" userInteractionEnabled="NO" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gbR-XF-q6T">
+                            <navigationBar userInteractionEnabled="NO" contentMode="scaleToFill" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gbR-XF-q6T">
                                 <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                                 <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="16" bottom="8" trailing="16"/>
                                 <items>
-                                    <navigationItem title="Circulars" id="xPj-vK-Hgf"/>
+                                    <navigationItem title="Circulars" largeTitleDisplayMode="always" id="xPj-vK-Hgf"/>
                                 </items>
                             </navigationBar>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search circulars" translatesAutoresizingMaskIntoConstraints="NO" id="4TW-7z-7jf">
@@ -31,8 +32,8 @@
                                 <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="16" bottom="8" trailing="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UYS-VH-Ztk">
-                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                            <tabBar userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UYS-VH-Ztk">
+                                <rect key="frame" x="0.0" y="779" width="414" height="83"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
                                     <tabBarItem title="Circulars" image="folder.fill" catalog="system" id="WuE-0H-fGb"/>
@@ -43,7 +44,7 @@
                             </tabBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kF5-ip-XCV"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="gbR-XF-q6T" firstAttribute="leading" secondItem="kF5-ip-XCV" secondAttribute="leading" id="60s-1W-270"/>
                             <constraint firstItem="4TW-7z-7jf" firstAttribute="leading" secondItem="kF5-ip-XCV" secondAttribute="leading" id="6D1-S5-i23"/>
@@ -67,5 +68,8 @@
         <image name="book.fill" catalog="system" width="128" height="102"/>
         <image name="folder.fill" catalog="system" width="128" height="97"/>
         <image name="gear" catalog="system" width="128" height="119"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

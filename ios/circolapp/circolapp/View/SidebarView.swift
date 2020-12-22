@@ -50,7 +50,7 @@ struct SidebarView: View {
                     tag: Screen.settings,
                     selection: $state,
                     label: {
-                        Label("Settings", systemImage: "gearshape")
+                        Label("Settings", systemImage: "gear")
                     })
             }
             .listStyle(SidebarListStyle())
