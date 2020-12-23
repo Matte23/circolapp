@@ -20,13 +20,18 @@ import SwiftUI
 
 struct PadView: View {
     @State var screen: Screen? = .all
+    @State var showOnboarding = !UserDefaults.standard.bool(forKey: "skipOnboarding")
     
     var body: some View {
         NavigationView {
             SidebarView(state: $screen)
         }
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
-        
+        .sheet(isPresented: self.$showOnboarding, onDismiss: {
+            UserDefaults.standard.set(true, forKey: "skipOnboarding")
+        }) {
+            OnboardingView()
+        }
     }
 }
 

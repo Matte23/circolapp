@@ -23,7 +23,7 @@ struct SidebarView: View {
     
     var body: some View {
         if #available(iOS 14.0, *) {
-            List {
+            List(selection: $state) {
                 NavigationLink(
                     destination: CircularList(),
                     tag: Screen.all,
