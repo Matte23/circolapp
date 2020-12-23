@@ -79,6 +79,11 @@ class ServerAPI(serverName: Servers) {
             Servers.PORPORATO -> "Liceo G.F. Porporato"
         }
 
+        fun getServerWebsite(server: Servers) = when (server) {
+            Servers.CURIE -> "https://www.curiepinerolo.edu.it/"
+            Servers.PORPORATO -> "https://www.liceoporporato.edu.it/"
+        }
+
         fun createServer(server: Servers, ktorClient: HttpClient) = when (server) {
             Servers.CURIE -> CurieServer(ktorClient)
             Servers.PORPORATO -> PorporatoServer(ktorClient)

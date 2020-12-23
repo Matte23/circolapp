@@ -36,7 +36,22 @@ struct SettingsView: View {
                 }
             }
             
+            Section(header: Text("SCHOOL")) {
+                Button(action: {
+                    let schoolID = UserDefaults.standard.integer(forKey: "school")
+                    let server = serverCompanion.getServer(serverID: Int32(schoolID))
+                    URLUtils.openUrl(url: serverCompanion.getServerWebsite(server: server))
+                }) {
+                    Text("School website")
+                }
+            }
+            
             Section(header: Text("ABOUT")) {
+                Button(action: {
+                    URLUtils.openUrl(url: "https://www.iubenda.com/privacy-policy/13230834")
+                }) {
+                    Text("Privacy policy")
+                }
                 HStack {
                     Text("Version name")
                     Spacer()
