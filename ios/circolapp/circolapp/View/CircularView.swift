@@ -30,7 +30,7 @@ struct CircularView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("Circular number " + String(circular.id))
+                Text("Circular number \(String(circular.id))")
                     .font(.headline)
                 Text(circular.date)
                     .font(.subheadline)

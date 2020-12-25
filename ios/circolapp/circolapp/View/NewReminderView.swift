@@ -50,7 +50,7 @@ struct NewReminderView: View {
         let center =  UNUserNotificationCenter.current()
         
         let content = UNMutableNotificationContent()
-        content.title = "Circular number " + String(circular.id)
+        content.title = NSString.localizedStringWithFormat(NSLocalizedString("Circular number %@", comment: "") as NSString, String(circular.id)) as String
         content.body = circular.name
         content.sound = UNNotificationSound.default
         content.userInfo["reminder"] = true

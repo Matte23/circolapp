@@ -63,7 +63,7 @@ class iOSRepository {
     
     public static func indexToSpotlight(circular: Circular) {
         let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
-        attributeSet.title = "Circular number \(circular.id)"
+        attributeSet.title = NSString.localizedStringWithFormat(NSLocalizedString("Circular number %@", comment: "") as NSString, String(circular.id)) as String
         attributeSet.contentDescription = circular.name
         attributeSet.identifier = "\(circular.id)"
         

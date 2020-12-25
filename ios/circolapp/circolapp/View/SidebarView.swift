@@ -36,7 +36,7 @@ struct SidebarView: View {
                     tag: Screen.favourites,
                     selection: $state,
                     label: {
-                        Label("Favourites", systemImage: "book")
+                        Label("Bookmarks", systemImage: "book")
                     })
                 NavigationLink(
                     destination: RemindersList(),

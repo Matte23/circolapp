@@ -1,0 +1,47 @@
+/*
+ * Circolapp
+ * Copyright (C) 2019-2020  Matteo Schiff
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+"All circulars" = "Tutte le circolari";
+"Circulars" = "Circolari";
+"Bookmarks" = "Segnalibri";
+"Reminders" = "Promemoria";
+"Settings" = "Impostazioni";
+
+"School" = "Scuola";
+"School website" = "Sito della scuola";
+"Privacy policy" = "Privacy policy";
+"Error" = "Errore";
+"Version" = "Versione";
+"Open source licenses" = "Licenze open source";
+
+"Search circulars" = "Cerca";
+
+"GENERAL" = "GENERALE";
+"SCHOOL" = "SCUOLA";
+"ABOUT" = "INFORMAZIONI";
+
+"Done" = "Fatto";
+"Cancel" = "Annulla";
+
+"Choose your school" = "Scegli la tua scuola";
+"Welcome to CircolApp" = "Benvenuto su Circolapp";
+
+"Pick a date for the reminder" = "Scegli una data per il promemoria";
+"New reminder" = "Nuovo promemoria";
+
+"Circular number %@" = "Circolare numero %@";

@@ -21,10 +21,10 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                                 <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="16" bottom="8" trailing="16"/>
                                 <items>
-                                    <navigationItem title="Circulars" largeTitleDisplayMode="always" id="xPj-vK-Hgf"/>
+                                    <navigationItem largeTitleDisplayMode="always" id="xPj-vK-Hgf"/>
                                 </items>
                             </navigationBar>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search circulars" translatesAutoresizingMaskIntoConstraints="NO" id="4TW-7z-7jf">
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="4TW-7z-7jf">
                                 <rect key="frame" x="0.0" y="140" width="414" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="f97-Xy-3Qi"/>
@@ -36,10 +36,10 @@
                                 <rect key="frame" x="0.0" y="779" width="414" height="83"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
-                                    <tabBarItem title="Circulars" image="folder.fill" catalog="system" id="WuE-0H-fGb"/>
-                                    <tabBarItem title="Favourites" image="book.fill" catalog="system" id="e4w-uW-Q8O"/>
-                                    <tabBarItem title="Reminders" image="alarm.fill" catalog="system" id="yC0-mi-bnG"/>
-                                    <tabBarItem title="Settings" image="gear" catalog="system" id="xJj-xy-3IB"/>
+                                    <tabBarItem title="" image="folder.fill" catalog="system" id="WuE-0H-fGb"/>
+                                    <tabBarItem title="" image="book.fill" catalog="system" id="e4w-uW-Q8O"/>
+                                    <tabBarItem title="" image="alarm.fill" catalog="system" id="yC0-mi-bnG"/>
+                                    <tabBarItem title="" image="gear" catalog="system" id="xJj-xy-3IB"/>
                                 </items>
                             </tabBar>
                         </subviews>

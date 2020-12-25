@@ -26,7 +26,7 @@ struct FavouritesList: View {
         List(favouritesViewModel.circulars, id: \.id) { circular in
             CircularView(circular: circular)
         }
-        .navigationBarTitle(Text("Favourites"), displayMode: .large)
+        .navigationBarTitle(Text("Bookmarks"), displayMode: .large)
         .addSearchBar(self.searchBar)
         .onReceive(searchBar.$text) {query in
             self.favouritesViewModel.search(query: query)

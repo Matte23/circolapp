@@ -36,7 +36,7 @@ struct PhoneView: View {
             }
             .tabItem {
                 Image(systemName: "book.fill")
-                Text("Favourites")
+                Text("Bookmarks")
             }
             
             NavigationView {

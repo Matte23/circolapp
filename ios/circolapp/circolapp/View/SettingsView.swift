@@ -52,25 +52,18 @@ struct SettingsView: View {
                 }) {
                     Text("Privacy policy")
                 }
-                HStack {
-                    Text("Version name")
-                    Spacer()
-                    Text(
-                        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Error"
-                    )
-                }
-                HStack {
-                    Text("Version code")
-                    Spacer()
-                    Text(
-                        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Error"
-                    )
-                }
                 NavigationLink(destination:
                                 CarteView()
                                 .navigationBarTitle("Open source licenses", displayMode: .inline)
                 ) {
                     Text("Open source licenses")
+                }
+                HStack {
+                    Text("Version")
+                    Spacer()
+                    Text(
+                        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Error"
+                    )
                 }
             }
         }
