@@ -62,55 +62,71 @@
         <ImageButton
             android:id="@+id/circular_view_button"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:contentDescription="@string/image_view_circular"
             android:src="@drawable/baseline_visibility_24"
             android:tint="@color/colorSecondary"
-            android:contentDescription="@string/image_view_circular"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
+            app:layout_constraintEnd_toStartOf="@+id/circular_share_button"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/circular_share_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/image_share_circular"
+            android:gravity="center"
+            android:src="@drawable/baseline_share_24"
+            android:tint="@color/colorSecondary"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
+            app:layout_constraintEnd_toStartOf="@+id/circular_download_button"
+            app:layout_constraintStart_toEndOf="@+id/circular_view_button" />
 
         <ImageButton
             android:id="@+id/circular_download_button"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/image_download_circular"
             android:gravity="center"
             android:src="@drawable/baseline_get_app_24"
             android:tint="@color/colorSecondary"
-            android:contentDescription="@string/image_download_circular"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
-            app:layout_constraintEnd_toStartOf="@+id/circular_guideline"
-            app:layout_constraintStart_toEndOf="@+id/circular_view_button" />
+            app:layout_constraintEnd_toStartOf="@+id/circular_favourite_button"
+            app:layout_constraintStart_toEndOf="@+id/circular_share_button" />
 
         <ImageButton
             android:id="@+id/circular_favourite_button"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/image_add_favourite"
             android:src="@drawable/baseline_star_24"
             android:tint="@color/colorSecondary"
-            android:contentDescription="@string/image_add_favourite"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
             app:layout_constraintEnd_toStartOf="@+id/circular_reminder_button"
-            app:layout_constraintStart_toStartOf="@+id/circular_guideline" />
+            app:layout_constraintStart_toEndOf="@+id/circular_download_button" />
 
         <ImageButton
             android:id="@+id/circular_reminder_button"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:contentDescription="@string/image_add_reminder"
             android:src="@drawable/baseline_notifications_24"
             android:tint="@color/colorSecondary"
-            android:contentDescription="@string/image_add_reminder"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/circulars_attachments_list"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/circular_favourite_button" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/circulars_attachments_list"
@@ -124,13 +140,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/circular_guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

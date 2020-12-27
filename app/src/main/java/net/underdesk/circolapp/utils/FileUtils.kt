@@ -43,6 +43,17 @@ object FileUtils {
         context.startActivity(viewIntent)
     }
 
+    fun shareFile(url: String, context: Context) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, url)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        context.startActivity(shareIntent)
+    }
+
     fun downloadFile(
         file: DownloadableFile,
         adapterCallback: CircularLetterAdapter.AdapterCallback,

@@ -79,8 +79,10 @@
     <string name="snackbar_connection_not_available">Network not available. Results may be outdated</string>
 
     <string name="image_view_attachment">View attachment</string>
+    <string name="image_share_attachment">Share attachment</string>
     <string name="image_download_attachment">Download attachment</string>
     <string name="image_view_circular">View circular</string>
+    <string name="image_share_circular">Share circular</string>
     <string name="image_download_circular">Download circular</string>
     <string name="image_add_favourite">Add to favourites</string>
     <string name="image_add_reminder">Add reminder</string>

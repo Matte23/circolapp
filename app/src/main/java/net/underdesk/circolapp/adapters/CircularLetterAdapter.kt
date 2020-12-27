@@ -62,6 +62,7 @@ class CircularLetterAdapter(
         var date: TextView = binding.circularDateTextview
         var collapseButton: ImageButton = binding.circularCollapseButton
         var viewButton: ImageButton = binding.circularViewButton
+        var shareButton: ImageButton = binding.circularShareButton
         var downloadButton: ImageButton = binding.circularDownloadButton
         var favouriteButton: ImageButton = binding.circularFavouriteButton
         var reminderButton: ImageButton = binding.circularReminderButton
@@ -118,6 +119,7 @@ class CircularLetterAdapter(
             holder.collapseButton.contentDescription = context.getString(R.string.image_expand)
 
             holder.viewButton.visibility = View.GONE
+            holder.shareButton.visibility = View.GONE
             holder.downloadButton.visibility = View.GONE
             holder.favouriteButton.visibility = View.GONE
             holder.reminderButton.visibility = View.GONE
@@ -134,6 +136,7 @@ class CircularLetterAdapter(
             holder.collapseButton.contentDescription = context.getString(R.string.image_collapse)
 
             holder.viewButton.visibility = View.VISIBLE
+            holder.shareButton.visibility = View.VISIBLE
             holder.downloadButton.visibility = View.VISIBLE
             holder.favouriteButton.visibility = View.VISIBLE
             holder.reminderButton.visibility = View.VISIBLE
@@ -152,6 +155,10 @@ class CircularLetterAdapter(
 
         holder.viewButton.setOnClickListener {
             FileUtils.viewFile(circulars[position].url, context)
+        }
+
+        holder.shareButton.setOnClickListener {
+            FileUtils.shareFile(circulars[position].url, context)
         }
 
         holder.downloadButton.setOnClickListener {

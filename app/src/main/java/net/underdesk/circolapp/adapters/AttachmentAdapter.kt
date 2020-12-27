@@ -39,6 +39,7 @@ class AttachmentAdapter(
     inner class AttachmentViewHolder(binding: ItemAttachmentBinding) : RecyclerView.ViewHolder(binding.root) {
         var title: TextView = binding.attachmentTitleTextview
         var viewButton: ImageButton = binding.attachmentViewButton
+        var shareButton: ImageButton = binding.attachmentShareButton
         var downloadButton: ImageButton = binding.attachmentDownloadButton
     }
 
@@ -54,6 +55,10 @@ class AttachmentAdapter(
 
         holder.viewButton.setOnClickListener {
             FileUtils.viewFile(attachmentsUrls[position], context)
+        }
+
+        holder.shareButton.setOnClickListener {
+            FileUtils.shareFile(attachmentsUrls[position], context)
         }
 
         holder.downloadButton.setOnClickListener {
