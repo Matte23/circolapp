@@ -22,6 +22,7 @@ repositories {
 
 kotlin {
     android()
+    jvm()
 
     val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
 
@@ -83,6 +84,19 @@ kotlin {
 
                 // SqlDelight
                 implementation(Dependencies.SQLDelight.sqlDelightNative)
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+                // Ktor
+                implementation(Dependencies.Ktor.ktorOkhttp)
+                implementation(Dependencies.Ktor.slf4j)
+
+                // SqlDelight
+                implementation(Dependencies.SQLDelight.sqlDelightSQLite)
+
+                // Misc
+                implementation(Dependencies.Misc.jsoup)
             }
         }
     }

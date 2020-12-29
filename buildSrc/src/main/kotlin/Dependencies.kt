@@ -39,6 +39,8 @@ object Dependencies {
         const val ktorIos = "io.ktor:ktor-client-ios:$version"
         const val ktorJson = "io.ktor:ktor-client-json:$version"
         const val ktorSerialization = "io.ktor:ktor-client-serialization:$version"
+
+        const val slf4j = "org.slf4j:slf4j-simple:1.7.30"
     }
 
     object Serialization {
@@ -51,6 +53,7 @@ object Dependencies {
         const val sqlDelightCoroutines = "com.squareup.sqldelight:coroutines-extensions:$version"
         const val sqlDelightAndroid = "com.squareup.sqldelight:android-driver:$version"
         const val sqlDelightNative = "com.squareup.sqldelight:native-driver:$version"
+        const val sqlDelightSQLite = "com.squareup.sqldelight:sqlite-driver:$version"
     }
 
     object AboutLibraries {
