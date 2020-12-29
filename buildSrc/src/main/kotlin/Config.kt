@@ -13,6 +13,8 @@ object Config {
             "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:${Dependencies.AboutLibraries.version}"
         const val dependencies =
             "com.github.ben-manes:gradle-versions-plugin:0.36.0"
+        const val shadow =
+            "com.github.jengelman.gradle.plugins:shadow:5.2.0"
     }
 
     object Android {

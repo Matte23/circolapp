@@ -17,6 +17,7 @@ buildscript {
         classpath(Config.Plugin.ktlint)
         classpath(Config.Plugin.aboutLibraries)
         classpath(Config.Plugin.dependencies)
+        classpath(Config.Plugin.shadow)
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
