@@ -72,8 +72,16 @@ class ServerUtils {
         val newCirculars = updateCirculars(server)
 
         if (newCirculars.second != -1 && newCirculars.first.isNotEmpty()) {
-            PushNotificationUtils.createPushNotification(ServerAPI.getServerTopic(server.serverID))
-            PushNotificationUtils.createPushNotificationiOS(ServerAPI.getServerTopic(server.serverID))
+            for (circular in newCirculars.first) {
+                PushNotificationUtils.createPushNotification(
+                    circular,
+                    ServerAPI.getServerTopic(server.serverID)
+                )
+                PushNotificationUtils.createPushNotificationiOS(
+                    circular,
+                    ServerAPI.getServerTopic(server.serverID)
+                )
+            }
         }
     }
 }

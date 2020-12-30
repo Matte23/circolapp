@@ -1,6 +1,6 @@
 plugins {
-    id("kotlin-platform-jvm")
-    id("application")
+    kotlin("jvm")
+    application
     id("com.github.johnrengelman.shadow")
 }
 

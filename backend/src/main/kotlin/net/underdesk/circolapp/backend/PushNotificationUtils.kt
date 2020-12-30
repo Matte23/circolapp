@@ -21,32 +21,36 @@ package net.underdesk.circolapp.backend
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.Notification
+import net.underdesk.circolapp.shared.data.Circular
 import java.time.LocalDateTime
 
 object PushNotificationUtils {
-    fun createPushNotification(topic: String) {
+    fun createPushNotification(circular: Circular, topic: String) {
         val message = Message.builder()
-            .putData("fetchCircular", "true")
+            .putData("newCircular", true.toString())
+            .putData("id", circular.id.toString())
+            .putData("name", circular.name)
+            .putData("url", circular.url)
             .setTopic(topic)
-            .build()
 
-        val response = FirebaseMessaging.getInstance().send(message)
+        val response = FirebaseMessaging.getInstance().send(message.build())
 
         val current = LocalDateTime.now()
 
-        print("Sent data push notification for topic $topic with response $response at time $current \n")
+        print("Sent data push notification with circular ${circular.id} for topic $topic with response $response at time $current \n")
     }
 
-    fun createPushNotificationiOS(topic: String) {
+    fun createPushNotificationiOS(circular: Circular, topic: String) {
         val realTopic = topic + "IOS"
 
         val message = Message.builder()
             .setNotification(
                 Notification.builder()
-                    .setTitle("Nuove circolari")
-                    .setBody("La tua scuola ha pubblicato nuove circolari")
+                    .setTitle("Circolare numero " + circular.id)
+                    .setBody(circular.name)
                     .build()
             )
+            .putData("url", circular.url)
             .setTopic(realTopic)
             .build()
 
@@ -54,6 +58,6 @@ object PushNotificationUtils {
 
         val current = LocalDateTime.now()
 
-        print("Sent managed push notification for topic $realTopic with response $response at time $current \n")
+        print("Sent managed push notification with circular ${circular.id} for topic $realTopic with response $response at time $current \n")
     }
 }
