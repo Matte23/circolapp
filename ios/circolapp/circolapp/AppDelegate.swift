@@ -91,6 +91,8 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         }
         
         let repository = iOSRepository.getCircularRepository()
+        let url = userInfo["url"] as! String
+        URLUtils.openUrl(url: url)
         iOSRepository.updateCirculars(circularRepository: repository, circularUpdated: {})
         
         completionHandler()
