@@ -52,6 +52,7 @@ PODS:
   - GoogleUtilities/UserDefaults (7.1.1):
     - GoogleUtilities/Logger
   - HTMLKit (3.1.0)
+  - Introspect (0.1.2)
   - nanopb (2.30906.0):
     - nanopb/decode (= 2.30906.0)
     - nanopb/encode (= 2.30906.0)
@@ -60,12 +61,15 @@ PODS:
   - PromisesObjC (1.2.11)
   - shared (1.0):
     - HTMLKit (~> 3.1.0)
+  - SwiftUIRefresh (0.0.3):
+    - Introspect (~> 0.1.0)
 
 DEPENDENCIES:
   - AppStorage (~> 1.0.3)
   - Carte
   - Firebase/Messaging
   - shared (from `../../shared`)
+  - SwiftUIRefresh
 
 SPEC REPOS:
   trunk:
@@ -80,8 +84,10 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - HTMLKit
+    - Introspect
     - nanopb
     - PromisesObjC
+    - SwiftUIRefresh
 
 EXTERNAL SOURCES:
   shared:
@@ -99,10 +105,12 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 116c84c4bdeb76be2a7a46de51244368f9794eab
   GoogleUtilities: 3dc4ff0d5e4840e2fa8eef0889620e8c33d4218c
   HTMLKit: 4ed10a911462cbf972329ec6aaaa827208dfd70c
+  Introspect: 85a29d2c5ee4d3d15469ad0b75fd8839f3e72674
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   shared: fb3154b4def038b2b13aa88e01dd9f91bb2de9b5
+  SwiftUIRefresh: ca6ae2718d25aad5dd68bbf5d2ae36ef6ade98bf
 
-PODFILE CHECKSUM: 7decc03927fcaa3f2209e5b0ce4ee4c86d714007
+PODFILE CHECKSUM: faad88d7c92ca3deaa3ebc5d53f6ff86592a6113
 
 COCOAPODS: 1.10.0

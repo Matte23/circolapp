@@ -68,6 +68,6 @@ class iOSServerApi {
             UserDefaults.standard.set(newTopic, forKey: topicKey)
         }
         
-        iOSRepository.updateCirculars(circularRepository: CircularRepository(circularDao: iOSRepository.getCircularDao(), serverAPI: serverAPI))
+        iOSRepository.updateCirculars(circularRepository: CircularRepository(circularDao: iOSRepository.getCircularDao(), serverAPI: serverAPI), circularUpdated: {})
     }
 }

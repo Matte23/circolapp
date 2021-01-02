@@ -17,6 +17,7 @@
  */
 
 import SwiftUI
+import SwiftUIRefresh
 
 struct CircularList: View {
     @ObservedObject var circularViewModel = CircularViewModel(repository: iOSRepository.getCircularRepository())
@@ -27,6 +28,12 @@ struct CircularList: View {
             CircularView(circular: circular)
         }
         .navigationBarTitle(Text("Circulars"), displayMode: .large)
+        .pullToRefresh() { endRefreshing in circularViewModel.updateCirculars {
+                DispatchQueue.main.async {
+                    endRefreshing()
+                }
+            }
+        }
         .addSearchBar(self.searchBar)
         .onReceive(searchBar.$text) {query in
             self.circularViewModel.search(query: query)

@@ -33,7 +33,7 @@ class iOSRepository {
         return CircularRepository(circularDao: getCircularDao(), serverAPI: serverAPI)
     }
     
-    public static func updateCirculars(circularRepository: CircularRepository) {
+    public static func updateCirculars(circularRepository: CircularRepository, circularUpdated: @escaping () -> Void) {
         circularRepository.updateCirculars(returnNewCirculars: true, completionHandler:
                                             { result, error in
                                                 if let errorReal = error {
@@ -50,6 +50,8 @@ class iOSRepository {
                                                 for circular in result!.first as! Array<Circular> {
                                                     indexToSpotlight(circular: circular)
                                                 }
+                                                
+                                                circularUpdated()
                                             })
     }
     
