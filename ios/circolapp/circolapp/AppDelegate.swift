@@ -72,7 +72,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         
         // Handle new circular notification
         let repository = iOSRepository.getCircularRepository()
-        iOSRepository.updateCirculars(circularRepository: repository)
+        iOSRepository.updateCirculars(circularRepository: repository, circularUpdated: {})
         
         // UI is updated automatically
         completionHandler([])
@@ -91,7 +91,9 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         }
         
         let repository = iOSRepository.getCircularRepository()
-        iOSRepository.updateCirculars(circularRepository: repository)
+        let url = userInfo["url"] as! String
+        URLUtils.openUrl(url: url)
+        iOSRepository.updateCirculars(circularRepository: repository, circularUpdated: {})
         
         completionHandler()
     }

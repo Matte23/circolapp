@@ -8,6 +8,7 @@ target 'circolapp' do
   pod 'shared', :path => '../../shared'
   pod 'Firebase/Messaging'
   pod 'AppStorage', '~> 1.0.3'
+  pod "SwiftUIRefresh"
   pod 'Carte'
 
   post_install do |installer|
