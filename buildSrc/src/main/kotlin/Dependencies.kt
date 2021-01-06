@@ -28,10 +28,10 @@ object Dependencies {
     }
 
     object Firebase {
-        const val bom = "com.google.firebase:firebase-bom:26.1.1"
+        const val bom = "com.google.firebase:firebase-bom:26.2.0"
         const val messaging = "com.google.firebase:firebase-messaging-ktx"
 
-        const val adminSDK = "com.google.firebase:firebase-admin:7.0.1"
+        const val adminSDK = "com.google.firebase:firebase-admin:7.1.0"
     }
 
     object Ktor {
