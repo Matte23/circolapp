@@ -9,6 +9,7 @@
     <string name="menu_about">Informazioni</string>
     <string name="menu_search">Cerca</string>
     <string name="menu_refresh">Aggiorna</string>
+    <string name="menu_mark_all_read">Segna tutte le circolari come lette</string>
 
     <string name="preferences_general_header">Generale</string>
     <string name="preference_notifications_header">Notifiche</string>

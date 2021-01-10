@@ -26,6 +26,7 @@ data class Circular(
     val date: String,
     var favourite: Boolean = false,
     var reminder: Boolean = false,
+    var read: Boolean = false,
     val attachmentsNames: MutableList<String> = mutableListOf(),
     val attachmentsUrls: MutableList<String> = mutableListOf()
 )

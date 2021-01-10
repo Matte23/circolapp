@@ -16,7 +16,7 @@ class CircularDao(
     private val appDatabaseQueries = database.appDatabaseQueries
 
     private val circularMapper =
-        { id: Long, school: Long, name: String, url: String, date: String, favourite: Long, reminder: Long, attachmentsNames: String, attachmentsUrls: String ->
+        { id: Long, school: Long, name: String, url: String, date: String, favourite: Long, reminder: Long, read: Long, attachmentsNames: String, attachmentsUrls: String ->
             Circular(
                 id,
                 school.toInt(),
@@ -25,6 +25,7 @@ class CircularDao(
                 date,
                 favourite.toBoolean(),
                 reminder.toBoolean(),
+                read.toBoolean(),
                 attachmentsNames.toList(),
                 attachmentsUrls.toList()
             )
@@ -40,6 +41,7 @@ class CircularDao(
                 it.date,
                 it.favourite.toLong(),
                 it.reminder.toLong(),
+                it.read.toLong(),
                 it.attachmentsNames.joinToString(),
                 it.attachmentsUrls.joinToString()
             )
@@ -56,11 +58,28 @@ class CircularDao(
             )
         }
 
+    suspend fun markRead(id: Long, school: Int, read: Boolean) =
+        withContext(PlatformDispatcher.IO) {
+            appDatabaseQueries.markCircularRead(
+                read.toLong(),
+                id,
+                school.toLong()
+            )
+        }
+
+    suspend fun markAllRead(read: Boolean) =
+        withContext(PlatformDispatcher.IO) {
+            appDatabaseQueries.markAllRead(
+                read.toLong()
+            )
+        }
+
     suspend fun deleteAll() = withContext(PlatformDispatcher.IO) {
         appDatabaseQueries.deleteAllCirculars()
     }
 
-    fun getCircular(id: Long, school: Int) = appDatabaseQueries.getCircular(id, school.toLong(), circularMapper).executeAsOne()
+    fun getCircular(id: Long, school: Int) =
+        appDatabaseQueries.getCircular(id, school.toLong(), circularMapper).executeAsOne()
 
     fun getCirculars(school: Int) =
         appDatabaseQueries.getCirculars(school.toLong(), circularMapper).executeAsList()

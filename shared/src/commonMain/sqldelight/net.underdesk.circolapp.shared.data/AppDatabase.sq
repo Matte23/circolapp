@@ -6,19 +6,29 @@ CREATE TABLE Circulars (
     date TEXT NOT NULL,
     favourite INTEGER NOT NULL DEFAULT 0,
     reminder INTEGER NOT NULL DEFAULT 0,
+    read INTEGER NOT NULL DEFAULT 0,
     attachmentsNames TEXT NOT NULL,
     attachmentsUrls TEXT NOT NULL,
     PRIMARY KEY (id, school)
 );
 
 insertCircular:
-INSERT OR IGNORE INTO Circulars(id, school, name, url, date, favourite, reminder, attachmentsNames, attachmentsUrls)
-VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);
+INSERT OR IGNORE INTO Circulars(id, school, name, url, date, favourite, reminder, read, attachmentsNames, attachmentsUrls)
+VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 updateCircular:
 UPDATE Circulars
 SET favourite = ?, reminder = ?
 WHERE id = ? AND school = ?;
+
+markCircularRead:
+UPDATE Circulars
+SET read = ?
+WHERE id = ? AND school = ?;
+
+markAllRead:
+UPDATE Circulars
+SET read = ?;
 
 deleteAllCirculars:
 DELETE FROM Circulars;

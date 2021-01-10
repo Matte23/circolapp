@@ -30,6 +30,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -38,7 +39,9 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.aboutlibraries.LibsBuilder
+import kotlinx.coroutines.launch
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
+import net.underdesk.circolapp.data.AndroidDatabase
 import net.underdesk.circolapp.databinding.ActivityMainBinding
 import net.underdesk.circolapp.utils.DownloadableFile
 import net.underdesk.circolapp.works.PollWork
@@ -111,6 +114,12 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         return when (item.itemId) {
             R.id.menu_main_refresh -> {
                 refreshCallback?.refresh()
+                true
+            }
+            R.id.menu_main_mark_all_read -> {
+                lifecycleScope.launch {
+                    AndroidDatabase.getDaoInstance(this@MainActivity).markAllRead(true)
+                }
                 true
             }
             R.id.menu_main_settings -> {

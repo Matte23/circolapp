@@ -21,6 +21,7 @@ package net.underdesk.circolapp.adapters
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,6 +85,14 @@ class CircularLetterAdapter(
         holder.number.text = context.getString(R.string.notification_title, circulars[position].id)
         holder.title.text = circulars[position].name
         holder.date.text = circulars[position].date
+
+        if (circulars[position].read) {
+            holder.number.typeface = Typeface.DEFAULT
+            holder.date.typeface = Typeface.DEFAULT
+        } else {
+            holder.number.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
+            holder.date.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
+        }
 
         holder.favouriteButton.setImageResource(
             if (circulars[position].favourite) {
@@ -154,6 +163,14 @@ class CircularLetterAdapter(
         }
 
         holder.viewButton.setOnClickListener {
+            adapterScope.launch {
+                AndroidDatabase.getDaoInstance(context).markRead(
+                    circulars[position].id,
+                    circulars[position].school,
+                    true
+                )
+            }
+
             FileUtils.viewFile(circulars[position].url, context)
         }
 
