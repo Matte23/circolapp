@@ -34,6 +34,11 @@ struct SettingsView: View {
                         Text(serverCompanion.getServerName(server: server))
                     }
                 }
+                Button(action: {
+                    iOSRepository.getCircularDao().markAllRead(read: true, completionHandler: {_,_ in })
+                }) {
+                    Text("Mark all circulars as read")
+                }
             }
             
             Section(header: Text("SCHOOL")) {

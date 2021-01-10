@@ -163,12 +163,14 @@ class CircularLetterAdapter(
         }
 
         holder.viewButton.setOnClickListener {
-            adapterScope.launch {
-                AndroidDatabase.getDaoInstance(context).markRead(
-                    circulars[position].id,
-                    circulars[position].school,
-                    true
-                )
+            if (!circulars[position].read) {
+                adapterScope.launch {
+                    AndroidDatabase.getDaoInstance(context).markRead(
+                        circulars[position].id,
+                        circulars[position].school,
+                        true
+                    )
+                }
             }
 
             FileUtils.viewFile(circulars[position].url, context)

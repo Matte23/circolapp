@@ -32,8 +32,10 @@ struct CircularView: View {
             HStack {
                 Text("Circular number \(String(circular.id))")
                     .font(.headline)
+                    .fontWeight(circular.read ? .regular : .bold)
                 Text(circular.date)
                     .font(.subheadline)
+                    .fontWeight(circular.read ? .regular : .bold)
                 Spacer()
                 Button(action: {
                     self.showDetail.toggle()
@@ -51,6 +53,10 @@ struct CircularView: View {
             if showDetail {
                 HStack {
                     Button(action: {
+                        if !circular.read {
+                            iOSRepository.getCircularDao().markRead(id: circular.id, school: circular.school, read: true, completionHandler: {_,_ in })
+                        }
+                        
                         URLUtils.openUrl(url: circular.url)
                     }) {
                         Image(systemName: "envelope.open.fill")
@@ -132,7 +138,7 @@ struct CircularView: View {
 }
 
 struct CircularView_Previews: PreviewProvider {
-    static var previewCircular = Circular(id: 1, school: 0, name: "This is a circular", url: "http://example.com", date: "19/11/2020", favourite: false, reminder: false, attachmentsNames: [], attachmentsUrls: [])
+    static var previewCircular = Circular(id: 1, school: 0, name: "This is a circular", url: "http://example.com", date: "19/11/2020", favourite: false, reminder: false, read: false, attachmentsNames: [], attachmentsUrls: [])
     
     static var previews: some View {
         CircularView(circular: previewCircular)
