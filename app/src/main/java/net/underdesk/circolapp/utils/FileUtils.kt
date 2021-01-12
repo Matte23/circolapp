@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -15,9 +17,8 @@ import net.underdesk.circolapp.adapters.CircularLetterAdapter
 
 object FileUtils {
     fun viewFile(url: String, context: Context) {
-        val viewIntent = Intent(Intent.ACTION_VIEW)
-
         if (url.endsWith(".pdf")) {
+            val viewIntent = Intent(Intent.ACTION_VIEW)
             viewIntent.setDataAndType(Uri.parse(url), "application/pdf")
 
             if (viewIntent.resolveActivity(context.packageManager) == null) {
@@ -36,11 +37,24 @@ object FileUtils {
 
                 return
             }
-        } else {
-            viewIntent.data = Uri.parse(url)
-        }
 
-        context.startActivity(viewIntent)
+            context.startActivity(viewIntent)
+        } else {
+            val primaryColor = ContextCompat.getColor(context, R.color.colorPrimary)
+
+            val otherParams = CustomTabColorSchemeParams.Builder()
+                .setToolbarColor(primaryColor)
+                .build()
+
+            val customTabsIntent = Builder()
+                .setShowTitle(true)
+                .setColorScheme(COLOR_SCHEME_SYSTEM)
+                .setDefaultColorSchemeParams(otherParams)
+                .setShareState(SHARE_STATE_ON)
+                .build()
+
+            customTabsIntent.launchUrl(context, Uri.parse(url))
+        }
     }
 
     fun shareFile(url: String, context: Context) {

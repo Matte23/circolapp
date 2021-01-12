@@ -14,6 +14,7 @@ object Dependencies {
         const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.2.0"
         const val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
         const val preference = "androidx.preference:preference-ktx:1.1.1"
+        const val browser = "androidx.browser:browser:1.3.0"
 
         private const val navigationVersion = "2.3.2"
         const val navigationFragment =
