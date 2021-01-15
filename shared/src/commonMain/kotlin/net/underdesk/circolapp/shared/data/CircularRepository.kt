@@ -11,8 +11,12 @@ class CircularRepository(
 
         var errorCode = 0
         val result = serverAPI.getCircularsFromServer()
-        if (result.second == ServerAPI.Companion.Result.ERROR)
+
+        if (result.second == ServerAPI.Companion.Result.GENERIC_ERROR)
             return Pair(emptyList(), -1)
+
+        if (result.second == ServerAPI.Companion.Result.NETWORK_ERROR)
+            return Pair(emptyList(), -2)
 
         val oldCirculars = circularDao.getCirculars(serverAPI.serverID())
         val newCirculars = result.first

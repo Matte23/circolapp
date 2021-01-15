@@ -77,6 +77,7 @@
     <string name="snackbar_circular_downloaded">La circolare sarà salvata nella cartella Download</string>
 
     <string name="snackbar_connection_not_available">Rete non disponibile. I risultati potrebbero non essere aggiornati</string>
+    <string name="snackbar_generic_error">Si è verificato un errore</string>
 
     <string name="image_view_attachment">Visualizza allegato</string>
     <string name="image_share_attachment">Condividi allegato</string>

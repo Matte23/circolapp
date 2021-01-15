@@ -45,8 +45,10 @@ class ServerUtils {
 
         var errorCode = 0
         val result = server.getCircularsFromServer()
-        if (result.second == ServerAPI.Companion.Result.ERROR)
+        if (result.second == ServerAPI.Companion.Result.GENERIC_ERROR)
             return Pair(emptyList(), -1)
+        if (result.second == ServerAPI.Companion.Result.NETWORK_ERROR)
+            return Pair(emptyList(), -2)
 
         val oldCirculars = circularDao.getCirculars(server.serverID)
         val newCirculars = result.first
@@ -71,7 +73,7 @@ class ServerUtils {
     private suspend fun checkServer(server: Server) {
         val newCirculars = updateCirculars(server)
 
-        if (newCirculars.second != -1 && newCirculars.first.isNotEmpty()) {
+        if (newCirculars.second >= 0 && newCirculars.first.isNotEmpty()) {
             for (circular in newCirculars.first) {
                 PushNotificationUtils.createPushNotification(
                     circular,

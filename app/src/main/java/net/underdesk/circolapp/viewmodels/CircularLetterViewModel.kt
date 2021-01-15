@@ -49,7 +49,7 @@ class CircularLetterViewModel internal constructor(
             }
         }
 
-    val showMessage = MutableLiveData<Boolean>().apply { value = false }
+    val showMessage = MutableLiveData<Int>().apply { value = 0 }
     val circularsUpdated = MutableLiveData<Boolean>().apply { value = false }
     private var isNotUpdating = true
 
@@ -65,9 +65,8 @@ class CircularLetterViewModel internal constructor(
             viewModelScope.launch {
                 isNotUpdating = false
 
-                if (circularRepository.updateCirculars(false).second == -1) {
-                    showMessage.postValue(true)
-                }
+                val result = circularRepository.updateCirculars(false).second
+                showMessage.postValue(result)
 
                 isNotUpdating = true
                 circularsUpdated.postValue(true)

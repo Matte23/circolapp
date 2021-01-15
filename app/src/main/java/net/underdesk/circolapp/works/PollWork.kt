@@ -83,7 +83,9 @@ class PollWork(appContext: Context, workerParams: WorkerParameters) :
         val circularRepository = AndroidCircularRepository.getInstance(applicationContext)
 
         val result = circularRepository.updateCirculars()
-        if (result.second == -1)
+
+        // Retry only if it's a network error, otherwise there is probably an issue with the parser code which can only be solved with an update
+        if (result.second == -2)
             return@coroutineScope Result.retry()
 
         val newCirculars = result.first

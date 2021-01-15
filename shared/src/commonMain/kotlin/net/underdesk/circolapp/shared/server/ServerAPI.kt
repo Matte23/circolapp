@@ -38,8 +38,11 @@ class ServerAPI(serverName: Servers) {
     suspend fun getCircularsFromServer(): Pair<List<Circular>, Result> = withContext(PlatformDispatcher.IO) {
         val newCircularsAvailable = server.newCircularsAvailable()
 
-        if (newCircularsAvailable.second == Result.ERROR)
-            return@withContext Pair(emptyList(), Result.ERROR)
+        if (newCircularsAvailable.second == Result.GENERIC_ERROR)
+            return@withContext Pair(emptyList(), Result.GENERIC_ERROR)
+
+        if (newCircularsAvailable.second == Result.NETWORK_ERROR)
+            return@withContext Pair(emptyList(), Result.NETWORK_ERROR)
 
         if (!newCircularsAvailable.first)
             return@withContext Pair(emptyList(), Result.SUCCESS)
@@ -57,7 +60,7 @@ class ServerAPI(serverName: Servers) {
         }
 
         enum class Result {
-            SUCCESS, ERROR
+            SUCCESS, NETWORK_ERROR, GENERIC_ERROR
         }
 
         val numberOfServers = Servers.values().size

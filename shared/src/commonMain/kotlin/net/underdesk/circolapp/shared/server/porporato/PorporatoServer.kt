@@ -43,7 +43,9 @@ class PorporatoServer(ktorClient: HttpClient) : Server(ktorClient) {
 
             Pair(list, ServerAPI.Companion.Result.SUCCESS)
         } catch (exception: IOException) {
-            Pair(emptyList(), ServerAPI.Companion.Result.ERROR)
+            Pair(emptyList(), ServerAPI.Companion.Result.NETWORK_ERROR)
+        } catch (exception: Exception) {
+            Pair(emptyList(), ServerAPI.Companion.Result.GENERIC_ERROR)
         }
     }
 

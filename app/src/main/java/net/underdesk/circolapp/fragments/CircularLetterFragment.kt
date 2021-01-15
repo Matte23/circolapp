@@ -75,14 +75,16 @@ class CircularLetterFragment :
         circularLetterViewModel.showMessage.observe(
             viewLifecycleOwner,
             {
-                if (it) activity?.findViewById<ConstraintLayout>(R.id.container)?.let { view ->
+                if (it < 0) activity?.findViewById<ConstraintLayout>(R.id.container)?.let { view ->
+                    val message = if (it == -1) getString(R.string.snackbar_generic_error) else getString(R.string.snackbar_connection_not_available)
+
                     Snackbar.make(
                         view,
-                        getString(R.string.snackbar_connection_not_available),
+                        message,
                         Snackbar.LENGTH_LONG
                     ).show()
 
-                    circularLetterViewModel.showMessage.postValue(false)
+                    circularLetterViewModel.showMessage.postValue(0)
                 }
             }
         )
@@ -91,8 +93,6 @@ class CircularLetterFragment :
             {
                 if (it) {
                     binding.circularsRefresh.isRefreshing = false
-
-                    circularLetterViewModel.showMessage.postValue(false)
                 }
             }
         )

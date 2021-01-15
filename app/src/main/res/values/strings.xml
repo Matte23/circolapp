@@ -78,6 +78,7 @@
     <string name="snackbar_circular_downloaded">The circular letter will be saved into the download folder</string>
 
     <string name="snackbar_connection_not_available">Network not available. Results may be outdated</string>
+    <string name="snackbar_generic_error">An error has occurred</string>
 
     <string name="image_view_attachment">View attachment</string>
     <string name="image_share_attachment">Share attachment</string>
