@@ -5,9 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent.*
+import androidx.browser.customtabs.CustomTabsService
+import androidx.browser.customtabs.CustomTabsSession
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -16,7 +19,7 @@ import net.underdesk.circolapp.R
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
 
 object FileUtils {
-    fun viewFile(url: String, context: Context) {
+    fun viewFile(url: String, context: Context, session: CustomTabsSession?) {
         if (url.endsWith(".pdf")) {
             val viewIntent = Intent(Intent.ACTION_VIEW)
             viewIntent.setDataAndType(Uri.parse(url), "application/pdf")
@@ -46,7 +49,7 @@ object FileUtils {
                 .setToolbarColor(primaryColor)
                 .build()
 
-            val customTabsIntent = Builder()
+            val customTabsIntent = Builder(session)
                 .setShowTitle(true)
                 .setColorScheme(COLOR_SCHEME_SYSTEM)
                 .setDefaultColorSchemeParams(otherParams)
@@ -54,6 +57,24 @@ object FileUtils {
                 .build()
 
             customTabsIntent.launchUrl(context, Uri.parse(url))
+        }
+    }
+
+    fun preloadFiles(url: String, otherUrls: List<String>, session: CustomTabsSession?) {
+        if (!url.endsWith(".pdf")) {
+            val bundles = arrayListOf<Bundle>()
+
+            for (otherUrl in otherUrls) {
+                if (!url.endsWith(".pdf")) {
+                    val bundle = Bundle().apply {
+                        putParcelable(CustomTabsService.KEY_URL, Uri.parse(otherUrl))
+                    }
+
+                    bundles.add(bundle)
+                }
+            }
+
+            session?.mayLaunchUrl(Uri.parse(url), null, bundles)
         }
     }
 

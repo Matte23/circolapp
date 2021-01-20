@@ -24,6 +24,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.databinding.ItemAttachmentBinding
 import net.underdesk.circolapp.utils.DownloadableFile
 import net.underdesk.circolapp.utils.FileUtils
@@ -31,9 +32,10 @@ import net.underdesk.circolapp.utils.FileUtils
 class AttachmentAdapter(
     private val attachmentsNames: List<String>,
     private val attachmentsUrls: List<String>,
-    private val adapterCallback: CircularLetterAdapter.AdapterCallback
+    private val mainActivity: MainActivity,
 ) :
     RecyclerView.Adapter<AttachmentAdapter.AttachmentViewHolder>() {
+    private val adapterCallback: CircularLetterAdapter.AdapterCallback = mainActivity
     private lateinit var context: Context
 
     inner class AttachmentViewHolder(binding: ItemAttachmentBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -54,7 +56,7 @@ class AttachmentAdapter(
         holder.title.text = attachmentsNames[position]
 
         holder.viewButton.setOnClickListener {
-            FileUtils.viewFile(attachmentsUrls[position], context)
+            FileUtils.viewFile(attachmentsUrls[position], context, mainActivity.customTabsSession)
         }
 
         holder.shareButton.setOnClickListener {

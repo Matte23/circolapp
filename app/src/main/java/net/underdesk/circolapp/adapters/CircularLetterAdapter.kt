@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import net.underdesk.circolapp.AlarmBroadcastReceiver
+import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
 import net.underdesk.circolapp.data.AndroidDatabase
 import net.underdesk.circolapp.databinding.ItemCircularBinding
@@ -45,11 +46,12 @@ import net.underdesk.circolapp.utils.FileUtils
 
 class CircularLetterAdapter(
     private var circulars: List<Circular>,
-    private val adapterCallback: AdapterCallback,
+    private val mainActivity: MainActivity,
     private val adapterScope: CoroutineScope
 ) :
     RecyclerView.Adapter<CircularLetterAdapter.CircularLetterViewHolder>() {
     private lateinit var context: Context
+    private val adapterCallback: AdapterCallback = mainActivity
     private var collapsedItems = -1
 
     init {
@@ -136,6 +138,12 @@ class CircularLetterAdapter(
             holder.attachmentsList.visibility = View.GONE
             holder.attachmentsList.adapter = null
         } else {
+            FileUtils.preloadFiles(
+                circulars[position].url,
+                circulars[position].attachmentsUrls,
+                mainActivity.customTabsSession
+            )
+
             holder.collapseButton.setImageDrawable(
                 getDrawable(
                     context,
@@ -155,7 +163,7 @@ class CircularLetterAdapter(
                 holder.attachmentsList.adapter = AttachmentAdapter(
                     circulars[position].attachmentsNames,
                     circulars[position].attachmentsUrls,
-                    adapterCallback
+                    mainActivity
                 )
             } else {
                 holder.attachmentsList.adapter = null
@@ -173,7 +181,7 @@ class CircularLetterAdapter(
                 }
             }
 
-            FileUtils.viewFile(circulars[position].url, context)
+            FileUtils.viewFile(circulars[position].url, context, mainActivity.customTabsSession)
         }
 
         holder.shareButton.setOnClickListener {

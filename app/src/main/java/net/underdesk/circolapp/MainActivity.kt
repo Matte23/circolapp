@@ -19,6 +19,7 @@
 package net.underdesk.circolapp
 
 import android.app.DownloadManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -30,6 +31,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
+import androidx.browser.customtabs.CustomTabsClient
+import androidx.browser.customtabs.CustomTabsServiceConnection
+import androidx.browser.customtabs.CustomTabsSession
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -43,6 +47,7 @@ import kotlinx.coroutines.launch
 import net.underdesk.circolapp.adapters.CircularLetterAdapter
 import net.underdesk.circolapp.data.AndroidDatabase
 import net.underdesk.circolapp.databinding.ActivityMainBinding
+import net.underdesk.circolapp.utils.CustomTabsHelper
 import net.underdesk.circolapp.utils.DownloadableFile
 import net.underdesk.circolapp.works.PollWork
 
@@ -57,6 +62,8 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
     var searchCallback: SearchCallback? = null
     var refreshCallback: RefreshCallback? = null
     override var fileToDownload: DownloadableFile? = null
+
+    var customTabsSession: CustomTabsSession? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         loadDarkTheme()
@@ -86,6 +93,26 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
         if (sharedPreferences.getBoolean("first_start", true)) {
             startIntroActivity()
         }
+    }
+
+    override fun onStart() {
+        val connection: CustomTabsServiceConnection = object : CustomTabsServiceConnection() {
+            override fun onCustomTabsServiceConnected(
+                name: ComponentName,
+                client: CustomTabsClient
+            ) {
+                client.warmup(0)
+                customTabsSession = client.newSession(null)
+            }
+
+            override fun onServiceDisconnected(name: ComponentName) {}
+        }
+        CustomTabsClient.bindCustomTabsService(
+            this,
+            CustomTabsHelper.getPreferredCustomTabsPackage(this),
+            connection
+        )
+        super.onStart()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
