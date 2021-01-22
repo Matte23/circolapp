@@ -1,6 +1,6 @@
 /*
  * Circolapp
- * Copyright (C) 2019-2020  Matteo Schiff
+ * Copyright (C) 2019-2021  Matteo Schiff
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
