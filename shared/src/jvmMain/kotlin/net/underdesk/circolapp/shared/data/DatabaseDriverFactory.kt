@@ -21,9 +21,9 @@ package net.underdesk.circolapp.shared.data
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 
-actual class DatabaseDriverFactory {
+actual class DatabaseDriverFactory(private val path: String) {
     actual fun createDriver(): SqlDriver {
-        return JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY + "circolapp.db")
+        return JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY + path)
             .also {
                 val currentVer = getVersion(it)
                 if (currentVer == 0) {

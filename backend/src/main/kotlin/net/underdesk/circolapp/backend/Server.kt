@@ -28,13 +28,29 @@ const val CHECK_DELAY_MILLIS = 900000L
 
 fun main(args: Array<String>) {
     print("Starting Circolapp Push microservice \n")
+
+    if (args.isEmpty()) {
+        print("ERROR: Database path not specified! Please specify the database path as a parameter \n")
+        return
+    } else {
+        print("Database path is: " + args[0] + " \n")
+    }
+
+    var enableNotifications = true
+    if (args.size >= 2 && args[1] == "--do-not-notify") {
+        print("Notifications are disabled \n")
+        enableNotifications = false
+    }
+
+    print("Initializing Firebase SDK \n")
     val options = FirebaseOptions.builder()
         .setCredentials(GoogleCredentials.getApplicationDefault())
         .build()
 
     FirebaseApp.initializeApp(options)
 
-    val serverUtils = ServerUtils()
+    print("Initializing database and server interfaces \n")
+    val serverUtils = ServerUtils(args[0], enableNotifications)
 
     print("Microservice started! \n")
     runBlocking {

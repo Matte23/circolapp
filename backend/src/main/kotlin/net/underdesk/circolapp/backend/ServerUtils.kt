@@ -23,10 +23,10 @@ import net.underdesk.circolapp.shared.server.KtorFactory
 import net.underdesk.circolapp.shared.server.Server
 import net.underdesk.circolapp.shared.server.ServerAPI
 
-class ServerUtils {
+class ServerUtils(databasePath: String, private val enableNotifications: Boolean = true) {
     private val serverList: MutableList<Server> = mutableListOf()
     private val ktorClient = KtorFactory().createClient()
-    private val circularDao = JavaDatabase.getDaoInstance()
+    private val circularDao = JavaDatabase.getDaoInstance(databasePath)
 
     init {
         for (serverId in ServerAPI.Companion.Servers.values()) {
@@ -75,14 +75,18 @@ class ServerUtils {
 
         if (newCirculars.second >= 0 && newCirculars.first.isNotEmpty()) {
             for (circular in newCirculars.first) {
-                PushNotificationUtils.createPushNotification(
-                    circular,
-                    ServerAPI.getServerTopic(server.serverID)
-                )
-                PushNotificationUtils.createPushNotificationiOS(
-                    circular,
-                    ServerAPI.getServerTopic(server.serverID)
-                )
+                if (enableNotifications) {
+                    PushNotificationUtils.createPushNotification(
+                        circular,
+                        ServerAPI.getServerTopic(server.serverID)
+                    )
+                    PushNotificationUtils.createPushNotificationiOS(
+                        circular,
+                        ServerAPI.getServerTopic(server.serverID)
+                    )
+                } else {
+                    print("Skipping notification for circular ${circular.id} of school ${circular.school} \n")
+                }
             }
         }
     }

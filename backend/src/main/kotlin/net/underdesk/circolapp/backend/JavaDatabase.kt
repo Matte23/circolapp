@@ -27,15 +27,15 @@ object JavaDatabase {
     @Volatile
     private var instance: AppDatabase? = null
 
-    private fun getInstance(): AppDatabase {
+    private fun getInstance(path: String): AppDatabase {
         return instance ?: synchronized(this) {
             instance ?: AppDatabase(
-                DatabaseDriverFactory().createDriver()
+                DatabaseDriverFactory(path).createDriver()
             ).also { instance = it }
         }
     }
 
-    fun getDaoInstance(): CircularDao {
-        return CircularDao(getInstance())
+    fun getDaoInstance(path: String): CircularDao {
+        return CircularDao(getInstance(path))
     }
 }
