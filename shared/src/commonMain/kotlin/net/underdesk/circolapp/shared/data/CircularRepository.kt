@@ -57,4 +57,34 @@ class CircularRepository(
         }
         return Pair(onlyNewCirculars, errorCode)
     }
+
+    suspend fun getRealUrl(rawUrl: String, id: Long, school: Int): String {
+        val result = serverAPI.getRealUrl(rawUrl)
+
+        if (result.second != ServerAPI.Companion.Result.SUCCESS)
+            return rawUrl
+
+        circularDao.setRealUrl(id, school, result.first)
+        return result.first
+    }
+
+    suspend fun getRealUrlForAttachment(
+        index: Int,
+        rawUrls: List<String>,
+        realUrls: List<String>,
+        id: Long,
+        school: Int
+    ): List<String> {
+        val result = serverAPI.getRealUrl(rawUrls[index])
+
+        if (result.second != ServerAPI.Companion.Result.SUCCESS)
+            return realUrls
+
+        val newList =
+            if (realUrls.size != rawUrls.size) MutableList(rawUrls.size) { "" } else realUrls.toMutableList()
+        newList[index] = result.first
+
+        circularDao.setRealAttachmentsUrls(id, school, newList)
+        return newList
+    }
 }

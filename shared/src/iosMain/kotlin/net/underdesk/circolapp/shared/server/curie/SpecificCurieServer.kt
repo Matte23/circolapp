@@ -30,14 +30,25 @@ actual class SpecificCurieServer actual constructor(private val curieServer: Cur
         val list = ArrayList<Circular>()
 
         htmlList?.forEach { element ->
+            val url = element.attributes.objectForKey("href").toString()
             if (element.parentElement?.parentElement?.parentElement?.tagName == "li") {
                 list.last().attachmentsNames.add(element.textContent)
-                list.last().attachmentsUrls.add(element.attributes.objectForKey("href").toString())
+                list.last().attachmentsUrls.add(url)
+
+                if (url.endsWith(".pdf")) {
+                    list.last().realAttachmentsUrls.add(url)
+                } else {
+                    list.last().realAttachmentsUrls.add("")
+                }
             } else {
-                list.add(curieServer.generateFromString(element.textContent, element.attributes.objectForKey("href").toString()))
+                list.add(curieServer.generateFromString(element.textContent, url))
             }
         }
 
         return list
+    }
+
+    actual fun parseFileUrl(string: String): String {
+        TODO("Not yet implemented")
     }
 }

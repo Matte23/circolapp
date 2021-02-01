@@ -67,6 +67,10 @@ class PorporatoServer(ktorClient: HttpClient) : Server(ktorClient) {
         }
     }
 
+    override suspend fun getRealUrl(rawUrl: String): Pair<String, ServerAPI.Companion.Result> {
+        return Pair(rawUrl, ServerAPI.Companion.Result.SUCCESS)
+    }
+
     override suspend fun newCircularsAvailable(): Pair<Boolean, ServerAPI.Companion.Result> {
         return Pair(true, ServerAPI.Companion.Result.SUCCESS)
     }
@@ -85,6 +89,7 @@ class PorporatoServer(ktorClient: HttpClient) : Server(ktorClient) {
                     val parent = list.find { it.id == attachment.id && !it.name.startsWith("All") }
                     parent?.attachmentsNames?.add(attachment.name)
                     parent?.attachmentsUrls?.add(attachment.url)
+                    parent?.realAttachmentsUrls?.add(attachment.url)
 
                     return@removeAll true
                 }
@@ -101,6 +106,7 @@ class PorporatoServer(ktorClient: HttpClient) : Server(ktorClient) {
                     val parent = list[lastIndex]
                     parent.attachmentsNames.add(attachment.name)
                     parent.attachmentsUrls.add(attachment.url)
+                    parent.realAttachmentsUrls.add(attachment.url)
 
                     return@removeAll true
                 }
@@ -146,9 +152,9 @@ class PorporatoServer(ktorClient: HttpClient) : Server(ktorClient) {
             title = title.removeRange(dateMatcher.range)
                 .removeSuffix(" (pubb.: )")
 
-            Circular(id, serverID, title, fullUrl, dateMatcher.value.replace("-", "/"))
+            Circular(id, serverID, title, fullUrl, fullUrl, dateMatcher.value.replace("-", "/"))
         } else {
-            Circular(id, serverID, title, fullUrl, "")
+            Circular(id, serverID, title, fullUrl, fullUrl, "")
         }
     }
 }

@@ -88,6 +88,7 @@ object Dependencies {
         const val jsoup = "org.jsoup:jsoup:1.13.1"
         const val appIntro = "com.github.AppIntro:AppIntro:6.0.0"
         const val materialSpinner = "com.github.tiper:MaterialSpinner:1.4.2"
+        const val materialProgressBar = "me.zhanghai.android.materialprogressbar:library:1.6.1"
     }
 
     object Testing {

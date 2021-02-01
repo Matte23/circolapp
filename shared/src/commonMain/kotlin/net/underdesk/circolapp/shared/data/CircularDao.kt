@@ -34,18 +34,20 @@ class CircularDao(
     private val appDatabaseQueries = database.appDatabaseQueries
 
     private val circularMapper =
-        { id: Long, school: Long, name: String, url: String, date: String, favourite: Long, reminder: Long, read: Long, attachmentsNames: String, attachmentsUrls: String ->
+        { id: Long, school: Long, name: String, url: String, date: String, favourite: Long, reminder: Long, read: Long, attachmentsNames: String, attachmentsUrls: String, realAttachmentsUrls: String, realUrl: String? ->
             Circular(
                 id,
                 school.toInt(),
                 name,
                 url,
+                realUrl,
                 date,
                 favourite.toBoolean(),
                 reminder.toBoolean(),
                 read.toBoolean(),
                 attachmentsNames.toList(),
-                attachmentsUrls.toList()
+                attachmentsUrls.toList(),
+                realAttachmentsUrls.toList()
             )
         }
 
@@ -61,7 +63,9 @@ class CircularDao(
                 it.reminder.toLong(),
                 it.read.toLong(),
                 it.attachmentsNames.joinToString(),
-                it.attachmentsUrls.joinToString()
+                it.attachmentsUrls.joinToString(),
+                it.realAttachmentsUrls.joinToString(),
+                it.realUrl
             )
         }
     }
@@ -71,6 +75,24 @@ class CircularDao(
             appDatabaseQueries.updateCircular(
                 favourite.toLong(),
                 reminder.toLong(),
+                id,
+                school.toLong()
+            )
+        }
+
+    suspend fun setRealUrl(id: Long, school: Int, url: String?) =
+        withContext(PlatformDispatcher.IO) {
+            appDatabaseQueries.setRealUrl(
+                url,
+                id,
+                school.toLong()
+            )
+        }
+
+    suspend fun setRealAttachmentsUrls(id: Long, school: Int, urls: List<String>) =
+        withContext(PlatformDispatcher.IO) {
+            appDatabaseQueries.setRealAttachmentsUrls(
+                urls.joinToString(),
                 id,
                 school.toLong()
             )

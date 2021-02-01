@@ -46,6 +46,23 @@ class CurieServer(ktorClient: HttpClient) : Server(ktorClient) {
         }
     }
 
+    override suspend fun getRealUrl(rawUrl: String): Pair<String, ServerAPI.Companion.Result> {
+        if (rawUrl.endsWith(".pdf"))
+            return Pair(rawUrl, ServerAPI.Companion.Result.SUCCESS)
+
+        return try {
+            withContext(Dispatchers.Default) {
+                val html: String = ktorClient.get(rawUrl)
+                val realUrl = SpecificCurieServer(this@CurieServer).parseFileUrl(html)
+                Pair(realUrl, ServerAPI.Companion.Result.SUCCESS)
+            }
+        } catch (exception: IOException) {
+            Pair(rawUrl, ServerAPI.Companion.Result.NETWORK_ERROR)
+        } catch (exception: Exception) {
+            Pair(rawUrl, ServerAPI.Companion.Result.GENERIC_ERROR)
+        }
+    }
+
     override suspend fun newCircularsAvailable(): Pair<Boolean, ServerAPI.Companion.Result> {
         return Pair(true, ServerAPI.Companion.Result.SUCCESS)
     }
@@ -61,6 +78,8 @@ class CurieServer(ktorClient: HttpClient) : Server(ktorClient) {
             """(\d+)""".toRegex()
         val idMatcher = idRegex.find(string)
 
+        val realUrl = if (url.endsWith(".pdf")) url else null
+
         val id = idMatcher?.value?.toLong() ?: -1L
 
         val dateRegex =
@@ -75,9 +94,9 @@ class CurieServer(ktorClient: HttpClient) : Server(ktorClient) {
                 .removePrefix("_")
                 .removePrefix(" ")
 
-            Circular(id, serverID, title, url, dateMatcher.value)
+            Circular(id, serverID, title, url, realUrl, dateMatcher.value)
         } else {
-            Circular(id, serverID, title, url, "")
+            Circular(id, serverID, title, url, realUrl, "")
         }
     }
 
@@ -88,4 +107,5 @@ class CurieServer(ktorClient: HttpClient) : Server(ktorClient) {
 
 expect class SpecificCurieServer(curieServer: CurieServer) {
     fun parseHtml(string: String): List<Circular>
+    fun parseFileUrl(string: String): String
 }

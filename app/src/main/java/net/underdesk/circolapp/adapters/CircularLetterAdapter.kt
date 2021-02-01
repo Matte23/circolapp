@@ -26,10 +26,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
@@ -37,10 +40,12 @@ import kotlinx.coroutines.launch
 import net.underdesk.circolapp.AlarmBroadcastReceiver
 import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
+import net.underdesk.circolapp.data.AndroidCircularRepository
 import net.underdesk.circolapp.data.AndroidDatabase
 import net.underdesk.circolapp.databinding.ItemCircularBinding
 import net.underdesk.circolapp.fragments.NewReminderFragment
 import net.underdesk.circolapp.shared.data.Circular
+import net.underdesk.circolapp.shared.data.CircularRepository
 import net.underdesk.circolapp.utils.DownloadableFile
 import net.underdesk.circolapp.utils.FileUtils
 
@@ -51,6 +56,7 @@ class CircularLetterAdapter(
 ) :
     RecyclerView.Adapter<CircularLetterAdapter.CircularLetterViewHolder>() {
     private lateinit var context: Context
+    private lateinit var circularRepository: CircularRepository
     private val adapterCallback: AdapterCallback = mainActivity
     private var collapsedItems = -1
 
@@ -60,6 +66,7 @@ class CircularLetterAdapter(
 
     inner class CircularLetterViewHolder(binding: ItemCircularBinding) : RecyclerView.ViewHolder(binding.root) {
         var card: CardView = binding.circularCard
+        var progressBar: ProgressBar = binding.circularProgressBar
         var title: TextView = binding.circularTitleTextview
         var number: TextView = binding.circularNumberTextview
         var date: TextView = binding.circularDateTextview
@@ -71,6 +78,9 @@ class CircularLetterAdapter(
         var reminderButton: ImageButton = binding.circularReminderButton
         var attachmentsList: RecyclerView = binding.circularsAttachmentsList
 
+        val loading = MutableLiveData(false)
+        var observer: MutableList<Observer<in Boolean>> = mutableListOf()
+
         init {
             attachmentsList.layoutManager = LinearLayoutManager(context)
         }
@@ -79,6 +89,7 @@ class CircularLetterAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CircularLetterViewHolder {
         val binding = ItemCircularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         context = parent.context
+        circularRepository = AndroidCircularRepository.getInstance(context)
 
         return CircularLetterViewHolder(binding)
     }
@@ -87,6 +98,23 @@ class CircularLetterAdapter(
         holder.number.text = context.getString(R.string.notification_title, circulars[position].id)
         holder.title.text = circulars[position].name
         holder.date.text = circulars[position].date
+
+        val observer = Observer<Boolean> {
+            if (it) {
+                holder.progressBar.visibility = View.VISIBLE
+                holder.viewButton.isEnabled = false
+                holder.downloadButton.isEnabled = false
+                holder.shareButton.isEnabled = false
+            } else {
+                holder.progressBar.visibility = View.GONE
+                holder.viewButton.isEnabled = true
+                holder.downloadButton.isEnabled = true
+                holder.shareButton.isEnabled = true
+            }
+        }
+
+        holder.loading.observe(mainActivity, observer)
+        holder.observer.add(observer)
 
         if (circulars[position].read) {
             holder.number.typeface = Typeface.DEFAULT
@@ -139,7 +167,7 @@ class CircularLetterAdapter(
             holder.attachmentsList.adapter = null
         } else {
             FileUtils.preloadFiles(
-                circulars[position].url,
+                circulars[position].realUrl,
                 circulars[position].attachmentsUrls,
                 mainActivity.customTabsSession
             )
@@ -161,9 +189,10 @@ class CircularLetterAdapter(
             if (circulars[position].attachmentsNames.isNotEmpty()) {
                 holder.attachmentsList.visibility = View.VISIBLE
                 holder.attachmentsList.adapter = AttachmentAdapter(
-                    circulars[position].attachmentsNames,
-                    circulars[position].attachmentsUrls,
-                    mainActivity
+                    circulars[position],
+                    mainActivity,
+                    adapterScope,
+                    holder
                 )
             } else {
                 holder.attachmentsList.adapter = null
@@ -181,16 +210,29 @@ class CircularLetterAdapter(
                 }
             }
 
-            FileUtils.viewFile(circulars[position].url, context, mainActivity.customTabsSession)
+            runWhenUrlIsAvailable(holder, circulars[position]) { url ->
+                FileUtils.viewFile(
+                    url,
+                    context,
+                    mainActivity.customTabsSession
+                )
+            }
         }
 
         holder.shareButton.setOnClickListener {
-            FileUtils.shareFile(circulars[position].url, context)
+            runWhenUrlIsAvailable(holder, circulars[position]) { url ->
+                FileUtils.shareFile(
+                    url,
+                    context
+                )
+            }
         }
 
         holder.downloadButton.setOnClickListener {
-            val file = DownloadableFile(circulars[position].name, circulars[position].url)
-            FileUtils.downloadFile(file, adapterCallback, context)
+            runWhenUrlIsAvailable(holder, circulars[position]) { url ->
+                val file = DownloadableFile(circulars[position].name, url)
+                FileUtils.downloadFile(file, adapterCallback, context)
+            }
         }
 
         holder.favouriteButton.setOnClickListener {
@@ -252,6 +294,32 @@ class CircularLetterAdapter(
 
             notifyItemChanged(position)
         }
+    }
+
+    override fun onViewRecycled(holder: CircularLetterViewHolder) {
+        holder.observer.forEach { holder.loading.removeObserver(it) }
+        holder.observer.clear()
+        super.onViewRecycled(holder)
+    }
+
+    private fun runWhenUrlIsAvailable(
+        holder: CircularLetterViewHolder,
+        circular: Circular,
+        code: (url: String) -> Unit
+    ) {
+        if (circular.realUrl == null) {
+            holder.loading.postValue(true)
+
+            adapterScope.launch {
+                val realUrl =
+                    circularRepository.getRealUrl(circular.url, circular.id, circular.school)
+                holder.loading.postValue(false)
+                code(realUrl)
+            }
+            return
+        }
+
+        code(circular.realUrl!!)
     }
 
     fun changeDataSet(newCirculars: List<Circular>) {

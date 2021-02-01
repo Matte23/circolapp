@@ -78,7 +78,10 @@ object FileUtils {
         }
     }
 
-    fun preloadFiles(url: String, otherUrls: List<String>, session: CustomTabsSession?) {
+    fun preloadFiles(url: String?, otherUrls: List<String>, session: CustomTabsSession?) {
+        if (url == null)
+            return
+
         if (!url.endsWith(".pdf")) {
             val bundles = arrayListOf<Bundle>()
 

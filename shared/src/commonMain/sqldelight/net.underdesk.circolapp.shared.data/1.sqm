@@ -1,0 +1,2 @@
+ALTER TABLE Circulars ADD COLUMN realAttachmentsUrls TEXT NOT NULL DEFAULT "";
+ALTER TABLE Circulars ADD COLUMN realUrl TEXT;

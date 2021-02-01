@@ -26,5 +26,6 @@ abstract class Server(
 ) {
     abstract val serverID: Int
     abstract suspend fun getCircularsFromServer(): Pair<List<Circular>, ServerAPI.Companion.Result>
+    abstract suspend fun getRealUrl(rawUrl: String): Pair<String, ServerAPI.Companion.Result>
     abstract suspend fun newCircularsAvailable(): Pair<Boolean, ServerAPI.Companion.Result>
 }

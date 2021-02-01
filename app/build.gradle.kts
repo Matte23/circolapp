@@ -80,6 +80,7 @@ dependencies {
     // Misc
     implementation(Dependencies.Misc.appIntro)
     implementation(Dependencies.Misc.materialSpinner)
+    implementation(Dependencies.Misc.materialProgressBar)
 
     // Testing
     testImplementation(Dependencies.Testing.junit)

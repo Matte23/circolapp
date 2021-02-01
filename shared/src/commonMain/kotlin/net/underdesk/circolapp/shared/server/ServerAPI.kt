@@ -50,6 +50,11 @@ class ServerAPI(serverName: Servers) {
         server.getCircularsFromServer()
     }
 
+    suspend fun getRealUrl(rawUrl: String): Pair<String, Result> =
+        withContext(PlatformDispatcher.IO) {
+            server.getRealUrl(rawUrl)
+        }
+
     fun changeServer(serverName: Servers) {
         server = createServer(serverName, ktorClient)
     }

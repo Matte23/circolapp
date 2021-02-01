@@ -29,14 +29,26 @@ actual class SpecificCurieServer actual constructor(private val curieServer: Cur
         val list = ArrayList<Circular>()
 
         htmlList.forEach { element ->
+            val url = element.attr("href")
             if (element.parents().size == 6) {
                 list.last().attachmentsNames.add(element.text())
-                list.last().attachmentsUrls.add(element.attr("href"))
+                list.last().attachmentsUrls.add(url)
+
+                if (url.endsWith(".pdf")) {
+                    list.last().realAttachmentsUrls.add(url)
+                } else {
+                    list.last().realAttachmentsUrls.add("")
+                }
             } else if (element.parents().size == 4) {
-                list.add(curieServer.generateFromString(element.text(), element.attr("href")))
+                list.add(curieServer.generateFromString(element.text(), url))
             }
         }
 
         return list
+    }
+
+    actual fun parseFileUrl(string: String): String {
+        val document = Jsoup.parseBodyFragment(string)
+        return document.getElementsByClass("mtli_attachment")[0].attr("href")
     }
 }

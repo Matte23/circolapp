@@ -23,10 +23,12 @@ data class Circular(
     val school: Int,
     val name: String,
     val url: String,
+    val realUrl: String?,
     val date: String,
     var favourite: Boolean = false,
     var reminder: Boolean = false,
     var read: Boolean = false,
     val attachmentsNames: MutableList<String> = mutableListOf(),
-    val attachmentsUrls: MutableList<String> = mutableListOf()
+    val attachmentsUrls: MutableList<String> = mutableListOf(),
+    val realAttachmentsUrls: MutableList<String> = mutableListOf()
 )

@@ -22,4 +22,16 @@ import com.squareup.sqldelight.db.SqlDriver
 
 object DatabaseFactory {
     fun createDatabase(sqlDriver: SqlDriver) = AppDatabase(sqlDriver)
+
+    fun getVersion(driver: SqlDriver): Int {
+        val sqlCursor = driver.executeQuery(null, "PRAGMA user_version;", 0, null)
+        if (!sqlCursor.next())
+            return 0
+
+        return sqlCursor.getLong(0)?.toInt() ?: 0
+    }
+
+    fun setVersion(driver: SqlDriver, version: Int) {
+        driver.execute(null, "PRAGMA user_version = $version;", 0, null)
+    }
 }

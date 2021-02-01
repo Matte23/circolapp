@@ -33,7 +33,7 @@ class CircolappFirebaseMessagingService : FirebaseMessagingService() {
             val url = remoteMessage.data["url"] ?: ""
 
             val circular = Circular(
-                id, -1, name, url, "",
+                id, -1, name, url, null, "",
                 favourite = false,
                 reminder = false,
                 attachmentsNames = mutableListOf(),
