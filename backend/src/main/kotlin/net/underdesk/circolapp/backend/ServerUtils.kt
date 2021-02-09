@@ -59,13 +59,19 @@ class ServerUtils(databasePath: String, private val enableNotifications: Boolean
                 errorCode = 1
             }
 
+            circularDao.insertAll(newCirculars)
+
+            // Do not send anything if the database was empty
+            if (oldCirculars.isEmpty()) {
+                print("Database was empty, not sending notifications \n")
+                return Pair(emptyList(), 0)
+            }
+
             val oldCircularsSize =
                 if (newCirculars.size < oldCirculars.size) 0 else oldCirculars.size
 
             val circularCount = newCirculars.size - oldCircularsSize
             onlyNewCirculars = newCirculars.subList(0, circularCount)
-
-            circularDao.insertAll(newCirculars)
         }
         return Pair(onlyNewCirculars, errorCode)
     }

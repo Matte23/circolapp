@@ -28,7 +28,7 @@ actual class DatabaseDriverFactory(private val path: String) {
                 val currentVer = DatabaseFactory.getVersion(it)
                 if (currentVer == 0) {
                     AppDatabase.Schema.create(it)
-                    DatabaseFactory.setVersion(it, 1)
+                    DatabaseFactory.setVersion(it, AppDatabase.Schema.version)
                 } else {
                     val schemaVer: Int = AppDatabase.Schema.version
                     if (schemaVer > currentVer) {
