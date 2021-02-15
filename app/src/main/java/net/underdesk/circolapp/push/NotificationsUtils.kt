@@ -30,19 +30,21 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import net.underdesk.circolapp.MainActivity
 import net.underdesk.circolapp.R
+import net.underdesk.circolapp.server.AndroidServerApi
 import net.underdesk.circolapp.shared.data.Circular
 import net.underdesk.circolapp.works.PollWork
 
 object NotificationsUtils {
     fun createNotificationsForCirculars(circulars: List<Circular>, context: Context) {
         createNotificationChannel(context)
+        val idsAreHumanReadable = AndroidServerApi.getInstance(context).idsAreHumanReadable()
 
         val summaryStyle = NotificationCompat.InboxStyle()
             .setBigContentTitle(context.getString(R.string.notification_summary_title))
             .setSummaryText(context.getString(R.string.notification_summary))
 
         for (circular in circulars) {
-            createNotification(circular, context)
+            createNotification(circular, context, idsAreHumanReadable)
             summaryStyle.addLine(circular.name)
         }
 
@@ -67,7 +69,11 @@ object NotificationsUtils {
         }
     }
 
-    private fun createNotification(circular: Circular, context: Context) {
+    private fun createNotification(
+        circular: Circular,
+        context: Context,
+        idsAreHumanReadable: Boolean
+    ) {
         val mainIntent = Intent(context, MainActivity::class.java)
         val viewIntent = Intent(Intent.ACTION_VIEW)
 
@@ -88,7 +94,6 @@ object NotificationsUtils {
 
         val builder = NotificationCompat.Builder(context, PollWork.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(context.getString(R.string.notification_title, circular.id))
             .setContentText(circular.name)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
@@ -98,6 +103,17 @@ object NotificationsUtils {
                 NotificationCompat.BigTextStyle()
                     .bigText(circular.name)
             )
+
+        if (idsAreHumanReadable) {
+            builder.setContentTitle(context.getString(R.string.notification_title_id, circular.id))
+        } else {
+            builder.setContentTitle(
+                context.getString(
+                    R.string.notification_title_date,
+                    circular.date
+                )
+            )
+        }
 
         with(NotificationManagerCompat.from(context)) {
             notify(circular.id.toInt(), builder.build())

@@ -22,7 +22,8 @@
     <string name="preferences_polling_summary">Sconsigliato. Disabilitare questa opzione per utilizzare le notifiche push</string>
     <string name="preferences_poll_interval_summary">Quanto tempo attendere tra una sincronizzazione ed un altra</string>
 
-    <string name="notification_title">Circolare numero %1$d</string>
+    <string name="notification_title_id">Circolare numero %1$d</string>
+    <string name="notification_title_date">Circolare pubblicata il %1$s</string>
     <string name="notification_summary_title">Nuove circolari pubblicate</string>
     <string name="notification_summary">Nuove circolari</string>
     <plurals name="notification_summary_text">

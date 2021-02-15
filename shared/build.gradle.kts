@@ -44,19 +44,18 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                // KotlinX
                 implementation(Dependencies.Kotlin.coroutinesCore) {
                     version {
                         strictly("1.4.2-native-mt")
                     }
                 }
+                implementation(Dependencies.Kotlin.serializationJson)
 
                 // Ktor
                 implementation(Dependencies.Ktor.ktorCore)
                 implementation(Dependencies.Ktor.ktorJson)
                 implementation(Dependencies.Ktor.ktorSerialization)
-
-                // Serialization
-                implementation(Dependencies.Serialization.json)
 
                 // SqlDelight
                 implementation(Dependencies.SQLDelight.sqlDelightRuntime)

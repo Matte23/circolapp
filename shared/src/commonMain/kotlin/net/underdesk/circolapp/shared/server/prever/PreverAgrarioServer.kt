@@ -16,17 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.underdesk.circolapp.shared.server
+package net.underdesk.circolapp.shared.server.prever
 
 import io.ktor.client.*
-import net.underdesk.circolapp.shared.data.Circular
+import net.underdesk.circolapp.shared.server.ServerAPI
 
-abstract class Server(
-    val ktorClient: HttpClient
-) {
-    abstract val serverID: Int
-    open val idsAreHumanReadable = true
-    abstract suspend fun getCircularsFromServer(): Pair<List<Circular>, ServerAPI.Companion.Result>
-    abstract suspend fun getRealUrl(rawUrl: String): Pair<String, ServerAPI.Companion.Result>
-    abstract suspend fun newCircularsAvailable(): Pair<Boolean, ServerAPI.Companion.Result>
+class PreverAgrarioServer(ktorClient: HttpClient) : GenericPreverServer(ktorClient) {
+    override val categoryId = 476
+    override val serverID = ServerAPI.getServerId(ServerAPI.Companion.Servers.PREVER_AGRARIO)
 }

@@ -24,12 +24,15 @@ import net.underdesk.circolapp.shared.PlatformDispatcher
 import net.underdesk.circolapp.shared.data.Circular
 import net.underdesk.circolapp.shared.server.curie.CurieServer
 import net.underdesk.circolapp.shared.server.porporato.PorporatoServer
+import net.underdesk.circolapp.shared.server.prever.PreverAgrarioServer
+import net.underdesk.circolapp.shared.server.prever.PreverAlberghieroServer
 
 class ServerAPI(serverName: Servers) {
     private val ktorClient = KtorFactory().createClient()
     private var server: Server
 
     fun serverID(): Int = server.serverID
+    fun idsAreHumanReadable() = server.idsAreHumanReadable
 
     init {
         server = createServer(serverName, ktorClient)
@@ -61,7 +64,7 @@ class ServerAPI(serverName: Servers) {
 
     companion object {
         enum class Servers {
-            CURIE, PORPORATO
+            CURIE, PORPORATO, PREVER_AGRARIO, PREVER_ALBERGHIERO
         }
 
         enum class Result {
@@ -85,16 +88,22 @@ class ServerAPI(serverName: Servers) {
         fun getServerName(server: Servers) = when (server) {
             Servers.CURIE -> "Liceo scientifico Maria Curie"
             Servers.PORPORATO -> "Liceo G.F. Porporato"
+            Servers.PREVER_AGRARIO -> "I.I.S. Arturo Prever - Agrario"
+            Servers.PREVER_ALBERGHIERO -> "I.I.S. Arturo Prever - Alberghiero"
         }
 
         fun getServerWebsite(server: Servers) = when (server) {
             Servers.CURIE -> "https://www.curiepinerolo.edu.it/"
             Servers.PORPORATO -> "https://www.liceoporporato.edu.it/"
+            Servers.PREVER_AGRARIO -> "https://www.prever.edu.it/agrario/"
+            Servers.PREVER_ALBERGHIERO -> "https://www.prever.edu.it/alberghiero/"
         }
 
         fun createServer(server: Servers, ktorClient: HttpClient) = when (server) {
             Servers.CURIE -> CurieServer(ktorClient)
             Servers.PORPORATO -> PorporatoServer(ktorClient)
+            Servers.PREVER_AGRARIO -> PreverAgrarioServer(ktorClient)
+            Servers.PREVER_ALBERGHIERO -> PreverAlberghieroServer(ktorClient)
         }
     }
 }

@@ -16,17 +16,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.underdesk.circolapp.shared.server
+package net.underdesk.circolapp.shared.server.pojo
 
-import io.ktor.client.*
-import net.underdesk.circolapp.shared.data.Circular
+import kotlinx.serialization.Serializable
 
-abstract class Server(
-    val ktorClient: HttpClient
-) {
-    abstract val serverID: Int
-    open val idsAreHumanReadable = true
-    abstract suspend fun getCircularsFromServer(): Pair<List<Circular>, ServerAPI.Companion.Result>
-    abstract suspend fun getRealUrl(rawUrl: String): Pair<String, ServerAPI.Companion.Result>
-    abstract suspend fun newCircularsAvailable(): Pair<Boolean, ServerAPI.Companion.Result>
-}
+@Serializable
+data class Post(
+    val id: Long,
+    val date: String,
+    val link: String,
+    val title: Title
+)
+
+@Serializable
+data class Title(
+    val rendered: String
+)

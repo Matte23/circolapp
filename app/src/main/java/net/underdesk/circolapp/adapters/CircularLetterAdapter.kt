@@ -44,6 +44,7 @@ import net.underdesk.circolapp.data.AndroidCircularRepository
 import net.underdesk.circolapp.data.AndroidDatabase
 import net.underdesk.circolapp.databinding.ItemCircularBinding
 import net.underdesk.circolapp.fragments.NewReminderFragment
+import net.underdesk.circolapp.server.AndroidServerApi
 import net.underdesk.circolapp.shared.data.Circular
 import net.underdesk.circolapp.shared.data.CircularRepository
 import net.underdesk.circolapp.utils.DownloadableFile
@@ -57,6 +58,7 @@ class CircularLetterAdapter(
     RecyclerView.Adapter<CircularLetterAdapter.CircularLetterViewHolder>() {
     private lateinit var context: Context
     private lateinit var circularRepository: CircularRepository
+    private var idsAreHumanReadable = true
     private val adapterCallback: AdapterCallback = mainActivity
     private var collapsedItems = -1
 
@@ -90,14 +92,22 @@ class CircularLetterAdapter(
         val binding = ItemCircularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         context = parent.context
         circularRepository = AndroidCircularRepository.getInstance(context)
+        idsAreHumanReadable = AndroidServerApi.getInstance(context).idsAreHumanReadable()
 
         return CircularLetterViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CircularLetterViewHolder, position: Int) {
-        holder.number.text = context.getString(R.string.notification_title, circulars[position].id)
+        if (idsAreHumanReadable) {
+            holder.number.text =
+                context.getString(R.string.notification_title_id, circulars[position].id)
+            holder.date.text = circulars[position].date
+        } else {
+            holder.number.text =
+                context.getString(R.string.notification_title_date, circulars[position].date)
+            holder.date.text = ""
+        }
         holder.title.text = circulars[position].name
-        holder.date.text = circulars[position].date
 
         val observer = Observer<Boolean> {
             if (it) {

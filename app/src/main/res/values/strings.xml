@@ -22,7 +22,8 @@
     <string name="preferences_polling_summary">Not recommended. Disable this option to use push notifications</string>
     <string name="preferences_poll_interval_summary">How long to wait before checking if new circulars are published</string>
 
-    <string name="notification_title">Circular letter number %1$d</string>
+    <string name="notification_title_id">Circular letter number %1$d</string>
+    <string name="notification_title_date">Circular published on %1$s</string>
     <string name="notification_summary_title">New circulars published</string>
     <string name="notification_summary">New circulars</string>
     <plurals name="notification_summary_text">
