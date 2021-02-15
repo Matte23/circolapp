@@ -18,13 +18,13 @@
 
 object Config {
     object Plugin {
-        const val android = "com.android.tools.build:gradle:4.1.1"
+        const val android = "com.android.tools.build:gradle:4.1.2"
         const val kotlin =
             "org.jetbrains.kotlin:kotlin-gradle-plugin:${Dependencies.Kotlin.version}"
         const val serialization =
             "org.jetbrains.kotlin:kotlin-serialization:${Dependencies.Kotlin.version}"
-        const val google = "com.google.gms:google-services:4.3.4"
-        const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:9.4.1"
+        const val google = "com.google.gms:google-services:4.3.5"
+        const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:10.0.0"
         const val sqlDelight =
             "com.squareup.sqldelight:gradle-plugin:${Dependencies.SQLDelight.version}"
         const val aboutLibraries =
@@ -32,7 +32,7 @@ object Config {
         const val dependencies =
             "com.github.ben-manes:gradle-versions-plugin:0.36.0"
         const val shadow =
-            "com.github.jengelman.gradle.plugins:shadow:5.2.0"
+            "com.github.jengelman.gradle.plugins:shadow:6.1.0"
     }
 
     object Android {
