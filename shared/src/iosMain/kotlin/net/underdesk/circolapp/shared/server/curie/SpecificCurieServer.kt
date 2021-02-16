@@ -49,6 +49,7 @@ actual class SpecificCurieServer actual constructor(private val curieServer: Cur
     }
 
     actual fun parseFileUrl(string: String): String {
-        TODO("Not yet implemented")
+        val document = HTMLParser(string).parseDocument()
+        return document.querySelector(".mtli_attachment")!!.attributes.objectForKey("href").toString()
     }
 }

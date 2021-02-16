@@ -36,6 +36,7 @@
 		95CA31B2255C1EDE00AC095B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA31B1255C1EDE00AC095B /* ContentView.swift */; };
 		95CA31B7255C1EE000AC095B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95CA31B6255C1EE000AC095B /* Preview Assets.xcassets */; };
 		95CA31C0255C28C300AC095B /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA31BF255C28C300AC095B /* CircularView.swift */; };
+		95CED73225DBFA3B00C0E661 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CED73125DBFA3B00C0E661 /* ActivityIndicator.swift */; };
 		95DB71AB258A1C1500A78033 /* CarteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DB71AA258A1C1500A78033 /* CarteView.swift */; };
 		95E58FBB2592195B00689C37 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E58FBA2592195B00689C37 /* ShareSheet.swift */; };
 		95F6666E2590D712006DE74F /* URLUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F6666D2590D712006DE74F /* URLUtils.swift */; };
@@ -90,6 +91,7 @@
 		95CA31B6255C1EE000AC095B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		95CA31B8255C1EE000AC095B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95CA31BF255C28C300AC095B /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
+		95CED73125DBFA3B00C0E661 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		95DB71AA258A1C1500A78033 /* CarteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarteView.swift; sourceTree = "<group>"; };
 		95E58FBA2592195B00689C37 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		95F6666D2590D712006DE74F /* URLUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLUtils.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				950C1783258E582E00B2DBFE /* PadView.swift */,
 				950C1785258E58AD00B2DBFE /* SidebarView.swift */,
 				950C1787258E5BD300B2DBFE /* PhoneView.swift */,
+				95CED73125DBFA3B00C0E661 /* ActivityIndicator.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -247,7 +250,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1210;
-				LastUpgradeCheck = 1210;
+				LastUpgradeCheck = 1240;
 				TargetAttributes = {
 					95CA31AB255C1EDD00AC095B = {
 						CreatedOnToolsVersion = 12.1;
@@ -377,6 +380,7 @@
 				95CA31C0255C28C300AC095B /* CircularView.swift in Sources */,
 				954AF8FF2588A61B00666D0C /* RemindersViewModel.swift in Sources */,
 				952DEDDF2576F8DC001DF85D /* SceneDelegate.swift in Sources */,
+				95CED73225DBFA3B00C0E661 /* ActivityIndicator.swift in Sources */,
 				954AF8FA2588A5DD00666D0C /* RemindersList.swift in Sources */,
 				95CA31B2255C1EDE00AC095B /* ContentView.swift in Sources */,
 				955B7A10257D10A70091B1F9 /* ViewControllerResolver.swift in Sources */,
@@ -420,6 +424,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -482,6 +487,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

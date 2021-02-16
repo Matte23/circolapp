@@ -24,6 +24,7 @@ struct CircularView: View {
     @State private var sharingPhone: Bool = false
     @State private var sharingPad: Bool = false
     @State private var showDetail = false
+    @State private var loadingRealUrl = false
     
     var circular: Circular
     
@@ -52,20 +53,25 @@ struct CircularView: View {
             
             if showDetail {
                 HStack {
-                    Button(action: {
-                        if !circular.read {
-                            iOSRepository.getCircularDao().markRead(id: circular.id, school: circular.school, read: true, completionHandler: {_,_ in })
-                        }
-                        
-                        URLUtils.openUrl(url: circular.url)
-                    }) {
-                        Image(systemName: "envelope.open.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20.0, height: 20.0)
+                    if loadingRealUrl {
+                        ActivityIndicator(isAnimating: .constant(true), style: .medium)
                             .padding(.leading, 32.0)
+                    } else {
+                        Button(action: {
+                            if !circular.read {
+                                iOSRepository.getCircularDao().markRead(id: circular.id, school: circular.school, read: true, completionHandler: {_,_ in })
+                            }
+                            
+                            runWhenUrlIsAvailable(code: {realUrl in URLUtils.openUrl(url: realUrl)})
+                        }) {
+                            Image(systemName: "envelope.open.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20.0, height: 20.0)
+                                .padding(.leading, 32.0)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
                     }
-                    .buttonStyle(BorderlessButtonStyle())
                     
                     Spacer()
                     
@@ -130,15 +136,29 @@ struct CircularView: View {
                 
                 
                 ForEach(0..<circular.attachmentsNames.count, id: \.self) { index in
-                    AttachmentView(attachmentName: circular.attachmentsNames[index] as! String, attachmentUrl: circular.attachmentsUrls[index] as! String)
+                    AttachmentView(index: index, circular: circular)
                 }
             }
         }
     }
+    
+    func runWhenUrlIsAvailable(code: @escaping (_ url: String) -> Void) {
+        if circular.realUrl == nil {
+            loadingRealUrl = true
+            iOSRepository.getCircularRepository().getRealUrl(rawUrl: circular.url, id: circular.id, school: circular.school, completionHandler:
+                                                                {realUrl, _ in
+                                                                    loadingRealUrl = false
+                                                                    code(realUrl!)
+                                                                })
+            return
+        }
+
+        code(circular.realUrl!)
+    }
 }
 
 struct CircularView_Previews: PreviewProvider {
-    static var previewCircular = Circular(id: 1, school: 0, name: "This is a circular", url: "http://example.com", date: "19/11/2020", favourite: false, reminder: false, read: false, attachmentsNames: [], attachmentsUrls: [])
+    static var previewCircular = Circular(id: 1, school: 0, name: "This is a circular", url: "http://example.com", realUrl: "http://example.com", date: "19/11/2020", favourite: false, reminder: false, read: false, attachmentsNames: [], attachmentsUrls: [], realAttachmentsUrls: [])
     
     static var previews: some View {
         CircularView(circular: previewCircular)

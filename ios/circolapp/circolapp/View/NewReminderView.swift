@@ -71,7 +71,7 @@ struct NewReminderView: View {
 }
 
 struct NewReminderView_Previews: PreviewProvider {
-    static var previewCircular = Circular(id: 1, school: 0, name: "This is a circular", url: "http://example.com", date: "19/11/2020", favourite: false, reminder: false, read: false, attachmentsNames: [], attachmentsUrls: [])
+    static var previewCircular = Circular(id: 1, school: 0, name: "This is a circular", url: "http://example.com", realUrl: "http://example.com", date: "19/11/2020", favourite: false, reminder: false, read: false, attachmentsNames: [], attachmentsUrls: [], realAttachmentsUrls: [])
     
     static var previews: some View {
         NewReminderView(circular: previewCircular)
