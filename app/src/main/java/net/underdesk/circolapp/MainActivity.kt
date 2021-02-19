@@ -192,6 +192,7 @@ class MainActivity : AppCompatActivity(), CircularLetterAdapter.AdapterCallback 
 
         val request = DownloadManager.Request(Uri.parse(fileToDownload!!.url))
         request.setTitle(fileToDownload!!.name)
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setDestinationInExternalPublicDir(
             Environment.DIRECTORY_DOWNLOADS,
             "Circolapp/$safeFilename.$extension"
