@@ -10,27 +10,10 @@ plugins {
 
 version = "1.0"
 
-repositories {
-    gradlePluginPortal()
-    google()
-    jcenter()
-    mavenCentral()
-    maven {
-        url = uri("https://dl.bintray.com/kotlin/kotlin-eap")
-    }
-}
-
 kotlin {
     android()
     jvm()
-
-    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
-
-    if (sdkName.startsWith("iphoneos")) {
-        iosArm64("ios")
-    } else {
-        iosX64("ios")
-    }
+    ios ()
 
     cocoapods {
         summary = "Shared module for Circolapp"
@@ -127,9 +110,9 @@ sqldelight {
 val packForXcode by tasks.creating(Sync::class) {
     group = "build"
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val targetName = "ios"
-    val framework =
-        kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
+    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
+    val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
+    val framework = kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
     inputs.property("mode", mode)
     dependsOn(framework.linkTask)
     val targetDir = File(buildDir, "xcode-frameworks")

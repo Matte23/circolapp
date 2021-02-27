@@ -18,9 +18,9 @@
 
 object Dependencies {
     object Kotlin {
-        const val version = "1.4.30"
+        const val version = "1.4.31"
         const val core = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${version}"
-        const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+        const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt"
         const val coroutinesAndroid =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2-native-mt"
@@ -56,7 +56,7 @@ object Dependencies {
     }
 
     object Ktor {
-        private const val version = "1.5.1"
+        private const val version = "1.5.2"
         const val ktorCore = "io.ktor:ktor-client-core:$version"
         const val ktorOkhttp = "io.ktor:ktor-client-okhttp:$version"
         const val ktorIos = "io.ktor:ktor-client-ios:$version"
