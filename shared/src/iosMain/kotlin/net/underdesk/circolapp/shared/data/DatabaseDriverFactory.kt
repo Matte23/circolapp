@@ -24,18 +24,5 @@ import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 actual class DatabaseDriverFactory {
     actual fun createDriver(): SqlDriver {
         return NativeSqliteDriver(AppDatabase.Schema, "circolapp.db")
-            .also {
-                var currentVer = DatabaseFactory.getVersion(it)
-                val schemaVer: Int = AppDatabase.Schema.version
-
-                if (currentVer == 0) {
-                    currentVer = 1
-                }
-
-                if (schemaVer > currentVer) {
-                    AppDatabase.Schema.migrate(it, currentVer, schemaVer)
-                    DatabaseFactory.setVersion(it, schemaVer)
-                }
-            }
     }
 }
