@@ -27,16 +27,23 @@ struct CircularView: View {
     @State private var loadingRealUrl = false
     
     var circular: Circular
+    var idIsHumanReadable = true
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("Circular number \(String(circular.id))")
-                    .font(.headline)
-                    .fontWeight(circular.read ? .regular : .bold)
-                Text(circular.date)
-                    .font(.subheadline)
-                    .fontWeight(circular.read ? .regular : .bold)
+                if idIsHumanReadable {
+                    Text("Circular number \(String(circular.id))")
+                        .font(.headline)
+                        .fontWeight(circular.read ? .regular : .bold)
+                    Text(circular.date)
+                        .font(.subheadline)
+                        .fontWeight(circular.read ? .regular : .bold)
+                } else {
+                    Text("Circular published on \(String(circular.date))")
+                        .font(.headline)
+                        .fontWeight(circular.read ? .regular : .bold)
+                }
                 Spacer()
                 Button(action: {
                     self.showDetail.toggle()

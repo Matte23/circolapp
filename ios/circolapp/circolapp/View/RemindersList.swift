@@ -24,7 +24,7 @@ struct RemindersList: View {
     
     var body: some View {
         List(remindersViewModel.circulars, id: \.id) { circular in
-            CircularView(circular: circular)
+            CircularView(circular: circular, idIsHumanReadable: remindersViewModel.idsAreHumanReadable)
         }
         .navigationBarTitle(Text("Reminders"), displayMode: .large)
         .addSearchBar(self.searchBar)

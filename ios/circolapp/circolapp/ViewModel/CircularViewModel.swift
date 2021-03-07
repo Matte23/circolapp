@@ -21,6 +21,7 @@ import Shared
 
 class CircularViewModel: ObservableObject {
     @Published var circulars = Array<Circular>()
+    public var idsAreHumanReadable = true
     
     private var circularWatcher: Ktor_ioCloseable? = nil
     private var userDefaultsObserver: NSKeyValueObservation? = nil
@@ -55,6 +56,7 @@ class CircularViewModel: ObservableObject {
     func startObservingCirculars() {
         stopObserving()
         circularWatcher = repository.circularDao.getCFlowCirculars(school: Int32(schoolID)).watch { circulars in
+            self.idsAreHumanReadable = iOSServerApi.instance.serverAPI.idsAreHumanReadable()
             self.circulars = circulars as! Array<Circular>;
         }
     }

@@ -25,7 +25,7 @@ struct CircularList: View {
     
     var body: some View {
         List(circularViewModel.circulars, id: \.id) { circular in
-            CircularView(circular: circular)
+            CircularView(circular: circular, idIsHumanReadable: circularViewModel.idsAreHumanReadable)
         }
         .navigationBarTitle(Text("Circulars"), displayMode: .large)
         .pullToRefresh() { endRefreshing in circularViewModel.updateCirculars {

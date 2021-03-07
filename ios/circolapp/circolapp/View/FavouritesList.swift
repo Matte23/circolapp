@@ -24,7 +24,7 @@ struct FavouritesList: View {
     
     var body: some View {
         List(favouritesViewModel.circulars, id: \.id) { circular in
-            CircularView(circular: circular)
+            CircularView(circular: circular, idIsHumanReadable: favouritesViewModel.idsAreHumanReadable)
         }
         .navigationBarTitle(Text("Bookmarks"), displayMode: .large)
         .addSearchBar(self.searchBar)

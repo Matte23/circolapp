@@ -21,6 +21,7 @@ import Shared
 
 class FavouritesViewModel: ObservableObject {
     @Published var circulars = Array<Circular>()
+    public var idsAreHumanReadable = true
     
     private var circularWatcher: Ktor_ioCloseable? = nil
     private var userDefaultsObserver: NSKeyValueObservation? = nil
@@ -50,6 +51,7 @@ class FavouritesViewModel: ObservableObject {
     func startObservingFavourites() {
         stopObserving()
         circularWatcher = repository.circularDao.getFavouritesC(school: Int32(schoolID)).watch { circulars in
+            self.idsAreHumanReadable = iOSServerApi.instance.serverAPI.idsAreHumanReadable()
             self.circulars = circulars as! Array<Circular>;
         }
     }
