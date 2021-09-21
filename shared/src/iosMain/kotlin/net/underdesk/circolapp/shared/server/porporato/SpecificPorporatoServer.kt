@@ -35,13 +35,15 @@ actual class SpecificPorporatoServer actual constructor(private val porporatoSer
             return list
 
         for (i in htmlList.indices) {
-            list.add(
-                porporatoServer.generateFromString(
-                    htmlList[i].textContent,
-                    htmlList[i].attributes.objectForKey("href").toString(),
-                    i.toLong()
+            porporatoServer.generateFromString(
+                htmlList[i].textContent,
+                htmlList[i].attributes.objectForKey("href").toString(),
+                i.toLong()
+            )?.let {
+                list.add(
+                    it
                 )
-            )
+            }
         }
 
         return list

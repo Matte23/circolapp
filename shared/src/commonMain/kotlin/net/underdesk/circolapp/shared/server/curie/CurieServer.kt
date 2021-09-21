@@ -67,7 +67,6 @@ class CurieServer(ktorClient: HttpClient) : Server(ktorClient) {
         return Pair(true, ServerAPI.Companion.Result.SUCCESS)
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     @Throws(IOException::class, CancellationException::class)
     private suspend fun retrieveDataFromServer(): Response {
         return ktorClient.get(ENDPOINT_URL)

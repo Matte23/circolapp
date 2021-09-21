@@ -75,7 +75,6 @@ class PorporatoServer(ktorClient: HttpClient) : Server(ktorClient) {
         return Pair(true, ServerAPI.Companion.Result.SUCCESS)
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     @Throws(IOException::class, CancellationException::class)
     private suspend fun parsePage(url: String): List<Circular> {
         val response = retrieveDataFromServer(url)
@@ -120,13 +119,12 @@ class PorporatoServer(ktorClient: HttpClient) : Server(ktorClient) {
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     @Throws(IOException::class, CancellationException::class)
     private suspend fun retrieveDataFromServer(url: String): String {
         return ktorClient.request<HttpResponse>(url).readText(Charsets.ISO_8859_1)
     }
 
-    fun generateFromString(string: String, path: String, index: Long): Circular {
+    fun generateFromString(string: String, path: String, index: Long): Circular? {
         val fullUrl = baseUrl + path
         var title = string
 
@@ -152,7 +150,7 @@ class PorporatoServer(ktorClient: HttpClient) : Server(ktorClient) {
             title = title.removeRange(dateMatcher.range)
                 .removeSuffix(" (pubb.: )")
 
-            Circular(id, serverID, title, fullUrl, fullUrl, dateMatcher.value.replace("-", "/"))
+            if (title != "") Circular(id, serverID, title, fullUrl, fullUrl, dateMatcher.value.replace("-", "/")) else null
         } else {
             Circular(id, serverID, title, fullUrl, fullUrl, "")
         }

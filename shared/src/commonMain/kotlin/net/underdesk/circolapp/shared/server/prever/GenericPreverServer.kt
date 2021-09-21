@@ -59,7 +59,6 @@ abstract class GenericPreverServer(ktorClient: HttpClient) : Server(ktorClient) 
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     @Throws(IOException::class, CancellationException::class)
     private suspend fun parsePage(page: Int): List<Circular> {
         val posts = retrievePageFromServer(page)
@@ -83,7 +82,6 @@ abstract class GenericPreverServer(ktorClient: HttpClient) : Server(ktorClient) 
         return Pair(true, ServerAPI.Companion.Result.SUCCESS)
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     @Throws(IOException::class, CancellationException::class)
     private suspend fun retrievePageFromServer(page: Int): List<Post> {
         return try {

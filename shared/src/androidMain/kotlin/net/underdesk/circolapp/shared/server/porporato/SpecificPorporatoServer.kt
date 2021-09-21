@@ -31,13 +31,15 @@ actual class SpecificPorporatoServer actual constructor(private val porporatoSer
         val list = ArrayList<Circular>()
 
         for (i in 0 until htmlList.size) {
-            list.add(
-                porporatoServer.generateFromString(
-                    htmlList[i].text(),
-                    htmlList[i].attr("href"),
-                    i.toLong()
+            porporatoServer.generateFromString(
+                htmlList[i].text(),
+                htmlList[i].attr("href"),
+                i.toLong()
+            )?.let {
+                list.add(
+                    it
                 )
-            )
+            }
         }
 
         return list
