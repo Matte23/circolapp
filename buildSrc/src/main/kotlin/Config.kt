@@ -18,7 +18,7 @@
 
 object Config {
     object Plugin {
-        const val android = "com.android.tools.build:gradle:4.1.2"
+        const val android = "com.android.tools.build:gradle:4.2.2"
         const val kotlin =
             "org.jetbrains.kotlin:kotlin-gradle-plugin:${Dependencies.Kotlin.version}"
         const val serialization =
@@ -30,7 +30,7 @@ object Config {
         const val aboutLibraries =
             "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:${Dependencies.AboutLibraries.version}"
         const val dependencies =
-            "com.github.ben-manes:gradle-versions-plugin:0.36.0"
+            "com.github.ben-manes:gradle-versions-plugin:0.39.0"
         const val shadow =
             "com.github.jengelman.gradle.plugins:shadow:6.1.0"
     }
